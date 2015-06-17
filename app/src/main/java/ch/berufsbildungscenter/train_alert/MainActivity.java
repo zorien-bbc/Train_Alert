@@ -1,18 +1,33 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    final Calendar c = Calendar.getInstance();
+    Button buttonDate;
+    Button buttonTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        buttonDate = (Button) findViewById(R.id.button2);
+        buttonTime = (Button) findViewById(R.id.button4);
+        buttonTime.setText(c.get(Calendar.HOUR_OF_DAY)+" : " + c.get(Calendar.MINUTE));
+       buttonDate.setText(c.get(Calendar.DAY_OF_MONTH)+"."+c.get(Calendar.MONTH)+"."+c.get(Calendar.YEAR));
+        buttonTime.setOnClickListener(new DateListener(this, buttonTime));
+        buttonDate.setOnClickListener(new DateListener(this, buttonDate));
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
