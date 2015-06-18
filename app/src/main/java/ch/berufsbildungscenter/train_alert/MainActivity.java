@@ -36,8 +36,8 @@ public class MainActivity extends ActionBarActivity {
         buttonTime = (Button) findViewById(R.id.buttonTime);
         buttonTime.setText(c.get(Calendar.HOUR_OF_DAY)+" : " + c.get(Calendar.MINUTE));
        buttonDate.setText(c.get(Calendar.DAY_OF_MONTH)+"."+c.get(Calendar.MONTH)+"."+c.get(Calendar.YEAR));
-        buttonTime.setOnClickListener(new DateListener(this, buttonTime));
-        buttonDate.setOnClickListener(new DateListener(this, buttonDate));
+        //buttonTime.setOnClickListener(new DateListener(this, buttonTime));
+        //buttonDate.setOnClickListener(new DateListener(this, buttonDate));
     }
 
 

@@ -1,9 +1,12 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +26,14 @@ public class VerbindungenActivity extends ActionBarActivity {
         verbindungen.add(new Verbindung("Hallo2", "032094", "30min"));
 
         verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), verbindungen, this.getLayoutInflater()));
+
+        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), VerbindungDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

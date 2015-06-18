@@ -4,6 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public class VerbindungDetailsActivity extends ActionBarActivity {
@@ -13,6 +17,12 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindung_details);
 
+        ListView list = (ListView) findViewById(R.id.listView);
+        ArrayList<Verbindung> verbindungen = new ArrayList<Verbindung>();
+        verbindungen.add(new Verbindung("Uster, Nossikon", "9:15", "15min"));
+        verbindungen.add(new Verbindung("Bern, Langenstrassenhaus", "9:16", "30min"));
+
+        list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), verbindungen, this.getLayoutInflater()));
 
     }
 

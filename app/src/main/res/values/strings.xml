@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Train Alert</string>
-    <string name="verbindungen_name">Train Alert</string>
-    <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
-    <string name="title_activity_verbindung_details">VerbindungDetailsActivity</string>
 </resources>
