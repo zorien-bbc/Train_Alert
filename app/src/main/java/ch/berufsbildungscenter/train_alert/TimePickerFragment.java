@@ -5,15 +5,26 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.widget.Button;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by zorien on 17.06.2015.
  */
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
+
+    private Button button;
+    private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+
+    public TimePickerFragment(Button button){
+        this.button=button;
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,9 +40,9 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        int selectedHour = hourOfDay;
-        int selectedMinute = minute;
-
+        Date zeit = new Date(0,0,0,hourOfDay,minute);
+        this.button.setText(time.format(zeit));
 
     }
+
 }

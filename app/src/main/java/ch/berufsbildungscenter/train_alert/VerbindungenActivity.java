@@ -1,8 +1,8 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class VerbindungenActivity extends ActionBarActivity {
@@ -22,8 +21,8 @@ public class VerbindungenActivity extends ActionBarActivity {
 
         ListView verbListView = (ListView) findViewById(R.id.verbListView);
         ArrayList<Verbindung> verbindungen = new ArrayList<Verbindung>();
-        verbindungen.add(new Verbindung("Hallo", "9:15", "15min"));
-        verbindungen.add(new Verbindung("Hallo2", "032094", "30min"));
+      //  verbindungen.add(new Verbindung("Hallo", "9:15", "15min"));
+      //  verbindungen.add(new Verbindung("Hallo2", "032094", "30min"));
 
         verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), verbindungen, this.getLayoutInflater()));
 

@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 Button button;
+
+    SimpleDateFormat date = new SimpleDateFormat("dd.MM.2015");
     public DatePickerFragment(Button button){
     this.button = button;
     }
@@ -23,12 +27,15 @@ Button button;
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
+
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
 
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        Date datum = new Date(year,month,day);
+        this.button.setText(date.format(datum));
 
     }
 }

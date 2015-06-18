@@ -1,7 +1,6 @@
 package ch.berufsbildungscenter.train_alert;
 
-import java.security.Timestamp;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -10,44 +9,12 @@ import java.util.List;
 public class Verbindung {
 
 
-    public Ort getVonOrt() {
-        return vonOrt;
+    public List<Fahrt> getVerbindungen() {
+        return verbindungen;
     }
 
-    public void setVonOrt(Ort vonOrt) {
-        this.vonOrt = vonOrt;
-    }
-
-    public Ort getNachOrt() {
-        return nachOrt;
-    }
-
-    public void setNachOrt(Ort nachOrt) {
-        this.nachOrt = nachOrt;
-    }
-
-    public String getGleis() {
-        return gleis;
-    }
-
-    public void setGleis(String gleis) {
-        this.gleis = gleis;
-    }
-
-    public String getTransportmittel() {
-        return transportmittel;
-    }
-
-    public void setTransportmittel(String transportmittel) {
-        this.transportmittel = transportmittel;
-    }
-
-    public Timestamp getZeit() {
-        return zeit;
-    }
-
-    public void setZeit(Timestamp zeit) {
-        this.zeit = zeit;
+    public void setVerbindungen(List<Fahrt> verbindungen) {
+        this.verbindungen = verbindungen;
     }
 
     public Timestamp getDauer() {
@@ -58,12 +25,44 @@ public class Verbindung {
         this.dauer = dauer;
     }
 
-    public List<Fahrt> getVerbindungen() {
-        return verbindungen;
+    public Timestamp getZeit() {
+        return zeit;
     }
 
-    public void setVerbindungen(List<Fahrt> verbindungen) {
-        this.verbindungen = verbindungen;
+    public void setZeit(Timestamp zeit) {
+        this.zeit = zeit;
+    }
+
+    public String getTransportmittel() {
+        return transportmittel;
+    }
+
+    public void setTransportmittel(String transportmittel) {
+        this.transportmittel = transportmittel;
+    }
+
+    public String getGleis() {
+        return gleis;
+    }
+
+    public void setGleis(String gleis) {
+        this.gleis = gleis;
+    }
+
+    public Ort getNachOrt() {
+        return nachOrt;
+    }
+
+    public void setNachOrt(Ort nachOrt) {
+        this.nachOrt = nachOrt;
+    }
+
+    public Ort getVonOrt() {
+        return vonOrt;
+    }
+
+    public void setVonOrt(Ort vonOrt) {
+        this.vonOrt = vonOrt;
     }
 
     private Ort vonOrt;
@@ -71,8 +70,8 @@ public class Verbindung {
 
     private String gleis;
     private String transportmittel;
-    private Timestamp zeit;
-    private Timestamp dauer;
+    private java.sql.Timestamp zeit;
+    private java.sql.Timestamp dauer;
 
     private List<Fahrt> verbindungen;
 

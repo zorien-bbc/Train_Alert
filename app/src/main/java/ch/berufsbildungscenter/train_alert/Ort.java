@@ -42,4 +42,10 @@ public class Ort {
     private double x;
     private double y;
 
+    public Ort(String id, String name, double x, double y) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.id = id;
+    }
 }
