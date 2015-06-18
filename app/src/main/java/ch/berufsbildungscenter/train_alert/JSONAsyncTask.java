@@ -104,13 +104,21 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
             JSONObject nachStation = nachVerbindungJSON.getJSONObject("station");
             JSONObject nachCoordinatJSON = nachStation.getJSONObject("coordinate");
 
+            JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
+            ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
+            for(int y = 0; y < reiseAbschnitte.length(); y++) {
+                JSONObject abschnitt = reiseAbschnitte.getJSONObject(y);
+                Fahrt fahrt = new Fahrt();
+                fahrtAbschnitte.add(fahrt);
+            }
+
             Verbindung verbindung = new Verbindung();
             verbindung.setVonOrt(new Ort(vonStation.getString("id"), vonStation.getString("name"), vonCoordinatJSON.getDouble("x"), vonCoordinatJSON.getDouble("y")));
             verbindung.setGleis(vonVerbindungJSON.getString("platform"));
             verbindung.setZeit(new java.sql.Timestamp(vonStation.getLong("departureTimestamp")));
             verbindung.setDauer(new java.sql.Timestamp(verbindungJSON.getLong("duration")));
-
             verbindung.setTransportmittel();
+            verbindung.setVerbindungen(fahrtAbschnitte);
         }
 
         Verbindung verbindung = new Verbindung();
