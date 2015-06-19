@@ -2,7 +2,6 @@ package ch.berufsbildungscenter.train_alert;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.media.ImageReader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -18,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +29,10 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
     private static final String API_URL = "http://transport.opendata.ch/v1/connections?from=";
 
-    private MainActivity activity;
+    private VerbindungenActivity activity;
     private ProgressDialog progressDialog;
 
-    public JSONAsyncTask(MainActivity activity, ProgressDialog progressDialog) {
+    public JSONAsyncTask(VerbindungenActivity activity, ProgressDialog progressDialog) {
         this.activity = activity;
         this.progressDialog = progressDialog;
     }
@@ -45,9 +43,11 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
         String stationVon = params[0].toString();
         String stationNach = params[1].toString();
 
+        Log.e(stationVon + stationNach, "EBOLALA");
+
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(String.format(API_URL+stationVon+"&to="+stationNach));
+                URL url = new URL(String.format(API_URL + stationVon + "&to=" + stationNach));
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -95,40 +95,49 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
-
             JSONObject vonVerbindungJSON = verbindungJSON.getJSONObject("from");
             JSONObject vonStation = vonVerbindungJSON.getJSONObject("station");
             JSONObject vonCoordinatJSON = vonStation.getJSONObject("coordinate");
 
+
             JSONObject nachVerbindungJSON = verbindungJSON.getJSONObject("to");
             JSONObject nachStation = nachVerbindungJSON.getJSONObject("station");
             JSONObject nachCoordinatJSON = nachStation.getJSONObject("coordinate");
-
             JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
-            ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
-            for(int y = 0; y < reiseAbschnitte.length(); y++) {
-                JSONObject abschnitt = reiseAbschnitte.getJSONObject(y);
-                Fahrt fahrt = new Fahrt();
-                fahrtAbschnitte.add(fahrt);
-            }
 
             Verbindung verbindung = new Verbindung();
+
+            ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
+            for (int y = 0; y < reiseAbschnitte.length(); y++) {
+                JSONObject abschnitt = reiseAbschnitte.getJSONObject(y);
+
+                JSONObject reise = abschnitt.getJSONObject("journey");
+                Fahrt fahrt = new Fahrt();
+                fahrt.setTransportmittel(reise.getString("name"));
+
+                JSONObject reiseDeparture = abschnitt.getJSONObject("departure");
+                JSONObject reiseArrival = abschnitt.getJSONObject("arrival");
+
+                fahrt.setAbfahrt(new java.sql.Timestamp(reiseDeparture.getLong("departureTimestamp") * 1000));
+                fahrt.setAnkunft(new java.sql.Timestamp(reiseArrival.getLong("arrivalTimestamp") * 1000));
+                fahrt.setVonGleis(reiseDeparture.getString("platform"));
+                fahrt.setBisGleis(reiseArrival.getString("platform"));
+                fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
+                fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
+                fahrtAbschnitte.add(fahrt);
+            }
             verbindung.setVonOrt(new Ort(vonStation.getString("id"), vonStation.getString("name"), vonCoordinatJSON.getDouble("x"), vonCoordinatJSON.getDouble("y")));
+            verbindung.setNachOrt(new Ort(nachJSON.getString("id"), nachJSON.getString("name"), nachCoordinateJSON.getDouble("x"), nachCoordinateJSON.getDouble("y")));
             verbindung.setGleis(vonVerbindungJSON.getString("platform"));
-            verbindung.setZeit(new java.sql.Timestamp(vonStation.getLong("departureTimestamp")));
-            verbindung.setDauer(new java.sql.Timestamp(verbindungJSON.getLong("duration")));
-            verbindung.setTransportmittel();
+            verbindung.setZeit(new java.sql.Timestamp(vonVerbindungJSON.getLong("departureTimestamp") * 1000));
+            verbindung.setDauer(verbindungJSON.getString("duration"));
             verbindung.setVerbindungen(fahrtAbschnitte);
+            verbindung.setTransportmittel(fahrtAbschnitte.get(0).getTransportmittel());
+            Log.v(verbindung.getGleis(), verbindung.getZeit() + "EBOLA");
+
+            result.add(verbindung);
         }
 
-        Verbindung verbindung = new Verbindung();
-        verbindung.setNachOrt(new Ort(nachJSON.getString("id"), nachJSON.getString("name"), nachCoordinateJSON.getDouble("x"), nachCoordinateJSON.getDouble("y")));
-        verbindung.setTransportmittel();
-        result.add(verbindung);
-        verbindung.setVerbindungen();
-
-
-        this.progressDialog.dismiss();
         return result;
     }
 
@@ -148,11 +157,10 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
     @Override
     protected void onPostExecute(List<Verbindung> result) {
         if (null == result) {
-            activity.displayLoadingDataFailedError();
-
+            Log.e("Daten nicht geladen", "EBOLA");
         } else {
+            this.progressDialog.dismiss();
             activity.setData(result);
         }
-
     }
 }

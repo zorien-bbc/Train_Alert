@@ -1,39 +1,46 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class VerbindungenActivity extends ActionBarActivity {
+    private String von;
+    private String nach;
+    public static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindungen);
 
+        Intent intent = getIntent();
+        von = intent.getStringExtra("von");
+        nach = intent.getStringExtra("nach");
+        progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
+        JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
+        jsonAsyncTask.execute(von,nach);
+
+    }
+
+    public void setData(List<Verbindung> result) {
+        List<Verbindung> resultset = result;
+
+        ((TextView) findViewById(R.id.vonOrtLabel)).setText(result.get(0).getVonOrt().getName());
+        ((TextView) findViewById(R.id.nachOrtLabel)).setText(result.get(0).getNachOrt().getName());
+        ((TextView) findViewById(R.id.datumLabel)).setText(result.get(0).getGleis());
+        ((TextView) findViewById(R.id.zeitLabel)).setText(result.get(0).getZeit().toString());
+
         ListView verbListView = (ListView) findViewById(R.id.verbListView);
-        ArrayList<Verbindung> verbindungen = new ArrayList<Verbindung>();
-      //  verbindungen.add(new Verbindung("Hallo", "9:15", "15min"));
-      //  verbindungen.add(new Verbindung("Hallo2", "032094", "30min"));
-
-        verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), verbindungen, this.getLayoutInflater()));
-
-        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), VerbindungDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), resultset, this.getLayoutInflater()));
     }
 
     @Override

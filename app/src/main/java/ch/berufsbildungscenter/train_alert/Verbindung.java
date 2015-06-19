@@ -1,12 +1,13 @@
 package ch.berufsbildungscenter.train_alert;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 /**
  * Created by zfehrn on 17.06.2015.
  */
-public class Verbindung {
+public class Verbindung implements Serializable {
 
 
     public List<Fahrt> getVerbindungen() {
@@ -17,13 +18,7 @@ public class Verbindung {
         this.verbindungen = verbindungen;
     }
 
-    public Timestamp getDauer() {
-        return dauer;
-    }
 
-    public void setDauer(Timestamp dauer) {
-        this.dauer = dauer;
-    }
 
     public Timestamp getZeit() {
         return zeit;
@@ -71,7 +66,16 @@ public class Verbindung {
     private String gleis;
     private String transportmittel;
     private java.sql.Timestamp zeit;
-    private java.sql.Timestamp dauer;
+
+    public String getDauer() {
+        return dauer;
+    }
+
+    public void setDauer(String dauer) {
+        this.dauer = dauer;
+    }
+
+    private String dauer;
 
     private List<Fahrt> verbindungen;
 

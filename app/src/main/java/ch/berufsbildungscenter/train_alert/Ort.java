@@ -1,9 +1,11 @@
 package ch.berufsbildungscenter.train_alert;
 
+import java.io.Serializable;
+
 /**
  * Created by zfehrn on 18.06.2015.
  */
-public class Ort {
+public class Ort implements Serializable {
 
     public String getId() {
         return id;

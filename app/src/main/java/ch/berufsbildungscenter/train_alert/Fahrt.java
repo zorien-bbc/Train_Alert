@@ -1,11 +1,12 @@
 package ch.berufsbildungscenter.train_alert;
 
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Created by zfehrn on 18.06.2015.
  */
-public class Fahrt {
+public class Fahrt implements Serializable {
 
     public String getVonHaltestelle() {
         return vonHaltestelle;

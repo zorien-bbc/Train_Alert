@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="VonOrt"
-                android:id="@+id/textView7"
+                android:id="@+id/vonOrtLabel"
                 android:paddingLeft="20dp" />
 
         </LinearLayout>
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="NachOrt"
-                android:id="@+id/textView8"
+                android:id="@+id/nachOrtLabel"
                 android:paddingLeft="20dp" />
 
         </LinearLayout>
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Datum"
-                android:id="@+id/datum"
+                android:id="@+id/datumLabel"
                 android:paddingLeft="20dp" />
         </LinearLayout>
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Zeit (Ab)"
-                android:id="@+id/zeit"
+                android:id="@+id/zeitLabel"
                 android:paddingLeft="20dp" />
         </LinearLayout>
 
@@ -134,14 +134,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Früher"
-                android:id="@+id/button2"
+                android:id="@+id/frueherBtn"
                 android:layout_weight="0.5" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Später"
-                android:id="@+id/button3"
+                android:id="@+id/spaeterBtn"
                 android:layout_weight="0.5" />
         </TableRow>
 

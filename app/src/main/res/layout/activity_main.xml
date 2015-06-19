@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editVon"
         android:layout_alignTop="@+id/von"
-        android:layout_toEndOf="@+id/nach" />
+        android:layout_toEndOf="@+id/nach"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editNach"
         android:layout_alignTop="@+id/nach"
-        android:layout_toEndOf="@+id/nach" />
+        android:layout_toEndOf="@+id/nach"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +59,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/editVia"
         android:layout_alignTop="@+id/via"
-        android:layout_alignStart="@+id/editNach" />
+        android:layout_alignStart="@+id/editNach"
+        android:maxLines="1"
+        />
 
     <Button
         android:layout_width="wrap_content"
