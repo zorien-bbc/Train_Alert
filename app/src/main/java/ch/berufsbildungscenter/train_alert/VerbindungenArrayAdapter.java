@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -28,8 +29,10 @@ public class VerbindungenArrayAdapter extends ArrayAdapter<Verbindung> {
         convertView = mInflater.inflate(R.layout.verbindungen_adapter, null);
         final Verbindung verbindung = (Verbindung) mItems.get(pos);
 
-        ((TextView) convertView.findViewById(R.id.zeit)).setText(verbindung.getZeit().toString());
-        ((TextView) convertView.findViewById(R.id.dauer)).setText(verbindung.getDauer());
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+        ((TextView) convertView.findViewById(R.id.zeit)).setText(formatter.format(verbindung.getZeit()).toString());
+        ((TextView) convertView.findViewById(R.id.dauer)).setText(verbindung.getDauer().substring(3, 8));
         ((TextView) convertView.findViewById(R.id.gleis)).setText(verbindung.getGleis());
         ((TextView) convertView.findViewById(R.id.beschreibung)).setText(verbindung.getTransportmittel());
         return convertView;

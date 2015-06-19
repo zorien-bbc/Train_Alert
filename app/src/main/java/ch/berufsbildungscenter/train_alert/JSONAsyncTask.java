@@ -111,20 +111,22 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
             for (int y = 0; y < reiseAbschnitte.length(); y++) {
                 JSONObject abschnitt = reiseAbschnitte.getJSONObject(y);
 
-                JSONObject reise = abschnitt.getJSONObject("journey");
-                Fahrt fahrt = new Fahrt();
-                fahrt.setTransportmittel(reise.getString("name"));
+                if(!abschnitt.isNull("journey")) {
+                    JSONObject reise = abschnitt.getJSONObject("journey");
+                    Fahrt fahrt = new Fahrt();
+                    fahrt.setTransportmittel(reise.getString("name"));
 
-                JSONObject reiseDeparture = abschnitt.getJSONObject("departure");
-                JSONObject reiseArrival = abschnitt.getJSONObject("arrival");
+                    JSONObject reiseDeparture = abschnitt.getJSONObject("departure");
+                    JSONObject reiseArrival = abschnitt.getJSONObject("arrival");
 
-                fahrt.setAbfahrt(new java.sql.Timestamp(reiseDeparture.getLong("departureTimestamp") * 1000));
-                fahrt.setAnkunft(new java.sql.Timestamp(reiseArrival.getLong("arrivalTimestamp") * 1000));
-                fahrt.setVonGleis(reiseDeparture.getString("platform"));
-                fahrt.setBisGleis(reiseArrival.getString("platform"));
-                fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
-                fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
-                fahrtAbschnitte.add(fahrt);
+                    fahrt.setAbfahrt(new java.sql.Timestamp(reiseDeparture.getLong("departureTimestamp") * 1000));
+                    fahrt.setAnkunft(new java.sql.Timestamp(reiseArrival.getLong("arrivalTimestamp") * 1000));
+                    fahrt.setVonGleis(reiseDeparture.getString("platform"));
+                    fahrt.setBisGleis(reiseArrival.getString("platform"));
+                    fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
+                    fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
+                    fahrtAbschnitte.add(fahrt);
+                }
             }
             verbindung.setVonOrt(new Ort(vonStation.getString("id"), vonStation.getString("name"), vonCoordinatJSON.getDouble("x"), vonCoordinatJSON.getDouble("y")));
             verbindung.setNachOrt(new Ort(nachJSON.getString("id"), nachJSON.getString("name"), nachCoordinateJSON.getDouble("x"), nachCoordinateJSON.getDouble("y")));

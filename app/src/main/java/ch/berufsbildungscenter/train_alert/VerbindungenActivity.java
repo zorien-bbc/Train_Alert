@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -32,15 +36,29 @@ public class VerbindungenActivity extends ActionBarActivity {
     }
 
     public void setData(List<Verbindung> result) {
-        List<Verbindung> resultset = result;
+        final List<Verbindung> resultset = result;
+
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
         ((TextView) findViewById(R.id.vonOrtLabel)).setText(result.get(0).getVonOrt().getName());
         ((TextView) findViewById(R.id.nachOrtLabel)).setText(result.get(0).getNachOrt().getName());
-        ((TextView) findViewById(R.id.datumLabel)).setText(result.get(0).getGleis());
-        ((TextView) findViewById(R.id.zeitLabel)).setText(result.get(0).getZeit().toString());
+        ((TextView) findViewById(R.id.datumLabel)).setText(dateFormatter.format(result.get(0).getZeit()).toString());
+        ((TextView) findViewById(R.id.zeitLabel)).setText(timeFormatter.format(result.get(0).getZeit()).toString());
 
         ListView verbListView = (ListView) findViewById(R.id.verbListView);
         verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), resultset, this.getLayoutInflater()));
+
+        verbListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), VerbindungDetailsActivity.class);
+                intent.putExtra("vonOrt", (Ort) resultset.get(position).getVonOrt());
+                intent.putExtra("nachOrt", (Ort) resultset.get(position).getNachOrt());
+                intent.putExtra("fahrten", resultset.get(position).getVerbindungen().toArray());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

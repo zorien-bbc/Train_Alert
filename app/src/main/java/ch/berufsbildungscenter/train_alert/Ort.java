@@ -1,5 +1,8 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**

@@ -1,11 +1,15 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -16,13 +20,22 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindung_details);
 
+        Intent intent = getIntent();
+        Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
+        Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
+        Fahrt[] fahrten = (Fahrt[]) intent.getParcelableArrayExtra("fahrten");
+
+        ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());
+        ((Button) findViewById(R.id.imageButton4)).setText(nachOrt.getName());
+
+        ArrayList<Fahrt> alleFahrten = new ArrayList<Fahrt>();
+        for(int i = 0; i == fahrten.length; i++) {
+            Fahrt einzFahrt = fahrten[i];
+            alleFahrten.add(einzFahrt);
+        }
+
         ListView list = (ListView) findViewById(R.id.listView);
-        ArrayList<Verbindung> verbindungen = new ArrayList<Verbindung>();
-        //verbindungen.add(new Verbindung("Uster, Nossikon", "9:15", "15min"));
-      //  verbindungen.add(new Verbindung("Bern, Langenstrassenhaus", "9:16", "30min"));
-
-        list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), verbindungen, this.getLayoutInflater()));
-
+        list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), alleFahrten, this.getLayoutInflater()));
     }
 
     @Override
