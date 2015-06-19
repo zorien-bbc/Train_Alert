@@ -1,7 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ch.berufsbildungscenter.train_alert.VerbindungDetailsActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    xmlns:support="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/alarm"
+        android:icon="@drawable/alarm"
+        android:title="Search"
+        support:showAsAction="collapseActionView|ifRoom"/>
+
+    <!--<item android:id="@+id/search"-->
+    <!--android:title="Search"-->
+    <!--android:icon="@mipmap/search"-->
+    <!--android:showAsAction="collapseActionView|ifRoom"-->
+    <!--android:actionViewClass="android.widget.SearchView" />-->
+
+    <item
+        android:id="@+id/buttonSettings"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:title="Einstellungen"
+        support:showAsAction="never"/>
+
+
 </menu>
