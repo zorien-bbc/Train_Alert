@@ -1,12 +1,6 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -24,8 +18,7 @@ public class MainActivity extends ActionBarActivity {
     final Calendar c = Calendar.getInstance();
     Button buttonDate;
     Button buttonTime;
-    EditText textVon;
-    EditText textNach;
+    EditText textVon,textNach;
     MainActivity main = this;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat date = new SimpleDateFormat("dd.MM."+c.get(Calendar.YEAR));
@@ -35,10 +28,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button button = (Button) findViewById(R
                 .id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+       button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textVon = (EditText) findViewById(R.id.editVon);
@@ -60,30 +52,17 @@ public class MainActivity extends ActionBarActivity {
         buttonDate.setText(date.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
-        //sendNotification();
-       Alarm alarm = new Alarm(this);
-        setAlarm();
+
+
     }
 
     public void displayLoadingDataFailedError() {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 
-    public void sendNotification() {
-        Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Notification.Builder notificationBuilder = new Notification.Builder(this);
-        notificationBuilder.setContentTitle("Train Alert")
-                .setContentText("Ihr Zug fährt in 5 Minuten!")
-                .setSmallIcon(R.drawable.logo)
-                .setSound(sound);
-        Intent intent = new Intent(this,MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notificationBuilder.build());
-    }
-public void setAlarm(){
-}
+
+
+
 
 
     @Override

@@ -1,53 +1,52 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.MenuItem;
 
 /**
  * Created by zorien on 19.06.2015.
  */
-public class AlarmManagerActivity extends AppCompatActivity implements View.OnClickListener {
-
-    MyReceiver myReceiver;
-    IntentFilter intentFilter;
-    TextView textFiled;
-
+public class AlarmManagerActivity extends Activity {
+    public static final String TAG = "SampleActivityBase";
+    public static final int REQUEST_CODE = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Clicklistener auf den Button setzen: Ruft unten onClick() auf
-        final Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
-
-        //Den Boradcast Receiver und den Intentfilter (auf was der Receiver reagiert) erstellen.
-        myReceiver = new MyReceiver();
-        intentFilter = new IntentFilter("ch.berufsbildungscenter.broadcastdemo.USER_ACTION");
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
-        registerReceiver(myReceiver, intentFilter);
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(myReceiver);
-    }
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setAction(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-    @Override
-    public void onClick(View view) {
-        Intent i = new Intent("ch.berufsbildungscenter.broadcastdemo.USER_ACTION");
-        sendBroadcast(i);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE,
+                    intent, 0);
+
+            int alarmType = AlarmManager.ELAPSED_REALTIME;
+            final int FIFTEEN_SEC_MILLIS = 10000;
+
+            // The AlarmManager, like most system services, isn't created by application code, but
+            // requested from the system.
+            AlarmManager alarmManager = (AlarmManager)
+                    this.getSystemService(this.ALARM_SERVICE);
+
+        // setRepeating takes a start delay and period between alarms as arguments.
+            // The below code fires after 15 seconds, and repeats every 15 seconds.  This is very
+            // useful for demonstration purposes, but horrendous for production.  Don't be that dev.
+            alarmManager.set(alarmType,SystemClock.elapsedRealtime()+ FIFTEEN_SEC_MILLIS,pendingIntent);
+            Log.i("RepeatingAlarmFragment", "Alarm set.");
+
+        return true;
     }
 }
+
 
 
