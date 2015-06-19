@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     EditText textNach;
     MainActivity main = this;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
-    private SimpleDateFormat date = new SimpleDateFormat("dd.MM.2015");
+    private SimpleDateFormat date = new SimpleDateFormat("dd.MM."+c.get(Calendar.YEAR));
 
 
     @Override
@@ -60,7 +60,9 @@ public class MainActivity extends ActionBarActivity {
         buttonDate.setText(date.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
-        sendNotification();
+        //sendNotification();
+       Alarm alarm = new Alarm(this);
+        setAlarm();
     }
 
     public void displayLoadingDataFailedError() {
@@ -80,7 +82,8 @@ public class MainActivity extends ActionBarActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notificationBuilder.build());
     }
-
+public void setAlarm(){
+}
 
 
     @Override

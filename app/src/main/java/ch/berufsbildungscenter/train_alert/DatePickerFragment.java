@@ -13,16 +13,20 @@ import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-Button button;
+    Button button;
 
-    SimpleDateFormat date = new SimpleDateFormat("dd.MM.2015");
-    public DatePickerFragment(Button button){
-    this.button = button;
+    final Calendar c = Calendar.getInstance();
+
+    private SimpleDateFormat date = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
+
+    public DatePickerFragment( Button button) {
+        this.button = button;
     }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
-        final Calendar c = Calendar.getInstance();
+
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -34,7 +38,8 @@ Button button;
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Date datum = new Date(year,month,day);
+        Date datum = new Date(year, month, day);
+
         this.button.setText(date.format(datum));
 
     }
