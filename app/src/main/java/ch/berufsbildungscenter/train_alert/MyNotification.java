@@ -22,7 +22,7 @@ public class MyNotification extends BroadcastReceiver {
         PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
         NotificationCompat.Builder mbuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.alarm)
                 .setContentTitle(msg)
                 .setTicker(msgalert)
                 .setContentText(msgtext);

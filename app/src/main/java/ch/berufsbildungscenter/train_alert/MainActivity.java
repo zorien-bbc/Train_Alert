@@ -53,8 +53,8 @@ public class MainActivity extends ActionBarActivity {
         buttonTime.setText(time.format(c.getTime()));
         Date datum = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         buttonDate.setText(date.format(datum));
-        buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
-        buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
+        //buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
+        //buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
 
 
     }

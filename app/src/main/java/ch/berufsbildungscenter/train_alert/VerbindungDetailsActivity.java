@@ -33,7 +33,6 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
             Fahrt einzFahrt = fahrten[i];
             alleFahrten.add(einzFahrt);
         }
-
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), alleFahrten, this.getLayoutInflater()));
     }
