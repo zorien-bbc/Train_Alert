@@ -21,11 +21,14 @@ public class MainActivity extends ActionBarActivity {
     final Calendar c = Calendar.getInstance();
     Button buttonDate;
     Button buttonTime;
-    EditText textVon,textNach;
+    EditText textVon, textNach;
     MainActivity main = this;
     Date date;
+    Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+    ;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM."+c.get(Calendar.YEAR));
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
+    boolean isDateChanged = false;
 
 
     @Override
@@ -34,7 +37,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Button button = (Button) findViewById(R
                 .id.button);
-       button.setOnClickListener(new View.OnClickListener() {
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textVon = (EditText) findViewById(R.id.editVon);
@@ -43,14 +47,20 @@ public class MainActivity extends ActionBarActivity {
                 String nach = textNach.getText().toString();
                 String time = buttonTime.getText().toString();
 
-                SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR)+"-MM-dd");
+                SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR) + "-MM-dd");
 
-                String datum = intentDate.format(date);
+
+                String startDatum = intentDate.format(startDate);
                 Intent intent = new Intent(main.getApplicationContext(), VerbindungenActivity.class);
                 intent.putExtra("von", von);
                 intent.putExtra("nach", nach);
-                intent.putExtra("time",time);
-                intent.putExtra("date",datum);
+                intent.putExtra("time", time);
+                if (isDateChanged) {
+                    String datum = intentDate.format(date);
+                    intent.putExtra("date", datum);
+                }else{
+                    intent.putExtra("date", startDatum);
+                }
                 startActivity(intent);
             }
         });
@@ -71,8 +81,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
-    public void setAlert(){
+    public void setAlert() {
         Intent intent = new Intent(this, MyNotification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this.getApplicationContext(), 234324243, intent, 0);
@@ -83,8 +92,9 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this.getApplicationContext(), "Alarm was setted", Toast.LENGTH_SHORT);
     }
 
-    public void getDate(int year,int month,int day){
-        date = new Date(year,month,day);
+    public void getDate(int year, int month, int day) {
+        date = new Date(year, month, day);
+        isDateChanged = true;
     }
 
     @Override

@@ -35,6 +35,8 @@ public class VerbindungDetailsArrayAdapter extends ArrayAdapter<Fahrt> {
         ((TextView) convertView.findViewById(R.id.nachLabel)).setText(fahrt.getBisHaltestelle());
         ((TextView) convertView.findViewById(R.id.vonZeitLabel)).setText(formatter.format(fahrt.getAbfahrt()).toString());
         ((TextView) convertView.findViewById(R.id.bisZeitLabel)).setText(formatter.format(fahrt.getAnkunft()).toString());
+        ((TextView) convertView.findViewById(R.id.vonGleisLabel)).setText(fahrt.getVonGleis());
+        ((TextView) convertView.findViewById(R.id.bisGleisLabel)).setText(fahrt.getBisGleis());
         ((TextView) convertView.findViewById(R.id.bahnLabel)).setText(fahrt.getTransportmittel());
 
         return convertView;
