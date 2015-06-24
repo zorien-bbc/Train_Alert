@@ -66,12 +66,16 @@
                 android:id="@+id/imageButton3"
                 android:layout_gravity="left"
                 android:text="HI"
-                android:drawableLeft="@mipmap/ic_launcher"/>
+                android:drawableLeft="@mipmap/ic_launcher"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:paddingRight="20dp" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/imageButton2" />
+                android:id="@+id/imageButton2"
+                android:background="@null" />
 
         </LinearLayout>
 
@@ -96,12 +100,16 @@
                 android:id="@+id/imageButton4"
                 android:layout_gravity="left"
                 android:text="HI"
-                android:drawableLeft="@mipmap/ic_launcher"/>
+                android:drawableLeft="@mipmap/ic_launcher"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:paddingRight="20dp" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/imageButton5" />
+                android:id="@+id/imageButton5"
+                android:background="@null" />
         </LinearLayout>
 
     </LinearLayout>

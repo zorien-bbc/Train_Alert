@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -27,18 +29,18 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
         Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
         ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
+        timestamp = fahrten.get(0).getAbfahrt();
 
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+        ((TextView) findViewById(R.id.textView13)).setText(formatter.format(timestamp));
         ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());
         ((Button) findViewById(R.id.imageButton4)).setText(nachOrt.getName());
 
-        ArrayList<Fahrt> alleFahrten = new ArrayList<Fahrt>();
-        for(Fahrt f : fahrten)  {
-            alleFahrten.add(f);
-        }
         ListView list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), alleFahrten, this.getLayoutInflater()));
-        timestamp = alleFahrten.get(0).getAbfahrt();
+        list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), fahrten, this.getLayoutInflater()));
     }
+
     public void setAlert() {
         Intent intent = new Intent(this, MyNotification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(

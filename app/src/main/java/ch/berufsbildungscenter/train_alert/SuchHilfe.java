@@ -53,7 +53,7 @@ public class SuchHilfe extends ActionBarActivity {
                                       int before, int count) {
 
                 JSONSuchHilfe jsonSuchHilfe = new JSONSuchHilfe(suchHilfe);
-                jsonSuchHilfe.execute(myTextBox.getText().toString().trim());
+                jsonSuchHilfe.execute(myTextBox.getText().toString());
             }
         });
     }

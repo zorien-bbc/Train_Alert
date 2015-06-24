@@ -66,6 +66,7 @@ public class Verbindung implements Serializable {
     private String gleis;
     private String transportmittel;
     private java.sql.Timestamp zeit;
+    private java.sql.Timestamp zeitAn;
 
     public String getDauer() {
         return dauer;
@@ -79,4 +80,11 @@ public class Verbindung implements Serializable {
 
     private ArrayList<Fahrt> verbindungen;
 
+    public Timestamp getZeitAn() {
+        return zeitAn;
+    }
+
+    public void setZeitAn(Timestamp zeitAn) {
+        this.zeitAn = zeitAn;
+    }
 }

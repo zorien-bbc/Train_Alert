@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                String von = textVon.getText().toString();
+                String von = textVon.getText().toString().replace(" ", "%20").toString();
                 String nach = textNach.getText().toString();
                 String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();

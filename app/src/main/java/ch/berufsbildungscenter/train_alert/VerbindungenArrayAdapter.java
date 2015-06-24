@@ -31,7 +31,8 @@ public class VerbindungenArrayAdapter extends ArrayAdapter<Verbindung> {
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
-        ((TextView) convertView.findViewById(R.id.zeit)).setText(formatter.format(verbindung.getZeit()).toString());
+        ((TextView) convertView.findViewById(R.id.zeitAb)).setText(formatter.format(verbindung.getZeit()).toString());
+        ((TextView) convertView.findViewById(R.id.zeitAn)).setText(formatter.format(verbindung.getZeitAn()).toString());
         ((TextView) convertView.findViewById(R.id.dauer)).setText(verbindung.getDauer().substring(3, 8));
         ((TextView) convertView.findViewById(R.id.gleis)).setText(verbindung.getGleis());
         ((TextView) convertView.findViewById(R.id.beschreibung)).setText(verbindung.getTransportmittel());
