@@ -25,8 +25,6 @@ public class VerbindungenListener implements View.OnClickListener {
         this.activity = activity;
     }
 
-
-
     @Override
     public void onClick(View v) {
         if(this.button.getId() == R.id.buttonTime){
@@ -43,7 +41,6 @@ public class VerbindungenListener implements View.OnClickListener {
         map.setMyLocationEnabled(true);
         Location location = map.getMyLocation();
         LatLng myPosition = new LatLng(location.getLatitude(),location.getLongitude());
-
 
         return myPosition;
     }

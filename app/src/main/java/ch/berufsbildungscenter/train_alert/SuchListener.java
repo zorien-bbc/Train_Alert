@@ -11,22 +11,17 @@ import android.widget.EditText;
  */
 public class SuchListener implements Button.OnClickListener{
     private Activity activity;
-    private EditText editText;
+    private EditText selectedEdit;
 
-    public SuchListener(Activity activity,EditText editText) {
-        this.editText = editText;
+    public SuchListener(Activity activity, EditText selectedEdit) {
         this.activity = activity;
+        this.selectedEdit = selectedEdit;
     }
-
 
     @Override
     public void onClick(View view) {
-        if(this.editText.getId()== R.id.editVon){
-            Intent intent = new Intent(this.activity.getApplicationContext(),SuchHilfe.class);
-            this.activity.startActivity(intent);
-        }else if(this.editText.getId()== R.id.editNach){
-            Intent intent = new Intent(this.activity.getApplicationContext(),SuchHilfe.class);
-            this.activity.startActivity(intent);
-        }
+        Intent intent = new Intent(this.activity.getApplicationContext(), SuchHilfe.class);
+        intent.putExtra("selectedEdit", selectedEdit.getId());
+        this.activity.startActivity(intent);
     }
 }

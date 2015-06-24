@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
     final Calendar c = Calendar.getInstance();
     Button buttonDate;
     Button buttonTime;
-    EditText textVon, textNach;
+    static EditText textVon, textNach, textVia;
     MainActivity main = this;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
@@ -29,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
     boolean isDateChanged = false;
+    private String textVonInhalt, textNachInhalt, textViaInhalt;
 
 
     @Override
@@ -39,8 +42,15 @@ public class MainActivity extends ActionBarActivity {
                 .id.button);
         textVon = (EditText) findViewById(R.id.editVon);
         textNach = (EditText) findViewById(R.id.editNach);
-        textVon.setOnClickListener(new SuchListener(this,textVon));
-        textNach.setOnClickListener(new SuchListener(this,textNach));
+        textVia = (EditText) findViewById(R.id.editVia);
+
+        textVon.setFocusable(false);
+        textNach.setFocusable(false);
+        textVia.setFocusable(false);
+
+        textVon.setOnClickListener(new SuchListener(this, textVon));
+        textNach.setOnClickListener(new SuchListener(this, textNach));
+        textVia.setOnClickListener(new SuchListener(this, textVia));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,20 +58,21 @@ public class MainActivity extends ActionBarActivity {
 
                 String von = textVon.getText().toString();
                 String nach = textNach.getText().toString();
+                String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();
 
                 SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR) + "-MM-dd");
-
 
                 String startDatum = intentDate.format(startDate);
                 Intent intent = new Intent(main.getApplicationContext(), VerbindungenActivity.class);
                 intent.putExtra("von", von);
                 intent.putExtra("nach", nach);
+                intent.putExtra("via", via);
                 intent.putExtra("time", time);
                 if (isDateChanged) {
                     String datum = intentDate.format(date);
                     intent.putExtra("date", datum);
-                }else{
+                } else {
                     intent.putExtra("date", startDatum);
                 }
                 startActivity(intent);
@@ -75,14 +86,11 @@ public class MainActivity extends ActionBarActivity {
         buttonDate.setText(dateFormat.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
-
-
     }
 
     public void displayLoadingDataFailedError() {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
-
 
     public void setAlert() {
         Intent intent = new Intent(this, MyNotification.class);

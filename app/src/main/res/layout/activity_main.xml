@@ -14,17 +14,18 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Von:"
         android:id="@+id/von"
+        android:layout_marginTop="48dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="39dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/editVon"
-        android:layout_alignTop="@+id/von"
-        android:layout_toEndOf="@+id/nach"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:layout_above="@+id/nach"
+        android:layout_alignStart="@+id/editNach"
+        android:layout_toStartOf="@+id/myPosition" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Nach:"
         android:id="@+id/nach"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="48dp"
         android:layout_below="@+id/von"
         android:layout_alignParentStart="true" />
 
@@ -40,9 +41,10 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/editNach"
-        android:layout_alignTop="@+id/nach"
-        android:layout_toEndOf="@+id/nach"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:layout_above="@+id/via"
+        android:layout_alignStart="@+id/buttonAn"
+        android:layout_toStartOf="@+id/imageButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +52,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Via:"
         android:id="@+id/via"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="48dp"
         android:layout_below="@+id/nach"
         android:layout_alignParentStart="true" />
 
@@ -58,10 +60,10 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/editVia"
-        android:layout_alignTop="@+id/via"
-        android:layout_alignStart="@+id/editNach"
         android:maxLines="1"
-        />
+        android:layout_alignBottom="@+id/via"
+        android:layout_alignStart="@+id/editNach"
+        android:layout_alignEnd="@+id/editNach" />
 
     <Button
         android:layout_width="wrap_content"
@@ -78,9 +80,8 @@
         android:id="@+id/myPosition"
         android:src="@android:drawable/ic_menu_mylocation"
         android:background="@null"
-        android:layout_alignBottom="@+id/editVon"
-        android:layout_toEndOf="@+id/editVon"
-        android:layout_marginStart="37dp" />
+        android:layout_alignTop="@+id/editVon"
+        android:layout_alignEnd="@+id/button" />
 
     <Button
         android:layout_width="60dp"
@@ -112,6 +113,69 @@
         android:id="@+id/buttonTime"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/buttonDate" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@android:drawable/ic_menu_mylocation"
+        android:background="@null"
+        android:layout_alignTop="@+id/editNach"
+        android:layout_alignStart="@+id/myPosition" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton6"
+        android:src="@android:drawable/ic_menu_mylocation"
+        android:background="@null"
+        android:layout_alignTop="@+id/editVia"
+        android:layout_alignStart="@+id/imageButton" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton7"
+        android:src="@drawable/delicon"
+        android:cropToPadding="false"
+        android:clickable="false"
+        android:baselineAlignBottom="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:scaleType="fitStart"
+        android:layout_above="@+id/via"
+        android:layout_alignEnd="@+id/editNach" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton8"
+        android:src="@drawable/delicon"
+        android:cropToPadding="false"
+        android:clickable="false"
+        android:baselineAlignBottom="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:scaleType="fitStart"
+        android:layout_alignBottom="@+id/editVia"
+        android:layout_toStartOf="@+id/imageButton6" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageButton9"
+        android:src="@drawable/delicon"
+        android:cropToPadding="false"
+        android:clickable="false"
+        android:baselineAlignBottom="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:scaleType="fitStart"
+        android:layout_alignBottom="@+id/editVon"
+        android:layout_alignEnd="@+id/editVon" />
 
 
 </RelativeLayout>

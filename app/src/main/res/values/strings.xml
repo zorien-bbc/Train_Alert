@@ -5,4 +5,6 @@
     <string name="title_activity_search">SearchActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="noConnections">Zu diesem Ort bestehen keine Verbindungen!</string>
+    <string name="noConnectionsTitle">Keine Reiseverbindungen!</string>
 </resources>

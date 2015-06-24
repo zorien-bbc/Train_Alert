@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,10 @@ import java.util.List;
 public class VerbindungenActivity extends ActionBarActivity {
     private String von;
     private String nach;
+    private String via;
     private String time;
     private String date;
+    private EditText textFeld;
     public static ProgressDialog progressDialog;
     Timestamp timestamp;
 
@@ -36,11 +39,12 @@ public class VerbindungenActivity extends ActionBarActivity {
         Intent intent = getIntent();
         von = intent.getStringExtra("von");
         nach = intent.getStringExtra("nach");
+        via = intent.getStringExtra("via");
         time = intent.getStringExtra("time");
         date = intent.getStringExtra("date");
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
-        jsonAsyncTask.execute(von, nach,time,date);
+        jsonAsyncTask.execute(von,nach,via,time,date);
     }
 
     public void setData(List<Verbindung> result) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,9 @@ import java.util.List;
 
 public class SuchHilfe extends ActionBarActivity {
     final SuchHilfe suchHilfe = this;
-    String textFeld;
+    int textFeldId;
+
+    private List<String> vorschlaege;
 
     public List<String> getVorschlaege() {
         return vorschlaege;
@@ -28,8 +31,6 @@ public class SuchHilfe extends ActionBarActivity {
         this.vorschlaege = vorschlaege;
     }
 
-    private List<String> vorschlaege;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,29 +38,24 @@ public class SuchHilfe extends ActionBarActivity {
         Intent intent = getIntent();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("HALLO");
-        textFeld = intent.getStringExtra("text");
+
+        textFeldId = getIntent().getIntExtra("selectedEdit", R.id.editVon);
+
         final EditText myTextBox = (EditText) findViewById(R.id.editText);
         myTextBox.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable s) {
             }
 
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
-
                 JSONSuchHilfe jsonSuchHilfe = new JSONSuchHilfe(suchHilfe);
-                jsonSuchHilfe.execute(myTextBox.getText().toString());
-
+                jsonSuchHilfe.execute(myTextBox.getText().toString().trim());
             }
         });
-
-
-        // jsonSuchHilfe.execute("B");
     }
 
     public void setData(List<String> result) {
@@ -74,11 +70,14 @@ public class SuchHilfe extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("ort", resultset.get(position));
-                intent.putExtra("vonWo", textFeld);
-                startActivity(intent);
-
+                if(textFeldId == R.id.editVon) {
+                    MainActivity.textVon.setText(resultset.get(position).toString());
+                } else if(textFeldId == R.id.editNach) {
+                    MainActivity.textNach.setText(resultset.get(position).toString());
+                } else if(textFeldId == R.id.editVia) {
+                    MainActivity.textVia.setText(resultset.get(position).toString());
+                }
+                finish();
             }
         });
     }
