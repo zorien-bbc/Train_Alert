@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 /**
@@ -22,16 +23,17 @@ public class MyNotification extends BroadcastReceiver {
         PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
         NotificationCompat.Builder mbuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.alarm)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle(msg)
                 .setTicker(msgalert)
-                .setContentText(msgtext);
+                .setContentText(msgtext)
+                .setSound(Uri.parse("android.resource://ch.berufsbildungscenter.train_alert/"+R.raw.train_whistle));
 
         mbuilder.setContentIntent(notificIntent);
-        mbuilder.setDefaults(NotificationCompat.DEFAULT_SOUND);
+        //mbuilder.setDefaults(NotificationCompat.DEFAULT_SOUND);
         mbuilder.setAutoCancel(true);
 
-        NotificationManager mnotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mnotificationManager         = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         mnotificationManager.notify(1,mbuilder.build());
 

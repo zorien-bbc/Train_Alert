@@ -1,5 +1,8 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
 public class VerbindungDetailsActivity extends ActionBarActivity {
-
+    Timestamp timestamp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,17 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         }
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), alleFahrten, this.getLayoutInflater()));
+        timestamp = alleFahrten.get(0).getAbfahrt();
+    }
+    public void setAlert() {
+        Intent intent = new Intent(this, MyNotification.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime(), pendingIntent);
+
+        Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -49,7 +65,8 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.alarm) {
+            setAlert();
             return true;
         }
 

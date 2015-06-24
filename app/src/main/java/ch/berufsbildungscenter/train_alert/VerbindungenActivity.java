@@ -96,7 +96,7 @@ public class VerbindungenActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.alarm) {
-            setAlert();
+           // setAlert();
             return true;
         }
 

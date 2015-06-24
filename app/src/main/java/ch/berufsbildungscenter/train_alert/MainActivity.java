@@ -37,12 +37,15 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Button button = (Button) findViewById(R
                 .id.button);
+        textVon = (EditText) findViewById(R.id.editVon);
+        textNach = (EditText) findViewById(R.id.editNach);
+        textVon.setOnClickListener(new SuchListener(this,textVon));
+        textNach.setOnClickListener(new SuchListener(this,textNach));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textVon = (EditText) findViewById(R.id.editVon);
-                textNach = (EditText) findViewById(R.id.editNach);
+
                 String von = textVon.getText().toString();
                 String nach = textNach.getText().toString();
                 String time = buttonTime.getText().toString();
