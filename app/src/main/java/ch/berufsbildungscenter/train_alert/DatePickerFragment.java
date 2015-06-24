@@ -14,13 +14,14 @@ import java.util.Date;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     Button button;
-
+    MainActivity mainActivity;
     final Calendar c = Calendar.getInstance();
 
     private SimpleDateFormat date = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
 
-    public DatePickerFragment( Button button) {
+    public DatePickerFragment(Button button, MainActivity mainActivity) {
         this.button = button;
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Date datum = new Date(year, month, day);
-
+        mainActivity.getDate(year,month,day);
         this.button.setText(date.format(datum));
 
     }

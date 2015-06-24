@@ -1,6 +1,9 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,8 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -19,7 +23,10 @@ import java.util.List;
 public class VerbindungenActivity extends ActionBarActivity {
     private String von;
     private String nach;
+    private String time;
+    private String date;
     public static ProgressDialog progressDialog;
+    Timestamp timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +36,11 @@ public class VerbindungenActivity extends ActionBarActivity {
         Intent intent = getIntent();
         von = intent.getStringExtra("von");
         nach = intent.getStringExtra("nach");
+        time = intent.getStringExtra("time");
+        date = intent.getStringExtra("date");
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
-        jsonAsyncTask.execute(von,nach);
+        jsonAsyncTask.execute(von, nach,time,date);
 
     }
 
@@ -45,7 +54,7 @@ public class VerbindungenActivity extends ActionBarActivity {
         ((TextView) findViewById(R.id.nachOrtLabel)).setText(result.get(0).getNachOrt().getName());
         ((TextView) findViewById(R.id.datumLabel)).setText(dateFormatter.format(result.get(0).getZeit()).toString());
         ((TextView) findViewById(R.id.zeitLabel)).setText(timeFormatter.format(result.get(0).getZeit()).toString());
-
+        timestamp = result.get(0).getZeit();
         ListView verbListView = (ListView) findViewById(R.id.verbListView);
         verbListView.setAdapter(new VerbindungenArrayAdapter(this.getApplicationContext(), resultset, this.getLayoutInflater()));
 
@@ -68,6 +77,17 @@ public class VerbindungenActivity extends ActionBarActivity {
         return true;
     }
 
+    public void setAlert() {
+        Intent intent = new Intent(this, MyNotification.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime(), pendingIntent);
+
+        Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -76,7 +96,8 @@ public class VerbindungenActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.alarm) {
+            setAlert();
             return true;
         }
 

@@ -40,14 +40,15 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
     @Override
     protected List<Verbindung> doInBackground(String... params) {
         List<Verbindung> result = null;
-        String stationVon = params[0].toString();
-        String stationNach = params[1].toString();
+        String stationVon = params[0];
+        String stationNach = params[1];
+        String time = params[2];
+        String date = params[3];
 
-        Log.e(stationVon + stationNach, "EBOLALA");
 
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(String.format(API_URL + stationVon + "&to=" + stationNach));
+                URL url = new URL(String.format(API_URL + stationVon + "&to=" + stationNach+"&time="+time+"&date="+date));
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");

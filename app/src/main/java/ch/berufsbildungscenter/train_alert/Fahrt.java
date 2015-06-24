@@ -79,44 +79,35 @@ public class Fahrt implements Serializable, Parcelable {
     private String bisGleis;
 
     // Parcelling part
-    public Fahrt() {}
+    public Fahrt(Parcel in){
+        String[] data = new String[5];
 
-    @Override
+        in.readStringArray(data);
+        this.vonHaltestelle = data[0];
+        this.bisHaltestelle = data[1];
+        this.transportmittel = data[2];
+        this.vonGleis = data[3];
+        this.bisGleis = data[4];
+    }
+
+    @?verride
     public int describeContents(){
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel pc, int flags) {
-        pc.writeString(vonHaltestelle);
-        pc.writeString(bisHaltestelle);
-        pc.writeString(transportmittel);
-
-        pc.writeSerializable(abfahrt);
-        pc.writeSerializable(ankunft);
-
-        pc.writeString(vonGleis);
-        pc.writeString(bisGleis);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] {this.id,
+                this.name,
+                this.grade});
     }
-
-    public static final Parcelable.Creator<Fahrt> CREATOR = new Parcelable.Creator<Fahrt>() {
-        public Fahrt createFromParcel(Parcel pc) {
-            return new Fahrt(pc);
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
         }
-        public Fahrt[] newArray(int size) {
-            return new Fahrt[size];
+
+        public Student[] newArray(int size) {
+            return new Student[size];
         }
     };
-
-    public Fahrt(Parcel pc){
-        vonHaltestelle = pc.readString();
-        bisHaltestelle = pc.readString();
-        transportmittel = pc.readString();
-
-        abfahrt = (Timestamp) pc.readSerializable();
-        ankunft = (Timestamp) pc.readSerializable();
-
-        vonGleis = pc.readString();
-        bisGleis = pc.readString();
-    }
 }
