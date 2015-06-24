@@ -23,8 +23,9 @@ public class MainActivity extends ActionBarActivity {
     Button buttonTime;
     EditText textVon,textNach;
     MainActivity main = this;
+    Date date;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
-    private SimpleDateFormat date = new SimpleDateFormat("dd.MM."+c.get(Calendar.YEAR));
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM."+c.get(Calendar.YEAR));
 
 
     @Override
@@ -40,10 +41,16 @@ public class MainActivity extends ActionBarActivity {
                 textNach = (EditText) findViewById(R.id.editNach);
                 String von = textVon.getText().toString();
                 String nach = textNach.getText().toString();
+                String time = buttonTime.getText().toString();
 
+                SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR)+"-MM-dd");
+
+                String datum = intentDate.format(date);
                 Intent intent = new Intent(main.getApplicationContext(), VerbindungenActivity.class);
                 intent.putExtra("von", von);
                 intent.putExtra("nach", nach);
+                intent.putExtra("time",time);
+                intent.putExtra("date",datum);
                 startActivity(intent);
             }
         });
@@ -52,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         buttonTime = (Button) findViewById(R.id.buttonTime);
         buttonTime.setText(time.format(c.getTime()));
         Date datum = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        buttonDate.setText(date.format(datum));
+        buttonDate.setText(dateFormat.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
 
@@ -76,7 +83,9 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this.getApplicationContext(), "Alarm was setted", Toast.LENGTH_SHORT);
     }
 
-
+    public void getDate(int year,int month,int day){
+        date = new Date(year,month,day);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

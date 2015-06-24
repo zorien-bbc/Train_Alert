@@ -2,7 +2,7 @@ package ch.berufsbildungscenter.train_alert;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by zfehrn on 17.06.2015.
@@ -10,11 +10,11 @@ import java.util.List;
 public class Verbindung implements Serializable {
 
 
-    public List<Fahrt> getVerbindungen() {
+    public ArrayList<Fahrt> getVerbindungen() {
         return verbindungen;
     }
 
-    public void setVerbindungen(List<Fahrt> verbindungen) {
+    public void setVerbindungen(ArrayList<Fahrt> verbindungen) {
         this.verbindungen = verbindungen;
     }
 
@@ -77,6 +77,6 @@ public class Verbindung implements Serializable {
 
     private String dauer;
 
-    private List<Fahrt> verbindungen;
+    private ArrayList<Fahrt> verbindungen;
 
 }

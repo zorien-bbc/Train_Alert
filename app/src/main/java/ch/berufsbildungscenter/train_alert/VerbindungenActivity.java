@@ -41,7 +41,6 @@ public class VerbindungenActivity extends ActionBarActivity {
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
         jsonAsyncTask.execute(von, nach,time,date);
-
     }
 
     public void setData(List<Verbindung> result) {
@@ -64,7 +63,7 @@ public class VerbindungenActivity extends ActionBarActivity {
                 Intent intent = new Intent(getApplicationContext(), VerbindungDetailsActivity.class);
                 intent.putExtra("vonOrt", (Ort) resultset.get(position).getVonOrt());
                 intent.putExtra("nachOrt", (Ort) resultset.get(position).getNachOrt());
-                intent.putExtra("fahrten", resultset.get(position).getVerbindungen().toArray());
+                intent.putParcelableArrayListExtra("fahrten", resultset.get(position).getVerbindungen());
                 startActivity(intent);
             }
         });

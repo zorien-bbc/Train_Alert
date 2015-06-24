@@ -7,9 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -23,15 +21,14 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         Intent intent = getIntent();
         Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
         Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
-        Fahrt[] fahrten = (Fahrt[]) intent.getParcelableArrayExtra("fahrten");
+        ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
 
         ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());
         ((Button) findViewById(R.id.imageButton4)).setText(nachOrt.getName());
 
         ArrayList<Fahrt> alleFahrten = new ArrayList<Fahrt>();
-        for(int i = 0; i == fahrten.length; i++) {
-            Fahrt einzFahrt = fahrten[i];
-            alleFahrten.add(einzFahrt);
+        for(Fahrt f : fahrten)  {
+            alleFahrten.add(f);
         }
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), alleFahrten, this.getLayoutInflater()));
