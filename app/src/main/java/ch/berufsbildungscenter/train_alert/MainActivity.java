@@ -1,25 +1,21 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     final Calendar c = Calendar.getInstance();
     Button buttonDate;
     Button buttonTime;
@@ -27,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
     MainActivity main = this;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-    ;
+    ImageButton imageButton;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
     boolean isDateChanged = false;
@@ -38,12 +34,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R
-                .id.button);
+        Button button = (Button) findViewById(R.id.button);
         textVon = (EditText) findViewById(R.id.editVon);
         textNach = (EditText) findViewById(R.id.editNach);
         textVia = (EditText) findViewById(R.id.editVia);
-
+        imageButton = (ImageButton) findViewById(R.id.myPosition);
         textVon.setFocusable(false);
         textNach.setFocusable(false);
         textVia.setFocusable(false);
@@ -51,12 +46,18 @@ public class MainActivity extends ActionBarActivity {
         textVon.setOnClickListener(new SuchListener(this, textVon));
         textNach.setOnClickListener(new SuchListener(this, textNach));
         textVia.setOnClickListener(new SuchListener(this, textVia));
-
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),StationenLocation.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String von = textVon.getText().toString().replace(" ", "%20").toString();
+                String von = textVon.getText().toString().replace(" ", "%20");
                 String nach = textNach.getText().toString();
                 String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();
@@ -92,16 +93,6 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 
-    public void setAlert() {
-        Intent intent = new Intent(this, MyNotification.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                + (5 * 1000), pendingIntent);
-
-        Toast.makeText(this.getApplicationContext(), "Alarm was setted", Toast.LENGTH_SHORT);
-    }
 
     public void getDate(int year, int month, int day) {
         date = new Date(year, month, day);
@@ -124,7 +115,6 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.alarm) {
-            setAlert();
             return true;
         }
 

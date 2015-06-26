@@ -28,7 +28,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".VerbindungDetailsActivity"
+        android:name=".VerbindungDetailsActivity"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
+        <activity
+            android:name=".StationenLocation"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <meta-data

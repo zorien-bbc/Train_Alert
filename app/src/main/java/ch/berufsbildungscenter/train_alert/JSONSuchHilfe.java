@@ -6,17 +6,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +42,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
 
                 int responseCode = connection.getResponseCode();
                 if (HttpURLConnection.HTTP_OK == responseCode) {
-                    result = parseData(connection.getInputStream());
+                    result = JSONParser.parseSearch(connection.getInputStream());
 
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
@@ -74,35 +65,8 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
         return null != networkInfo && networkInfo.isConnected();
     }
 
-    private List<String> parseData(InputStream inputStream) throws IOException, JSONException {
 
-        List<String> result = new ArrayList<String>();
 
-        String input = readInput(inputStream);
-        JSONObject data = new JSONObject(input);
-
-        JSONArray verbindungenJSON = data.getJSONArray("stations");
-
-        for (int i = 0; i < verbindungenJSON.length(); i++) {
-            JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
-                result.add(verbindungJSON.getString("name"));
-        }
-
-        return result;
-    }
-
-    private String readInput(InputStream inputStream) throws IOException {
-        StringBuilder resultBuilder = new StringBuilder();
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-
-        String line;
-        while (null != (line = bufferedReader.readLine())) {
-            resultBuilder.append(line);
-        }
-
-        return resultBuilder.toString();
-    }
     @Override
     protected void onPostExecute(List<String> result) {
         if (null == result) {

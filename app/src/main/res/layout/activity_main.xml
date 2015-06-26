@@ -24,9 +24,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editVon"
         android:maxLines="1"
-        android:layout_above="@+id/nach"
-        android:layout_alignStart="@+id/editNach"
-        android:layout_toStartOf="@+id/imageButton9" />
+        android:layout_alignBottom="@+id/von"
+        android:layout_toEndOf="@+id/nach" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,9 +43,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editNach"
         android:maxLines="1"
-        android:layout_above="@+id/via"
-        android:layout_alignStart="@+id/buttonAn"
-        android:layout_toStartOf="@+id/imageButton9" />
+        android:layout_alignTop="@+id/imageButton7"
+        android:layout_toEndOf="@+id/nach" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +65,30 @@
         android:layout_alignBottom="@+id/via"
         android:layout_alignStart="@+id/editNach"
         android:layout_alignEnd="@+id/editNach" />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+        <RadioButton
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="Ab"
+            android:id="@+id/toggleButtonAb"
+            android:layout_alignTop="@+id/buttonAn"
+            android:layout_alignParentStart="true" />
 
+        <RadioButton
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="An"
+            android:id="@+id/toggleButtonAn"
+            android:layout_alignTop="@+id/buttonDate"
+            android:layout_toEndOf="@+id/buttonAb"
+            android:singleLine="true" />
+    </RadioGroup>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,35 +108,18 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:text="Ab"
-        android:id="@+id/buttonAb"
-        android:layout_alignTop="@+id/buttonAn"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:text="An"
-        android:id="@+id/buttonAn"
-        android:layout_alignTop="@+id/buttonDate"
-        android:layout_toEndOf="@+id/buttonAb"
-        android:singleLine="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonDate"
-        android:layout_alignTop="@+id/buttonTime"
-        android:layout_toEndOf="@+id/buttonAn" />
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/buttonTime" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonTime"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/buttonDate" />
+        android:layout_alignEnd="@+id/imageButton6" />
 
     <ImageButton
         android:layout_width="wrap_content"
