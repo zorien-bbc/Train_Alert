@@ -19,7 +19,6 @@ public class Verbindung implements Serializable {
     }
 
 
-
     public Timestamp getZeit() {
         return zeit;
     }

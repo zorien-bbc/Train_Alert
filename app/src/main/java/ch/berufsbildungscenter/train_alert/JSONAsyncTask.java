@@ -50,9 +50,10 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(String.format(API_URL + stationVon + "&to=" + stationNach + "&via=" + stationVia + "&time=" + time + "&date=" + date));
+                URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20") + "&to=" + stationNach.replaceAll("\\s+", "%20") + "&via=" +
+                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date);
 
-                Log.v("URL", url.toString());
+                Log.v("URLJSON", url.toString());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -141,7 +142,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
             verbindung.setDauer(verbindungJSON.getString("duration"));
             verbindung.setVerbindungen(fahrtAbschnitte);
             verbindung.setTransportmittel(fahrtAbschnitte.get(0).getTransportmittel());
-            Log.v(verbindung.getGleis(), verbindung.getZeit() + "EBOLA");
+            Log.v(LOG_TAG, verbindung.getZeit() + verbindung.getGleis());
 
             result.add(verbindung);
         }
@@ -163,10 +164,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
     @Override
     protected void onPostExecute(List<Verbindung> result) {
         if (result == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setMessage(R.string.noConnections)
-                    .setTitle(R.string.noConnectionsTitle);
-            AlertDialog dialog = builder.create();
+
         } else {
             this.progressDialog.dismiss();
             activity.setData(result);

@@ -44,7 +44,7 @@ public class VerbindungenActivity extends ActionBarActivity {
         date = intent.getStringExtra("date");
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
-        jsonAsyncTask.execute(von,nach,via,time,date);
+        jsonAsyncTask.execute(von, nach, via, time, date);
     }
 
     public void setData(List<Verbindung> result) {
@@ -100,7 +100,7 @@ public class VerbindungenActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.alarm) {
-           // setAlert();
+            // setAlert();
             return true;
         }
 

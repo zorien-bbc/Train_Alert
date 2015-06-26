@@ -21,8 +21,8 @@ public class TimePickerFragment extends DialogFragment
     private Button button;
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
 
-    public TimePickerFragment(Button button){
-        this.button=button;
+    public TimePickerFragment(Button button) {
+        this.button = button;
     }
 
 
@@ -40,7 +40,7 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Date zeit = new Date(0,0,0,hourOfDay,minute);
+        Date zeit = new Date(0, 0, 0, hourOfDay, minute);
         this.button.setText(time.format(zeit));
 
     }

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
 
-    private static final String LOG_TAG = JSONAsyncTask.class.getCanonicalName();
+    private static final String LOG_TAG = JSONSuchHilfe.class.getCanonicalName();
 
     private static final String API_URL = "http://transport.opendata.ch/v1/locations?query=";
 
@@ -42,7 +42,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
 
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(String.format(API_URL + stationVon));
+                URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20"));
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -106,7 +106,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> result) {
         if (null == result) {
-            Log.e("Daten nicht geladen", "EBOLA");
+            Log.e(LOG_TAG, "Daten nicht geladen");
         } else {
             activity.setData(result);
         }

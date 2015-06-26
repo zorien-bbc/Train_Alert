@@ -70,11 +70,11 @@ public class SuchHilfe extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(textFeldId == R.id.editVon) {
+                if (textFeldId == R.id.editVon) {
                     MainActivity.textVon.setText(resultset.get(position).toString());
-                } else if(textFeldId == R.id.editNach) {
+                } else if (textFeldId == R.id.editNach) {
                     MainActivity.textNach.setText(resultset.get(position).toString());
-                } else if(textFeldId == R.id.editVia) {
+                } else if (textFeldId == R.id.editVia) {
                     MainActivity.textVia.setText(resultset.get(position).toString());
                 }
                 finish();

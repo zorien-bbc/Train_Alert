@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class VerbindungDetailsActivity extends ActionBarActivity {
     Timestamp timestamp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
         timestamp = fahrten.get(0).getAbfahrt();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
 
         ((TextView) findViewById(R.id.textView13)).setText(formatter.format(timestamp));
         ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());

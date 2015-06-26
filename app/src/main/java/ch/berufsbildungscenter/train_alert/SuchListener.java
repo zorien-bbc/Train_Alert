@@ -9,7 +9,7 @@ import android.widget.EditText;
 /**
  * Created by Nils on 19.06.2015.
  */
-public class SuchListener implements Button.OnClickListener{
+public class SuchListener implements Button.OnClickListener {
     private Activity activity;
     private EditText selectedEdit;
 

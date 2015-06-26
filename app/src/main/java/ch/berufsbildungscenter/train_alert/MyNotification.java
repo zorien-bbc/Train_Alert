@@ -19,7 +19,7 @@ public class MyNotification extends BroadcastReceiver {
         createNotification(k1, "Alarm alarm alarm!", "Dein Zug f\u00e4hrt in f\u00fcnf minuten", "ALARM");
     }
 
-    public void createNotification(Context context, String msg, String msgtext, String msgalert){
+    public void createNotification(Context context, String msg, String msgtext, String msgalert) {
         PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
         NotificationCompat.Builder mbuilder = new NotificationCompat.Builder(context)
@@ -27,15 +27,15 @@ public class MyNotification extends BroadcastReceiver {
                 .setContentTitle(msg)
                 .setTicker(msgalert)
                 .setContentText(msgtext)
-                .setSound(Uri.parse("android.resource://ch.berufsbildungscenter.train_alert/"+R.raw.train_whistle));
+                .setSound(Uri.parse("android.resource://ch.berufsbildungscenter.train_alert/" + R.raw.train_whistle));
 
         mbuilder.setContentIntent(notificIntent);
         //mbuilder.setDefaults(NotificationCompat.DEFAULT_SOUND);
         mbuilder.setAutoCancel(true);
 
-        NotificationManager mnotificationManager         = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mnotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mnotificationManager.notify(1,mbuilder.build());
+        mnotificationManager.notify(1, mbuilder.build());
 
     }
 }

@@ -78,10 +78,11 @@ public class Fahrt implements Serializable, Parcelable {
     private String bisGleis;
 
     // Parcelling part
-    public Fahrt() {}
+    public Fahrt() {
+    }
 
     @Override
-    public int describeContents(){
+    public int describeContents() {
         return 0;
     }
 
@@ -102,12 +103,13 @@ public class Fahrt implements Serializable, Parcelable {
         public Fahrt createFromParcel(Parcel pc) {
             return new Fahrt(pc);
         }
+
         public Fahrt[] newArray(int size) {
             return new Fahrt[size];
         }
     };
 
-    public Fahrt(Parcel pc){
+    public Fahrt(Parcel pc) {
         vonHaltestelle = pc.readString();
         bisHaltestelle = pc.readString();
         transportmittel = pc.readString();

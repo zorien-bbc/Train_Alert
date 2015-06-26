@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Zeit"
+                android:text="Zeit (Ab):"
                 android:id="@+id/textView9"
                 android:textSize="14dp" />
 
@@ -181,7 +182,7 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/verbListView"
             android:layout_marginBottom="20dp" />
 
