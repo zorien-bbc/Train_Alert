@@ -1,9 +1,11 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -13,27 +15,28 @@ import java.util.List;
 /**
  * Created by zorien on 18.06.2015.
  */
-public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
+public class JSONOrt extends AsyncTask<String, Void, List<String>> {
 
-    private static final String LOG_TAG = JSONSuchHilfe.class.getCanonicalName();
+    private static final String LOG_TAG = JSONAsyncTask.class.getCanonicalName();
 
-    private static final String API_URL = "http://transport.opendata.ch/v1/locations?query=";
+    private static final String API_URL = "http://transport.opendata.ch/v1/locations?x=";
 
-    private SuchHilfe activity;
+    private StationenLocation activity;
 
-    public JSONSuchHilfe(SuchHilfe activity) {
+    public JSONOrt(StationenLocation activity) {
         this.activity = activity;
     }
 
     @Override
     protected List<String> doInBackground(String... params) {
         List<String> result = null;
-        String stationVon = params[0].toString();
+        String xCor = params[0];
+        String yCor = params[1];
 
 
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20"));
+                URL url = new URL(String.format(API_URL + xCor)+"&y="+yCor);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -42,7 +45,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
 
                 int responseCode = connection.getResponseCode();
                 if (HttpURLConnection.HTTP_OK == responseCode) {
-                    result = JSONParser.parseSearch(connection.getInputStream());
+                    result = JSONParser.parseOrt(connection.getInputStream());
 
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
@@ -53,6 +56,8 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
             }
+        }else{
+
         }
 
         return result;
@@ -69,10 +74,22 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
 
     @Override
     protected void onPostExecute(List<String> result) {
-        if (null == result) {
-            Log.e(LOG_TAG, "Daten nicht geladen");
+        if (!isNetworkConnectionAvailable()) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+            alert.setTitle("Keine Internet Verbindung");
+            alert.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                }
+            });
+
+            alert.show();
         } else {
-            activity.setData(result);
+            if (null == result) {
+                Log.e("Daten nicht geladen", "EBOLA");
+            } else {
+                this.activity.setData(result);
+            }
         }
     }
 
