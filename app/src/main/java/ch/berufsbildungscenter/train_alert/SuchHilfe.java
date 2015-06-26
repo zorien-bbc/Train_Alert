@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +35,14 @@ public class SuchHilfe extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_such_hilfe);
         Intent intent = getIntent();
+        String ort = intent.getStringExtra("ort");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("HALLO");
 
         textFeldId = getIntent().getIntExtra("selectedEdit", R.id.editVon);
 
         final EditText myTextBox = (EditText) findViewById(R.id.editText);
+        myTextBox.setText(ort);
         myTextBox.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }

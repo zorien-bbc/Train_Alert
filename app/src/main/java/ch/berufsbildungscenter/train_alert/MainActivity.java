@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +29,14 @@ public class MainActivity extends ActionBarActivity {
     ImageButton imageButtonVon;
     ImageButton imageButtonNach;
     ImageButton imageButtonVia;
+
+    ImageButton deleteVon;
+    ImageButton deleteNach;
+    ImageButton deleteVia;
+
+
+    private RadioGroup radioSexGroup;
+    private RadioButton radioSexButton;
 
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
@@ -49,9 +59,18 @@ public class MainActivity extends ActionBarActivity {
         imageButtonNach = (ImageButton) findViewById(R.id.imageButtonNach);
         imageButtonVia = (ImageButton) findViewById(R.id.imageButtonVia);
 
-        imageButtonVon.setOnClickListener(new LocationListener(imageButtonVon));
-        imageButtonNach.setOnClickListener(new LocationListener(imageButtonNach));
-        imageButtonVia.setOnClickListener(new LocationListener(imageButtonVia));
+        deleteVon = (ImageButton) findViewById(R.id.deleteVon);
+        deleteNach = (ImageButton) findViewById(R.id.deleteNach);
+        deleteVia = (ImageButton) findViewById(R.id.deleteVia);
+
+        imageButtonVon.setOnClickListener(new LocationListener(this,imageButtonVon));
+        imageButtonNach.setOnClickListener(new LocationListener(this,imageButtonNach));
+        imageButtonVia.setOnClickListener(new LocationListener(this, imageButtonVia));
+
+        deleteVon.setOnClickListener(new EditTextListener(textVon));
+        deleteNach.setOnClickListener(new EditTextListener(textNach));
+        deleteVia.setOnClickListener(new EditTextListener(textVia));
+
         textVon.setFocusable(false);
         textNach.setFocusable(false);
         textVia.setFocusable(false);
@@ -60,13 +79,7 @@ public class MainActivity extends ActionBarActivity {
         textNach.setOnClickListener(new SuchListener(this, textNach));
         textVia.setOnClickListener(new SuchListener(this, textVia));
 
-        imageButtonVon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),StationenLocation.class);
-                startActivity(intent);
-            }
-        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Verbindungen"
+            android:text="@string/verbindungenTitel"
             android:id="@+id/textView4"
             android:layout_marginBottom="10dp" />
 
@@ -35,7 +35,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Von:"
+                android:text="@string/vonLabel"
                 android:id="@+id/textView5"
                 android:textSize="14dp" />
 
@@ -43,7 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="VonOrt"
                 android:id="@+id/vonOrtLabel"
                 android:paddingLeft="20dp"
                 android:textSize="14dp" />
@@ -61,7 +60,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nach:"
+                android:text="@string/nachLabel"
                 android:id="@+id/textView6"
                 android:textSize="14dp" />
 
@@ -69,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="NachOrt"
                 android:id="@+id/nachOrtLabel"
                 android:paddingLeft="20dp"
                 android:textSize="14dp" />
@@ -87,7 +85,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Datum:"
+                android:text="@string/datumLabel"
                 android:id="@+id/textView11"
                 android:textSize="14dp" />
 
@@ -95,7 +93,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Datum"
                 android:id="@+id/datumLabel"
                 android:paddingLeft="20dp"
                 android:textSize="14dp" />
@@ -112,7 +109,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Zeit (Ab):"
+                android:text="@string/zeitLabel"
                 android:id="@+id/textView9"
                 android:textSize="14dp" />
 
@@ -120,7 +117,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Zeit (Ab)"
                 android:id="@+id/zeitLabel"
                 android:paddingLeft="20dp"
                 android:textSize="14dp" />
@@ -136,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Ab"
+                android:text="@string/radioAb"
                 android:id="@+id/textView"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
@@ -146,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="An"
+                android:text="@string/radioAn"
                 android:id="@+id/textView8"
                 android:layout_weight="0.20"
                 android:gravity="center_vertical"
@@ -156,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Dauer (h)"
+                android:text="@string/dauerLabel"
                 android:id="@+id/textView2"
                 android:layout_weight="0.12"
                 android:gravity="center_vertical" />
@@ -165,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Gleis"
+                android:text="@string/gleisLabel"
                 android:id="@+id/textView3"
                 android:layout_weight="0.10"
                 android:gravity="center_vertical" />
@@ -174,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Verkehrsmittel"
+                android:text="@string/verkehrsmittelLabel"
                 android:id="@+id/textView7"
                 android:gravity="center_vertical" />
 

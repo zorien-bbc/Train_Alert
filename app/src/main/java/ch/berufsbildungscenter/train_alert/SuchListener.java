@@ -22,6 +22,7 @@ public class SuchListener implements Button.OnClickListener {
     public void onClick(View view) {
         Intent intent = new Intent(this.activity.getApplicationContext(), SuchHilfe.class);
         intent.putExtra("selectedEdit", selectedEdit.getId());
+        intent.putExtra("ort", selectedEdit.getText().toString());
         this.activity.startActivity(intent);
     }
 }

@@ -7,4 +7,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="noConnections">Daten konnten nicht geladen werden!</string>
     <string name="noConnectionsTitle">Datenfehler!</string>
+    <string name="hintEditNach">Nach</string>
+    <string name="hintEditVon">Von</string>
+    <string name="hintEditVia">Via</string>
+    <string name="radioAb">Ab</string>
+    <string name="radioAn">An</string>
+    <string name="verbindungenButton">Verbindungen suchen</string>
+    <string name="verbindungenTitel">Verbindung</string>
+    <string name="nachLabel">Nach:</string>
+    <string name="vonLabel">Von:</string>
+    <string name="abfahrtLabel">Abfahrt:</string>
+    <string name="verbindungInfoLabel">Verbindungs-Info</string>
+    <string name="datumLabel">Datum:</string>
+    <string name="zeitLabel">Zeit (Ab):</string>
+    <string name="dauerLabel">Dauer (h)</string>
+    <string name="gleisLabel">Gleis</string>
+    <string name="verkehrsmittelLabel">Verkehrsmittel</string>
 </resources>

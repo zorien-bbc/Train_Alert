@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public class StationenLocation extends ActionBarActivity {
-    int textFeldId;
+    int imageButtonId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +21,7 @@ public class StationenLocation extends ActionBarActivity {
         MyLocation myLocation = new MyLocation(this);
         JSONOrt jsonOrt = new JSONOrt(this);
         jsonOrt.execute(myLocation.latitude + "", myLocation.longtitude + "");
-        textFeldId = getIntent().getIntExtra("selectedEdit", R.id.editVon);
+        imageButtonId = getIntent().getIntExtra("button",R.id.imageButtonVon);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class StationenLocation extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(textFeldId == R.id.editVon) {
+                if(imageButtonId == R.id.imageButtonVon) {
                     MainActivity.textVon.setText(resultset.get(position).toString());
-                } else if(textFeldId == R.id.editNach) {
+                } else if(imageButtonId == R.id.imageButtonNach) {
                     MainActivity.textNach.setText(resultset.get(position).toString());
-                } else if(textFeldId == R.id.editVia) {
+                } else if(imageButtonId == R.id.imageButtonVia) {
                     MainActivity.textVia.setText(resultset.get(position).toString());
                 }
                 finish();
