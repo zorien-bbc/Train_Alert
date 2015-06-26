@@ -101,7 +101,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/myPosition"
+        android:id="@+id/imageButtonVon"
         android:src="@android:drawable/ic_menu_mylocation"
         android:background="@null"
         android:layout_alignTop="@+id/editVon"
@@ -119,25 +119,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonTime"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/imageButton6" />
+        android:layout_alignEnd="@+id/imageButtonVia" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButtonNach"
         android:src="@android:drawable/ic_menu_mylocation"
         android:background="@null"
         android:layout_alignTop="@+id/editNach"
-        android:layout_alignStart="@+id/myPosition" />
+        android:layout_alignStart="@+id/imageButtonVon" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton6"
+        android:id="@+id/imageButtonVia"
         android:src="@android:drawable/ic_menu_mylocation"
         android:background="@null"
         android:layout_alignTop="@+id/editVia"
-        android:layout_alignStart="@+id/imageButton" />
+        android:layout_alignStart="@+id/imageButtonVon" />
 
     <ImageButton
         android:layout_width="22dp"
@@ -153,7 +153,7 @@
         android:longClickable="false"
         android:scaleType="fitStart"
         android:layout_above="@+id/via"
-        android:layout_toStartOf="@+id/imageButton" />
+        android:layout_toStartOf="@+id/imageButtonNach" />
 
     <ImageButton
         android:layout_width="22dp"
@@ -169,7 +169,7 @@
         android:longClickable="false"
         android:scaleType="fitStart"
         android:layout_alignBottom="@+id/editVia"
-        android:layout_toStartOf="@+id/imageButton6" />
+        android:layout_toStartOf="@+id/imageButtonVia" />
 
     <ImageButton
         android:layout_width="22dp"

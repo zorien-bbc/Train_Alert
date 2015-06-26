@@ -1,18 +1,14 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +23,11 @@ public class MainActivity extends ActionBarActivity {
     MainActivity main = this;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-    ;
+
+    ImageButton imageButtonVon;
+    ImageButton imageButtonNach;
+    ImageButton imageButtonVia;
+
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
     boolean isDateChanged = false;
@@ -44,6 +44,14 @@ public class MainActivity extends ActionBarActivity {
         textNach = (EditText) findViewById(R.id.editNach);
         textVia = (EditText) findViewById(R.id.editVia);
 
+
+        imageButtonVon = (ImageButton) findViewById(R.id.imageButtonVon);
+        imageButtonNach = (ImageButton) findViewById(R.id.imageButtonNach);
+        imageButtonVia = (ImageButton) findViewById(R.id.imageButtonVia);
+
+        imageButtonVon.setOnClickListener(new LocationListener(imageButtonVon));
+        imageButtonNach.setOnClickListener(new LocationListener(imageButtonNach));
+        imageButtonVia.setOnClickListener(new LocationListener(imageButtonVia));
         textVon.setFocusable(false);
         textNach.setFocusable(false);
         textVia.setFocusable(false);
@@ -52,6 +60,13 @@ public class MainActivity extends ActionBarActivity {
         textNach.setOnClickListener(new SuchListener(this, textNach));
         textVia.setOnClickListener(new SuchListener(this, textVia));
 
+        imageButtonVon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),StationenLocation.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,16 +107,6 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 
-    public void setAlert() {
-        Intent intent = new Intent(this, MyNotification.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                + (5 * 1000), pendingIntent);
-
-        Toast.makeText(this.getApplicationContext(), "Alarm was setted", Toast.LENGTH_SHORT);
-    }
 
     public void getDate(int year, int month, int day) {
         date = new Date(year, month, day);
@@ -124,7 +129,6 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.alarm) {
-            setAlert();
             return true;
         }
 
