@@ -36,12 +36,12 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
         String stationVia = params[2];
         String time = params[3];
         String date = params[4];
-
+        String aban = params[5];
 
         if (isNetworkConnectionAvailable()) {
             try {
                 URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20") + "&to=" + stationNach.replaceAll("\\s+", "%20") + "&via=" +
-                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date);
+                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date + "&isArrivalTime=" + aban);
 
 
                 Log.v("URLJSON", url.toString());

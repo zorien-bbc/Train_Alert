@@ -18,6 +18,4 @@
     <!--android:icon="@mipmap/search"-->
     <!--android:showAsAction="collapseActionView|ifRoom"-->
     <!--android:actionViewClass="android.widget.SearchView" />-->
-
-
 </menu>

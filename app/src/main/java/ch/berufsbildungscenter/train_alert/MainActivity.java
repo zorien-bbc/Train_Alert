@@ -1,5 +1,8 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -41,9 +44,8 @@ public class MainActivity extends ActionBarActivity {
     ImageButton deleteNach;
     ImageButton deleteVia;
 
-
-    private RadioGroup radioSexGroup;
-    private RadioButton radioSexButton;
+    RadioButton buttonAb;
+    RadioButton buttonAn;
 
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
@@ -81,6 +83,9 @@ public class MainActivity extends ActionBarActivity {
         deleteNach = (ImageButton) findViewById(R.id.deleteNach);
         deleteVia = (ImageButton) findViewById(R.id.deleteVia);
 
+        buttonAb = (RadioButton) findViewById(R.id.toggleButtonAb);
+        buttonAn = (RadioButton) findViewById(R.id.toggleButtonAn);
+
         imageButtonVon.setOnClickListener(new LocationListener(this,imageButtonVon));
         imageButtonNach.setOnClickListener(new LocationListener(this,imageButtonNach));
         imageButtonVia.setOnClickListener(new LocationListener(this, imageButtonVia));
@@ -97,7 +102,6 @@ public class MainActivity extends ActionBarActivity {
         textNach.setOnClickListener(new SuchListener(this, textNach));
         textVia.setOnClickListener(new SuchListener(this, textVia));
 
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,22 +110,44 @@ public class MainActivity extends ActionBarActivity {
                 String nach = textNach.getText().toString();
                 String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();
-
-                SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR) + "-MM-dd");
-
-                String startDatum = intentDate.format(startDate);
-                Intent intent = new Intent(main.getApplicationContext(), VerbindungenActivity.class);
-                intent.putExtra("von", von);
-                intent.putExtra("nach", nach);
-                intent.putExtra("via", via);
-                intent.putExtra("time", time);
-                if (isDateChanged) {
-                    String datum = intentDate.format(date);
-                    intent.putExtra("date", datum);
+                String aban = null;
+                if(buttonAn.isChecked()) {
+                    aban = "1";
                 } else {
-                    intent.putExtra("date", startDatum);
+                    aban = "0";
+
                 }
-                startActivity(intent);
+                if(von.equals("") || nach.equals("")) {
+                    AlertDialog errorAlertDialog = new AlertDialog.Builder(MainActivity.this)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                            )
+                            .create();
+                    errorAlertDialog.setTitle("Fehler");
+                    errorAlertDialog.setMessage("Start- und Zielort angeben!");
+                    errorAlertDialog.show();
+                } else {
+                    SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR) + "-MM-dd");
+                    String startDatum = intentDate.format(startDate);
+                    Intent intent = new Intent(main.getApplicationContext(), VerbindungenActivity.class);
+                    intent.putExtra("von", von);
+                    intent.putExtra("nach", nach);
+                    intent.putExtra("via", via);
+                    intent.putExtra("time", time);
+                    intent.putExtra("wann", aban);
+                    if (isDateChanged) {
+                        String datum = intentDate.format(date);
+                        intent.putExtra("date", datum);
+                    } else {
+                        intent.putExtra("date", startDatum);
+                    }
+                    startActivity(intent);
+                }
             }
         });
 
@@ -159,8 +185,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.alarm) {
-            return true;
+        if(id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), MainEinstellungen.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -38,7 +38,6 @@ public class SuchHilfe extends ActionBarActivity {
         String ort = intent.getStringExtra("ort");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         textFeldId = getIntent().getIntExtra("selectedEdit", R.id.editVon);
 
         final EditText myTextBox = (EditText) findViewById(R.id.editText);

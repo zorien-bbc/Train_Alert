@@ -54,13 +54,17 @@
         <activity
             android:name=".SuchHilfe"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".VerbindungMap"
             android:label="@string/title_activity_verbindung_map" >
         </activity>
-
+        <activity
+            android:name=".MainEinstellungen"
+            android:label="@string/title_activity_main_einstellungen" >
+        </activity>
     </application>
 
 </manifest>

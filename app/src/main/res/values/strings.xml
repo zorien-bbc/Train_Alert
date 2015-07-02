@@ -26,4 +26,5 @@
     <string name="title_activity_verbindung_map">VerbindungMap</string>
     <string name="title_activity_alarm_settings">AlarmSettings</string>
     <string name="title_activity_pass_list">PassList</string>
+    <string name="einstellungen_title">Train Alert Einstellungen</string>
 </resources>

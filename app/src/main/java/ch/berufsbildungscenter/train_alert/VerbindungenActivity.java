@@ -27,6 +27,7 @@ public class VerbindungenActivity extends ActionBarActivity {
     private String via;
     private String time;
     private String date;
+    private String aban;
     private EditText textFeld;
     public static ProgressDialog progressDialog;
     Timestamp timestamp;
@@ -42,9 +43,11 @@ public class VerbindungenActivity extends ActionBarActivity {
         via = intent.getStringExtra("via");
         time = intent.getStringExtra("time");
         date = intent.getStringExtra("date");
+        aban = intent.getStringExtra("wann");
+
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
-        jsonAsyncTask.execute(von, nach, via, time, date);
+        jsonAsyncTask.execute(von, nach, via, time, date, aban);
     }
 
     public void setData(List<Verbindung> result) {
