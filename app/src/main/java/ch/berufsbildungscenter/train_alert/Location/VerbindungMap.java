@@ -33,6 +33,7 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapVerbindung);
         mapFragment.getMapAsync(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
