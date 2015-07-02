@@ -10,6 +10,8 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
+
 /**
  * Created by zfehrn on 18.06.2015.
  */

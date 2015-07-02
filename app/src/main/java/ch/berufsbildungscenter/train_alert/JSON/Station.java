@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.JSON;
 
 import android.os.Parcel;
 import android.os.Parcelable;

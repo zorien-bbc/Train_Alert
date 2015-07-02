@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Database;
 
 import com.google.android.gms.maps.model.LatLng;
 

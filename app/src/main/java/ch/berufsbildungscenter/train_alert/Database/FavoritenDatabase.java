@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -52,7 +52,6 @@ public class FavoritenDatabase {
      */
     public void deleteFavoriten(Favoriten favoriten) {
         long id = favoriten.getId();
-        System.out.println("Comment deleted with id: " + id);
         database.delete(FavoritenSQLiteHelper.TABLE_FAVORITEN, FavoritenSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }

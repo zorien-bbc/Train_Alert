@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Listener;
 
 import android.view.View;
 import android.widget.EditText;

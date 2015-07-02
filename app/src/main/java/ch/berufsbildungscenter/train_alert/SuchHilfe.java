@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.Database.Favoriten;
+import ch.berufsbildungscenter.train_alert.Database.FavoritenDatabase;
+import ch.berufsbildungscenter.train_alert.JSON.JSONSuchHilfe;
 
 
 public class SuchHilfe extends ActionBarActivity {
@@ -37,6 +43,35 @@ public class SuchHilfe extends ActionBarActivity {
         Intent intent = getIntent();
         String ort = intent.getStringExtra("ort");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        ListView favListView = (ListView) findViewById(R.id.listView2);
+        FavoritenDatabase favoritenDatabase = new FavoritenDatabase(getApplicationContext());
+        try {
+            //Try to open the DB connection
+            favoritenDatabase.open();
+        } catch (SQLException e) {
+            Log.v("DATABASETEST", e.toString());
+        }
+
+            final List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
+            for (int i = 0; i < favoritens.size(); i++) {
+                arrayAdapter.add(favoritens.get(i).getName());
+            }
+        favListView.setAdapter(arrayAdapter);
+        favListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (textFeldId == R.id.editVon) {
+                    MainActivity.textVon.setText(favoritens.get(position).getName());
+                } else if (textFeldId == R.id.editNach) {
+                    MainActivity.textNach.setText(favoritens.get(position).getName());
+                } else if (textFeldId == R.id.editVia) {
+                    MainActivity.textVia.setText(favoritens.get(position).getName());
+                }
+                finish();
+            }
+        });
+
 
         textFeldId = getIntent().getIntExtra("selectedEdit", R.id.editVon);
 

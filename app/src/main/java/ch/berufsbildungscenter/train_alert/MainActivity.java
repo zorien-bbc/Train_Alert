@@ -1,12 +1,13 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,27 +15,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+import ch.berufsbildungscenter.train_alert.Listener.EditTextListener;
+import ch.berufsbildungscenter.train_alert.Listener.LocationListener;
+import ch.berufsbildungscenter.train_alert.Listener.SuchListener;
+import ch.berufsbildungscenter.train_alert.Listener.VerbindungenListener;
+
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     final Calendar c = Calendar.getInstance();
     Button buttonDate;
     Button buttonTime;
+
     static EditText textVon, textNach, textVia;
     MainActivity main = this;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
-    FavoritenDatabase favoritenDatabase;
+
 
     ImageButton imageButtonVon;
     ImageButton imageButtonNach;
@@ -51,30 +53,27 @@ public class MainActivity extends ActionBarActivity {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
     boolean isDateChanged = false;
     private String textVonInhalt, textNachInhalt, textViaInhalt;
-
+    private GestureDetectorCompat gDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        actionBar.addTab(actionBar.newTab().setText("Favoriten").setTabListener(this), false);
+        actionBar.addTab(actionBar.newTab().setText("Route").setTabListener(this), true);
+        actionBar.addTab(actionBar.newTab().setText("Standort").setTabListener(this), false);
+        actionBar.setHomeButtonEnabled(false);
+
+
         Button button = (Button) findViewById(R
                 .id.button);
         textVon = (EditText) findViewById(R.id.editVon);
         textNach = (EditText) findViewById(R.id.editNach);
         textVia = (EditText) findViewById(R.id.editVia);
-        favoritenDatabase = new FavoritenDatabase(this);
 
-
-        try {
-            //Try to open the DB connection
-            favoritenDatabase.open();
-        } catch (SQLException e) {
-            Log.v("DATABASETEST", e.toString());
-        }
-        LatLng latLng = new LatLng(55,33);
-        Favoriten favoriten = new Favoriten(latLng,"Uster");
-        favoritenDatabase.createFavoriten(favoriten);
-        List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
         imageButtonVon = (ImageButton) findViewById(R.id.imageButtonVon);
         imageButtonNach = (ImageButton) findViewById(R.id.imageButtonNach);
         imageButtonVia = (ImageButton) findViewById(R.id.imageButtonVia);
@@ -191,5 +190,48 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+
+        if(tab.getPosition()==0) {
+            Intent intent = new Intent(getApplicationContext(), FavoritenView.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+    public static EditText getTextVon() {
+        return textVon;
+    }
+
+    public static void setTextVon(EditText textVon) {
+        MainActivity.textVon = textVon;
+    }
+
+    public static EditText getTextNach() {
+        return textNach;
+    }
+
+    public static void setTextNach(EditText textNach) {
+        MainActivity.textNach = textNach;
+    }
+
+    public static EditText getTextVia() {
+        return textVia;
+    }
+
+    public static void setTextVia(EditText textVia) {
+        MainActivity.textVia = textVia;
     }
 }

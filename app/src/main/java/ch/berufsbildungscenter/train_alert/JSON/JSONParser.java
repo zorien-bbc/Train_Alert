@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.JSON;
 
 import android.util.Log;
 
@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.Verbindung;
 
 /**
  * Created by zorien on 26.06.2015.
@@ -121,6 +123,7 @@ public class JSONParser {
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
+
             result.add(verbindungJSON.getString("name"));
         }
 

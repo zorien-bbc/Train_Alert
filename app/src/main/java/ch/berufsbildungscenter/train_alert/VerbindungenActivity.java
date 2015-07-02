@@ -16,9 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.JSON.JSONAsyncTask;
 
 
 public class VerbindungenActivity extends ActionBarActivity {
@@ -68,8 +71,8 @@ public class VerbindungenActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), VerbindungDetailsActivity.class);
-                intent.putExtra("vonOrt", (Ort) resultset.get(position).getVonOrt());
-                intent.putExtra("nachOrt", (Ort) resultset.get(position).getNachOrt());
+                intent.putExtra("vonOrt", (Serializable) resultset.get(position).getVonOrt());
+                intent.putExtra("nachOrt", (Serializable) resultset.get(position).getNachOrt());
                 intent.putParcelableArrayListExtra("fahrten", resultset.get(position).getVerbindungen());
                 intent.putParcelableArrayListExtra("stationen", resultset.get(position).getStations());
                 startActivity(intent);

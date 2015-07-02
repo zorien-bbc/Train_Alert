@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
+import ch.berufsbildungscenter.train_alert.JSON.Ort;
+import ch.berufsbildungscenter.train_alert.JSON.Station;
+
 /**
  * Created by zfehrn on 17.06.2015.
  */

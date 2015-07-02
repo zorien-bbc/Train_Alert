@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Location;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.JSON.JSONOrt;
+import ch.berufsbildungscenter.train_alert.MainActivity;
+import ch.berufsbildungscenter.train_alert.R;
 
 
 public class StationenLocation extends ActionBarActivity {
@@ -32,6 +36,7 @@ public class StationenLocation extends ActionBarActivity {
     }
     public void setData(List<String> result) {
         final List<String> resultset = result;
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         ListView listView = (ListView) findViewById(R.id.listView3);
         for(String s : resultset){
@@ -43,11 +48,11 @@ public class StationenLocation extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(imageButtonId == R.id.imageButtonVon) {
-                    MainActivity.textVon.setText(resultset.get(position).toString());
+                    MainActivity.getTextVon().setText(resultset.get(position).toString());
                 } else if(imageButtonId == R.id.imageButtonNach) {
-                    MainActivity.textNach.setText(resultset.get(position).toString());
+                    MainActivity.getTextNach().setText(resultset.get(position).toString());
                 } else if(imageButtonId == R.id.imageButtonVia) {
-                    MainActivity.textVia.setText(resultset.get(position).toString());
+                    MainActivity.getTextVia().setText(resultset.get(position).toString());
                 }
                 finish();
             }

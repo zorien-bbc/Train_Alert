@@ -27,4 +27,8 @@
     <string name="title_activity_alarm_settings">AlarmSettings</string>
     <string name="title_activity_pass_list">PassList</string>
     <string name="einstellungen_title">Train Alert Einstellungen</string>
+    <string name="keineFavoriten">Sie haben noch keine Favoriten</string>
+    <string name="title_Favorite">Favoriten</string>
+    <string name="title_activity_alarm_view">AlarmView</string>
+    <string name="title_activity_standort_map">StandortMap</string>
 </resources>

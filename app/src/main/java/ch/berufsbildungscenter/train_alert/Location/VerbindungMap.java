@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Location;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.R;
+import ch.berufsbildungscenter.train_alert.JSON.Station;
 
 public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallback, android.support.v7.app.ActionBar.TabListener {
 

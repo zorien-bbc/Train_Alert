@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.JSON;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -9,6 +9,8 @@ import android.util.Log;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.SuchHilfe;
 
 /**
  * Created by zorien on 18.06.2015.

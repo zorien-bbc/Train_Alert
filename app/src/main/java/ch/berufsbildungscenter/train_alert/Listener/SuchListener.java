@@ -1,10 +1,12 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Listener;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import ch.berufsbildungscenter.train_alert.SuchHilfe;
 
 /**
  * Created by Nils on 19.06.2015.

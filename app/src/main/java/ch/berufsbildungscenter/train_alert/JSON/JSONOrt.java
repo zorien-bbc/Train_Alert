@@ -1,50 +1,46 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.Location.StationenLocation;
+
 /**
  * Created by zorien on 18.06.2015.
  */
-public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
+public class JSONOrt extends AsyncTask<String, Void, List<String>> {
 
     private static final String LOG_TAG = JSONAsyncTask.class.getCanonicalName();
 
-    private static final String API_URL = "http://transport.opendata.ch/v1/connections?from=";
+    private static final String API_URL = "http://transport.opendata.ch/v1/locations?x=";
 
-    private VerbindungenActivity activity;
-    private ProgressDialog progressDialog;
+    private StationenLocation activity;
+    // private StandortMap standortMap;
 
-    public JSONAsyncTask(VerbindungenActivity activity, ProgressDialog progressDialog) {
+    public JSONOrt(StationenLocation activity) {
         this.activity = activity;
-        this.progressDialog = progressDialog;
     }
 
+
     @Override
-    protected List<Verbindung> doInBackground(String... params) {
-        List<Verbindung> result = null;
-        String stationVon = params[0];
-        String stationNach = params[1];
-        String stationVia = params[2];
-        String time = params[3];
-        String date = params[4];
-        String aban = params[5];
+    protected List<String> doInBackground(String... params) {
+        List<String> result = null;
+        String xCor = params[0];
+        String yCor = params[1];
+
 
         if (isNetworkConnectionAvailable()) {
             try {
-                URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20") + "&to=" + stationNach.replaceAll("\\s+", "%20") + "&via=" +
-                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date + "&isArrivalTime=" + aban);
-
-
-                Log.v("URLJSON", url.toString());
+                URL url = new URL(String.format(API_URL + xCor) + "&y=" + yCor);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -53,7 +49,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
                 int responseCode = connection.getResponseCode();
                 if (HttpURLConnection.HTTP_OK == responseCode) {
-                    result = JSONParser.parseConnections(connection.getInputStream());
+                    result = JSONParser.parseOrt(connection.getInputStream());
 
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
@@ -63,7 +59,9 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
-            }//finally
+            }
+        } else {
+
         }
 
         return result;
@@ -77,14 +75,27 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
     }
 
 
-
     @Override
-    protected void onPostExecute(List<Verbindung> result) {
-        if (result == null) {
+    protected void onPostExecute(List<String> result) {
+        if (!isNetworkConnectionAvailable()) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+            alert.setTitle("Keine Internet Verbindung");
+            alert.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
 
+                }
+            });
+
+            alert.show();
         } else {
-            this.progressDialog.dismiss();
-            activity.setData(result);
+            if (null == result) {
+                Log.e("Daten nicht geladen", "EBOLA");
+            } else {
+
+                this.activity.setData(result);
+
+
+            }
         }
     }
 }

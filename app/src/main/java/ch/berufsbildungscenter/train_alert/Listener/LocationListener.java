@@ -1,9 +1,11 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Listener;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
+
+import ch.berufsbildungscenter.train_alert.Location.StationenLocation;
 
 /**
  * Created by zorien on 26.06.2015.

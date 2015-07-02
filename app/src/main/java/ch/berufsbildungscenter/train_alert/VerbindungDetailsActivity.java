@@ -17,12 +17,20 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
+import ch.berufsbildungscenter.train_alert.JSON.Ort;
+import ch.berufsbildungscenter.train_alert.JSON.Station;
+import ch.berufsbildungscenter.train_alert.Listener.FavoritenListener;
+import ch.berufsbildungscenter.train_alert.Location.VerbindungMap;
+
 
 public class VerbindungDetailsActivity extends ActionBarActivity {
     Timestamp timestamp;
-    Button button;
     ArrayList<Station> stations;
+    Button buttonVon;
+    Button buttonNach;
     int zeit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +38,19 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_verbindung_details);
 
         Intent intent = getIntent();
-        Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
+        final Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
         Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
         ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
         stations = intent.getExtras().getParcelableArrayList("stationen");
-
+        buttonVon = (Button) findViewById(R.id.imageButton3);
+        buttonNach = (Button) findViewById(R.id.imageButton4);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
         timestamp = fahrten.get(0).getAbfahrt();
         ((TextView) findViewById(R.id.textView13)).setText(formatter.format(timestamp));
-        ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());
-        ((Button) findViewById(R.id.imageButton4)).setText(nachOrt.getName());
+        buttonVon.setText(vonOrt.getName());
+        buttonNach.setText(nachOrt.getName());
+        buttonVon.setOnClickListener(new FavoritenListener(this, vonOrt));
+        buttonNach.setOnClickListener(new FavoritenListener(this, nachOrt));
 
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), fahrten, this.getLayoutInflater()));
@@ -52,7 +63,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this.getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime()-zeit, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
 
         Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
 

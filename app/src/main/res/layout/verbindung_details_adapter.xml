@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="70dp"
-        android:layout_height="110dp"
+        android:layout_height="125dp"
         android:id="@+id/imageView"
         android:src="@drawable/connection_transp"
         android:adjustViewBounds="false"
