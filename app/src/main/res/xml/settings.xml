@@ -3,9 +3,26 @@
     <PreferenceCategory android:title="@string/einstellungen_title">
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/alarm_title">
+        <RingtonePreference android:title="Klingelton auswählen"
+            android:key="klingelton"
+            android:defaultValue="@raw/train_whistle">
+        </RingtonePreference>
+        <ListPreference android:title="Alarm Zeit">
+            <extra
+                android:name="Bruda"
+                android:value="4">
+
+            </extra>
+            <extra
+                android:name="Hallo"
+                android:value="3">
+            </extra>
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/verbindung_title">
 
     </PreferenceCategory>
-    <PreferenceCategory>
+    <PreferenceCategory android:title="@string/orte_title">
 
     </PreferenceCategory>
 </PreferenceScreen>
