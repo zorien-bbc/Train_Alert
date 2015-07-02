@@ -68,6 +68,7 @@ public class VerbindungenActivity extends ActionBarActivity {
                 intent.putExtra("vonOrt", (Ort) resultset.get(position).getVonOrt());
                 intent.putExtra("nachOrt", (Ort) resultset.get(position).getNachOrt());
                 intent.putParcelableArrayListExtra("fahrten", resultset.get(position).getVerbindungen());
+                intent.putParcelableArrayListExtra("stationen", resultset.get(position).getStations());
                 startActivity(intent);
             }
         });
@@ -81,7 +82,7 @@ public class VerbindungenActivity extends ActionBarActivity {
     }
 
     public void setAlert() {
-        Intent intent = new Intent(this, MyNotification.class);
+        Intent intent = new Intent(this, Notification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this.getApplicationContext(), 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);

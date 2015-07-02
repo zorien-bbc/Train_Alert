@@ -78,6 +78,15 @@ public class Verbindung implements Serializable {
     private String dauer;
 
     private ArrayList<Fahrt> verbindungen;
+    private ArrayList<Station> stations;
+
+    public ArrayList<Station> getStations() {
+        return stations;
+    }
+
+    public void setStations(ArrayList<Station> stations) {
+        this.stations = stations;
+    }
 
     public Timestamp getZeitAn() {
         return zeitAn;

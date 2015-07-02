@@ -63,7 +63,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
-            }
+            }//finally
         }
 
         return result;

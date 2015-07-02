@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 public class VerbindungDetailsActivity extends ActionBarActivity {
     Timestamp timestamp;
+    Button button;
+    ArrayList<Station> stations;
+    int zeit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +33,10 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
         Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
         ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
-        timestamp = fahrten.get(0).getAbfahrt();
+        stations = intent.getExtras().getParcelableArrayList("stationen");
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
-
+        timestamp = fahrten.get(0).getAbfahrt();
         ((TextView) findViewById(R.id.textView13)).setText(formatter.format(timestamp));
         ((Button) findViewById(R.id.imageButton3)).setText(vonOrt.getName());
         ((Button) findViewById(R.id.imageButton4)).setText(nachOrt.getName());
@@ -43,11 +46,13 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
     }
 
     public void setAlert() {
-        Intent intent = new Intent(this, MyNotification.class);
+
+
+        Intent intent = new Intent(this, Notification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, intent, 0);
+                this.getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime()-zeit, pendingIntent);
 
         Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
 
@@ -71,6 +76,10 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         if (id == R.id.alarm) {
             setAlert();
             return true;
+        } else if (id == R.id.mapIcon) {
+            Intent intent = new Intent(getApplicationContext(), VerbindungMap.class);
+            intent.putParcelableArrayListExtra("station", stations);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

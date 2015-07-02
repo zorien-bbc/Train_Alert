@@ -45,7 +45,7 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
 
                 int responseCode = connection.getResponseCode();
                 if (HttpURLConnection.HTTP_OK == responseCode) {
-                    result = JSONParser.parseOrt(connection.getInputStream());
+                    result = ch.berufsbildungscenter.train_alert.JSONParser.parseOrt(connection.getInputStream());
 
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));

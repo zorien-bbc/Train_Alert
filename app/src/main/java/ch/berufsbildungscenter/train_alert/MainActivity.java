@@ -3,6 +3,7 @@ package ch.berufsbildungscenter.train_alert;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +14,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
     final Calendar c = Calendar.getInstance();
@@ -25,6 +30,8 @@ public class MainActivity extends ActionBarActivity {
     MainActivity main = this;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+    FavoritenDatabase favoritenDatabase;
 
     ImageButton imageButtonVon;
     ImageButton imageButtonNach;
@@ -53,8 +60,19 @@ public class MainActivity extends ActionBarActivity {
         textVon = (EditText) findViewById(R.id.editVon);
         textNach = (EditText) findViewById(R.id.editNach);
         textVia = (EditText) findViewById(R.id.editVia);
+        favoritenDatabase = new FavoritenDatabase(this);
 
 
+        try {
+            //Try to open the DB connection
+            favoritenDatabase.open();
+        } catch (SQLException e) {
+            Log.v("DATABASETEST", e.toString());
+        }
+        LatLng latLng = new LatLng(55,33);
+        Favoriten favoriten = new Favoriten(latLng,"Uster");
+        favoritenDatabase.createFavoriten(favoriten);
+        List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
         imageButtonVon = (ImageButton) findViewById(R.id.imageButtonVon);
         imageButtonNach = (ImageButton) findViewById(R.id.imageButtonNach);
         imageButtonVia = (ImageButton) findViewById(R.id.imageButtonVia);

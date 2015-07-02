@@ -32,6 +32,7 @@ public class JSONParser {
         JSONObject nachCoordinateJSON = nachJSON.getJSONObject("coordinate");
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
+            Log.v(verbindungenJSON.length()+"","laenge JSON OBJEKT");
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
             JSONObject vonVerbindungJSON = verbindungJSON.getJSONObject("from");
             JSONObject vonStation = vonVerbindungJSON.getJSONObject("station");
@@ -44,13 +45,22 @@ public class JSONParser {
             JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
 
             Verbindung verbindung = new Verbindung();
-
             ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
+            ArrayList<Station> stationen = new ArrayList<Station>();
             for (int y = 0; y < reiseAbschnitte.length(); y++) {
                 JSONObject abschnitt = reiseAbschnitte.getJSONObject(y);
 
                 if (!abschnitt.isNull("journey")) {
                     JSONObject reise = abschnitt.getJSONObject("journey");
+                    JSONArray passList = reise.getJSONArray("passList");
+                    for (int zaehler = 0; zaehler < passList.length();zaehler++) {
+
+                        JSONObject stations = passList.getJSONObject(zaehler);
+                        JSONObject passStation = stations.getJSONObject("station");
+                        JSONObject coordinate = passStation.getJSONObject("coordinate");
+                        Station station = new Station(passStation.getString("id"), passStation.getString("name"), coordinate.getDouble("x"), coordinate.getDouble("y"));
+                        stationen.add(station);
+                    }
                     Fahrt fahrt = new Fahrt();
                     fahrt.setTransportmittel(reise.getString("name"));
 
@@ -72,9 +82,10 @@ public class JSONParser {
             verbindung.setZeit(new java.sql.Timestamp(vonVerbindungJSON.getLong("departureTimestamp") * 1000));
             verbindung.setZeitAn(new java.sql.Timestamp(nachVerbindungJSON.getLong("arrivalTimestamp") * 1000));
             verbindung.setDauer(verbindungJSON.getString("duration"));
-            verbindung.setVerbindungen(fahrtAbschnitte);
             verbindung.setTransportmittel(fahrtAbschnitte.get(0).getTransportmittel());
-            Log.v(verbindung.getGleis(), verbindung.getZeit() + "EBOLA");
+            verbindung.setVerbindungen(fahrtAbschnitte);
+            verbindung.setStations(stationen);
+
 
             result.add(verbindung);
         }

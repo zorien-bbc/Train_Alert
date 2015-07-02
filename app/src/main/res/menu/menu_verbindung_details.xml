@@ -7,18 +7,17 @@
         android:icon="@drawable/alarm"
         android:title="Search"
         support:showAsAction="collapseActionView|ifRoom"/>
+    <item
+        android:id="@+id/mapIcon"
+        android:icon="@drawable/mapicon"
+        android:title="In Maps anzeigen"
+        support:showAsAction="collapseActionView|ifRoom"/>
 
     <!--<item android:id="@+id/search"-->
     <!--android:title="Search"-->
     <!--android:icon="@mipmap/search"-->
     <!--android:showAsAction="collapseActionView|ifRoom"-->
     <!--android:actionViewClass="android.widget.SearchView" />-->
-
-    <item
-        android:id="@+id/buttonSettings"
-        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
-        android:title="Einstellungen"
-        support:showAsAction="never"/>
 
 
 </menu>

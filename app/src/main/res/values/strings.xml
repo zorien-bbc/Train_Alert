@@ -23,4 +23,7 @@
     <string name="dauerLabel">Dauer (h)</string>
     <string name="gleisLabel">Gleis</string>
     <string name="verkehrsmittelLabel">Verkehrsmittel</string>
+    <string name="title_activity_verbindung_map">VerbindungMap</string>
+    <string name="title_activity_alarm_settings">AlarmSettings</string>
+    <string name="title_activity_pass_list">PassList</string>
 </resources>
