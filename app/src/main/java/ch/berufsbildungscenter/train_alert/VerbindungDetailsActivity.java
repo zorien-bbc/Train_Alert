@@ -1,11 +1,11 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -13,10 +13,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.Database.Alarm;
+import ch.berufsbildungscenter.train_alert.Database.AlarmDatabase;
 import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
 import ch.berufsbildungscenter.train_alert.JSON.Ort;
 import ch.berufsbildungscenter.train_alert.JSON.Station;
@@ -57,13 +61,37 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
     }
 
     public void setAlert() {
-
-
+        AlarmDatabase alarmDatabase;
+        Alarm alarm=null;
+        int alarmNummer = (int) System.currentTimeMillis();
+        alarm = new Alarm(timestamp.getTime(),buttonVon.getText().toString(),buttonNach.getText().toString(),1,alarmNummer);
+        alarmDatabase = new AlarmDatabase(getApplicationContext());
         Intent intent = new Intent(this, Notification.class);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
+                this.getApplicationContext(), alarmNummer, intent, 0);
+
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
+        try {
+            //Try to open the DB connection
+            alarmDatabase.open();
+        } catch (SQLException e) {
+            Log.v("DATABASETEST", e.toString());
+        }
+        alarmDatabase.createAlarm(alarm);
+        List<Alarm> alarms = alarmDatabase.getAllAlarme();
+        for (int i = 0; i<alarms.size(); i++){
+            if(alarms.contains(alarmNummer)){
+            Log.v("Alarm","gesetzt");
+            }
+        }
+
+
+
+
+        Log.v(alarm.getTime()+"", "test");
+        alarmDatabase.close();
 
         Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
 

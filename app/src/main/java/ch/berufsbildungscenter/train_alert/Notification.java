@@ -8,14 +8,28 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.Database.Alarm;
+import ch.berufsbildungscenter.train_alert.Database.AlarmDatabase;
+
 /**
  * Created by zorien on 19.06.2015.
  */
 public class Notification extends BroadcastReceiver {
-
+AlarmDatabase alarmDatabase;
     @Override
     public void onReceive(Context k1, Intent k2) {
         // TODO Auto-generated method stub
+        alarmDatabase = new AlarmDatabase(k1);
+        try {
+            alarmDatabase.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        List<Alarm> alarmList = alarmDatabase.getAllAlarme();
+
         createNotification(k1, "Alarm alarm alarm!", "Dein Zug f\u00e4hrt in f\u00fcnf minuten", "ALARM");
     }
 

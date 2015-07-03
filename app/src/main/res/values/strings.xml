@@ -31,7 +31,10 @@
     <string name="title_Favorite">Favoriten</string>
     <string name="title_activity_alarm_view">AlarmView</string>
     <string name="title_activity_standort_map">StandortMap</string>
-    <string name="alarm_title">Alarm Einstellungen</string>
-    <string name="verbindung_title">Verbindungen Einstellungen</string>
-    <string name="orte_title">Orte Einstellungen</string>
+    <string name="alarm_title">Klingelton auswählen</string>
+    <string name="verbindung_title">Verbindung</string>
+    <string name="orte_title">Orte</string>
+    <string name="favoriten">Favoriten</string>
+    <string name="route">Route</string>
+    <string name="alarme">Alarme</string>
 </resources>
