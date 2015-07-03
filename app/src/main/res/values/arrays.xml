@@ -9,11 +9,11 @@
     </string-array>
 
     <string-array name="alarmzeiten_values">
-        <item>1</item>
-        <item>2</item>
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
+        <item>60000</item>
+        <item>120000</item>
+        <item>300000</item>
+        <item>600000</item>
+        <item>900000</item>
     </string-array>
 
     <string-array name="verbindungen">

@@ -35,7 +35,11 @@
         <activity
             android:name=".VerbindungDetailsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.berufsbildungscenter.train_alert.VerbindungenActivity" />
+        </activity>
         <activity
             android:name=".Location.StationenLocation"
             android:label="@string/app_name"

@@ -3,7 +3,9 @@ package ch.berufsbildungscenter.train_alert;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -31,10 +33,13 @@ import ch.berufsbildungscenter.train_alert.Location.VerbindungMap;
 public class VerbindungDetailsActivity extends ActionBarActivity {
     Timestamp timestamp;
     ArrayList<Station> stations;
+    ArrayList<Fahrt> fahrten;
+    Ort vonOrt;
+    Ort nachOrt;
+
     Button buttonVon;
     Button buttonNach;
     int zeit;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +47,11 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_verbindung_details);
 
         Intent intent = getIntent();
-        final Ort vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
-        Ort nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
-        ArrayList<Fahrt> fahrten = intent.getExtras().getParcelableArrayList("fahrten");
+        vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
+        nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
+        fahrten = intent.getExtras().getParcelableArrayList("fahrten");
         stations = intent.getExtras().getParcelableArrayList("stationen");
+
         buttonVon = (Button) findViewById(R.id.imageButton3);
         buttonNach = (Button) findViewById(R.id.imageButton4);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
@@ -72,23 +78,11 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
                 this.getApplicationContext(), alarmNummer, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        zeit = Integer.parseInt(sp.getString("alarmtime", "300000"));
+
         alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
-        try {
-            //Try to open the DB connection
-            alarmDatabase.open();
-        } catch (SQLException e) {
-            Log.v("DATABASETEST", e.toString());
-        }
-        alarmDatabase.createAlarm(alarm);
-        List<Alarm> alarms = alarmDatabase.getAllAlarme();
-        for (int i = 0; i<alarms.size(); i++){
-            if(alarms.contains(alarmNummer)){
-            Log.v("Alarm","gesetzt");
-            }
-        }
-
-
-
 
         Log.v(alarm.getTime()+"", "test");
         alarmDatabase.close();
