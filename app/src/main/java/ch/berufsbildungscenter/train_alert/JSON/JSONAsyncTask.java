@@ -1,10 +1,14 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -42,10 +46,13 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
         String date = params[4];
         String aban = params[5];
 
+        SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.activity.getApplicationContext());
+        String limit = sprefs.getString("anzVerbindungen", "4");
+
         if (isNetworkConnectionAvailable()) {
             try {
                 URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20") + "&to=" + stationNach.replaceAll("\\s+", "%20") + "&via=" +
-                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date + "&isArrivalTime=" + aban);
+                        stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date + "&isArrivalTime=" + aban + "&limit=" + limit);
 
 
                 Log.v("URLJSON", url.toString());
@@ -61,6 +68,8 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
+                    this.cancel(true);
+                    return null;
                 }
 
                 connection.disconnect();
@@ -79,8 +88,6 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
 
         return null != networkInfo && networkInfo.isConnected();
     }
-
-
 
     @Override
     protected void onPostExecute(List<Verbindung> result) {

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -40,17 +41,41 @@ public class VerbindungenActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindungen);
 
-        Intent intent = getIntent();
-        von = intent.getStringExtra("von");
-        nach = intent.getStringExtra("nach");
-        via = intent.getStringExtra("via");
-        time = intent.getStringExtra("time");
-        date = intent.getStringExtra("date");
-        aban = intent.getStringExtra("wann");
+        if(!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
+            SharedPreferences savedState = getPreferences(MODE_PRIVATE);
+            von = savedState.getString("von", "");
+            nach = savedState.getString("nach", "");
+            via = savedState.getString("via", "");
+            time = savedState.getString("time", "");
+            date = savedState.getString("date", "");
+            aban = savedState.getString("aban", "");
+        } else {
+            Intent intent = getIntent();
+            von = intent.getStringExtra("von");
+            nach = intent.getStringExtra("nach");
+            via = intent.getStringExtra("via");
+            time = intent.getStringExtra("time");
+            date = intent.getStringExtra("date");
+            aban = intent.getStringExtra("wann");
+        }
 
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
         jsonAsyncTask.execute(von, nach, via, time, date, aban);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences savedState = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = savedState.edit();
+        editor.putString("von", von);
+        editor.putString("nach", nach);
+        editor.putString("via", via);
+        editor.putString("time", time);
+        editor.putString("date", date);
+        editor.putString("wann", aban);
+        editor.commit();
     }
 
     public void setData(List<Verbindung> result) {

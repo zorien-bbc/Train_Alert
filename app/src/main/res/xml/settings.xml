@@ -2,27 +2,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/einstellungen_title">
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/alarm_title">
+        <ListPreference
+            android:key="alarmtime"
+            android:title="Minuten vor der Abfahrt erinnern"
+            android:entries="@array/alarmzeiten"
+            android:entryValues="@array/alarmzeiten_values"
+            android:dialogTitle="Bestimmen Sie die Zeit wie lange vor der Abfahrt Sie informiert werden möchten" />
         <RingtonePreference android:title="Klingelton auswählen"
-            android:key="klingelton"
-            android:defaultValue="@raw/train_whistle">
-        </RingtonePreference>
-        <ListPreference android:title="Alarm Zeit">
-            <extra
-                android:name="Bruda"
-                android:value="4">
-
-            </extra>
-            <extra
-                android:name="Hallo"
-                android:value="3">
-            </extra>
-        </ListPreference>
+            android:key="klingelton" />
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/verbindung_title">
-
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/orte_title">
-
+        <ListPreference
+            android:key="anzVerbindungen"
+            android:title="Anzahl angezeigte Verbindungen"
+            android:entries="@array/verbindungen"
+            android:entryValues="@array/verbindungen"
+            android:dialogTitle="Bestimmen Sie die Anzahl der Verbindungen, die angezeigt werden" />
     </PreferenceCategory>
 </PreferenceScreen>

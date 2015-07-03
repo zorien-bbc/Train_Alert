@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -38,10 +39,6 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap map) {
-
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(this.stations.get(0).getX(), this.stations.get(0).getY()), 13));
         LatLng latLng = new LatLng(this.stations.get(0).getX(), this.stations.get(0).getY());
         PolylineOptions polyline = new PolylineOptions().geodesic(true);
         for (int i = 0; i < this.stations.size(); i++) {
@@ -60,7 +57,8 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
                 .position(new LatLng(this.stations.get(laenge).getX(), this.stations.get(laenge).getY())));
 
         map.addPolyline(polyline);
-
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                polyline.getPoints().get(0), 12));
     }
 
 

@@ -1,7 +1,9 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -19,17 +21,27 @@ import android.text.TextUtils;
 
 
 import java.util.List;
+import java.util.Map;
 
 public class MainEinstellungen extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment() {
-            @Override
-            public void onCreate(Bundle savedInstanceState) {
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment()
+        {
+            public void onCreate(Bundle savedInstanceState)
+            {
                 super.onCreate(savedInstanceState);
-                setTitle(getString(R.string.einstellungen_title));
                 addPreferencesFromResource(R.xml.settings);
             }
         }).commit();
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        Map<String, ?> item = prefs.getAll();
+        if (item.isEmpty())
+        {
+
+        }
     }
 }

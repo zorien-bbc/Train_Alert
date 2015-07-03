@@ -91,6 +91,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
             Intent intent = new Intent(getApplicationContext(), VerbindungMap.class);
             intent.putParcelableArrayListExtra("station", stations);
             startActivity(intent);
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);
