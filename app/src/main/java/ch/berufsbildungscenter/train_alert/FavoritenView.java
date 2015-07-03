@@ -35,18 +35,20 @@ public class FavoritenView extends AppCompatActivity implements ActionBar.TabLis
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        actionBar.addTab(actionBar.newTab().setText("Favoriten").setTabListener(this), true);
-        actionBar.addTab(actionBar.newTab().setText("Route").setTabListener(this), false
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.favoriten)).setTabListener(this), true);
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.route)).setTabListener(this), false
         );
-        actionBar.addTab(actionBar.newTab().setText("Standort").setTabListener(this), false);
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.alarme)).setTabListener(this), false);
         actionBar.setHomeButtonEnabled(false);
         fillList();
     }
-    public void fillList(){
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+    public void fillList() {
+
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         ListView favListView = (ListView) findViewById(R.id.listViewOrte);
-         favoritenDatabase = new FavoritenDatabase(getApplicationContext());
+        favoritenDatabase = new FavoritenDatabase(getApplicationContext());
         try {
             //Try to open the DB connection
             favoritenDatabase.open();
@@ -54,41 +56,41 @@ public class FavoritenView extends AppCompatActivity implements ActionBar.TabLis
             Log.v("DATABASETEST", e.toString());
         }
         final List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
-        if(favoritens.size()!=0) {
+        if (favoritens.size() != 0) {
             for (int i = 0; i < favoritens.size(); i++) {
                 arrayAdapter.add(favoritens.get(i).getName());
             }
 
-        favListView.setAdapter(arrayAdapter);
-        favListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            favListView.setAdapter(arrayAdapter);
+            favListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           final int pos, long id) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setTitle(favoritens.get(pos).getName() + " wirklich aus den Favoriten l\u00f6schen?");
-                alert.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               final int pos, long id) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                    alert.setTitle(favoritens.get(pos).getName() + " wirklich aus den Favoriten l\u00f6schen?");
+                    alert.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        favoritenDatabase.deleteFavoriten(favoritens.get(pos));
-                        fillList();
-                    }
-                });
+                        }
+                    });
+                    alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            favoritenDatabase.deleteFavoriten(favoritens.get(pos));
+                            fillList();
+                        }
+                    });
 
 
-                alert.show();
+                    alert.show();
 
-                Log.v("long clicked", "pos: " + pos);
+                    Log.v("long clicked", "pos: " + pos);
 
-                return true;
-            }
-        });
-        }else{
+                    return true;
+                }
+            });
+        } else {
             arrayAdapter.add(getString(R.string.keineFavoriten));
             favListView.setAdapter(arrayAdapter);
         }
@@ -115,12 +117,16 @@ public class FavoritenView extends AppCompatActivity implements ActionBar.TabLis
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
 
-        if(tab.getPosition()==1) {
+        if (tab.getPosition() == 1) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }else if(tab.getPosition()==2){
+            Intent intent = new Intent(getApplicationContext(), AlarmView.class);
             startActivity(intent);
         }
     }

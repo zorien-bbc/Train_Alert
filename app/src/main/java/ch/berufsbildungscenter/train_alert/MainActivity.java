@@ -67,6 +67,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar.addTab(actionBar.newTab().setText("Standort").setTabListener(this), false);
         actionBar.setHomeButtonEnabled(false);
 
+
         Button button = (Button) findViewById(R
                 .id.button);
         textVon = (EditText) findViewById(R.id.editVon);
@@ -91,8 +92,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         buttonAb = (RadioButton) findViewById(R.id.toggleButtonAb);
         buttonAn = (RadioButton) findViewById(R.id.toggleButtonAn);
 
-        imageButtonVon.setOnClickListener(new LocationListener(this, imageButtonVon));
-        imageButtonNach.setOnClickListener(new LocationListener(this, imageButtonNach));
+        imageButtonVon.setOnClickListener(new LocationListener(this,imageButtonVon));
+        imageButtonNach.setOnClickListener(new LocationListener(this,imageButtonNach));
         imageButtonVia.setOnClickListener(new LocationListener(this, imageButtonVia));
 
         deleteVon.setOnClickListener(new EditTextListener(textVon));
@@ -116,10 +117,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();
                 String aban = null;
-                if (buttonAn.isChecked()) {
+                if(buttonAn.isChecked()) {
                     aban = "1";
                 } else {
                     aban = "0";
+
                 }
 
                 if (von.equals("") || nach.equals("")) {
@@ -207,10 +209,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id == R.id.action_settings) {
             Intent intent = new Intent(getApplicationContext(), MainEinstellungen.class);
             startActivity(intent);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -218,8 +221,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
 
-        if (tab.getPosition() == 0) {
+        if(tab.getPosition()==0) {
             Intent intent = new Intent(getApplicationContext(), FavoritenView.class);
+            startActivity(intent);
+        } else if (tab.getPosition() == 2) {
+            Intent intent = new Intent(getApplicationContext(), AlarmView.class);
             startActivity(intent);
         }
     }
@@ -233,7 +239,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
-
     public static EditText getTextVon() {
         return textVon;
     }

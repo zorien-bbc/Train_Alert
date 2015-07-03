@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adapterSwitch"
+        android:layout_gravity="right"
+        android:checked="false"
+        android:layout_alignTop="@+id/adapterTextVia"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/vonLabel"
+        android:id="@+id/adapterTextVon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/abfahrtLabel"
+        android:id="@+id/adapterTextVia"
+        android:layout_below="@+id/adapterTextVon"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/nachLabel"
+        android:id="@+id/adapterTextNach"
+        android:layout_below="@+id/adapterTextVia"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

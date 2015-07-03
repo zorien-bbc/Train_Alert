@@ -123,7 +123,6 @@ public class JSONParser {
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
-
             result.add(verbindungJSON.getString("name"));
         }
 
