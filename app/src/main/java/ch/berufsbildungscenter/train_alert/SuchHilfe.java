@@ -27,11 +27,9 @@ public class SuchHilfe extends ActionBarActivity {
     int textFeldId;
 
     private List<String> vorschlaege;
-
     public List<String> getVorschlaege() {
         return vorschlaege;
     }
-
     public void setVorschlaege(List<String> vorschlaege) {
         this.vorschlaege = vorschlaege;
     }
@@ -77,6 +75,9 @@ public class SuchHilfe extends ActionBarActivity {
 
         final EditText myTextBox = (EditText) findViewById(R.id.editText);
         myTextBox.setText(ort);
+
+        myTextBox.setHint(getIntent().getStringExtra("weg"));
+
         myTextBox.setSelection(myTextBox.getText().length());
         myTextBox.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {

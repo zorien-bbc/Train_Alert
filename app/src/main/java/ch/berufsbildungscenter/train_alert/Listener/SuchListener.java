@@ -14,10 +14,12 @@ import ch.berufsbildungscenter.train_alert.SuchHilfe;
 public class SuchListener implements Button.OnClickListener {
     private Activity activity;
     private EditText selectedEdit;
+    private String weg;
 
-    public SuchListener(Activity activity, EditText selectedEdit) {
+    public SuchListener(Activity activity, EditText selectedEdit, String weg) {
         this.activity = activity;
         this.selectedEdit = selectedEdit;
+        this.weg = weg;
     }
 
     @Override
@@ -25,6 +27,7 @@ public class SuchListener implements Button.OnClickListener {
         Intent intent = new Intent(this.activity.getApplicationContext(), SuchHilfe.class);
         intent.putExtra("selectedEdit", selectedEdit.getId());
         intent.putExtra("ort", selectedEdit.getText().toString());
+        intent.putExtra("weg", weg);
         this.activity.startActivity(intent);
     }
 }

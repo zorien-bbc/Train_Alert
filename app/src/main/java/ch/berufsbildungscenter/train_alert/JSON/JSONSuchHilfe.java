@@ -1,9 +1,11 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -22,6 +24,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
     private static final String API_URL = "http://transport.opendata.ch/v1/locations?query=";
 
     private SuchHilfe activity;
+    private HttpURLConnection connection;
 
     public JSONSuchHilfe(SuchHilfe activity) {
         this.activity = activity;
@@ -33,11 +36,11 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
         String stationVon = params[0].toString();
 
 
-        if (isNetworkConnectionAvailable()) {
+        if (JSONAsyncTask.isNetworkConnectionAvailable(this.activity)) {
             try {
                 URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20"));
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 connection.connect();
@@ -49,34 +52,21 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
                 }
-
-                connection.disconnect();
-
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
+            } finally {
             }
         }
 
         return result;
     }
 
-    private boolean isNetworkConnectionAvailable() {
-        ConnectivityManager connectivityService = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityService.getActiveNetworkInfo();
-
-        return null != networkInfo && networkInfo.isConnected();
-    }
-
-
-
     @Override
     protected void onPostExecute(List<String> result) {
         if (null == result) {
-            Log.e(LOG_TAG, "Daten nicht geladen");
+            JSONAsyncTask.noConnectionAlert(this.activity);
         } else {
             activity.setData(result);
         }
     }
-
-
 }

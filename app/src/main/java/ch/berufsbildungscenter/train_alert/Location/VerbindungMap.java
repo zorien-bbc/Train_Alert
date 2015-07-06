@@ -23,6 +23,7 @@ import ch.berufsbildungscenter.train_alert.JSON.Station;
 public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallback, android.support.v7.app.ActionBar.TabListener {
 
     List<Station> stations;
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,11 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
 
         Intent intent = getIntent();
         stations = intent.getParcelableArrayListExtra("station");
+        title = intent.getStringExtra("verbindung");
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapVerbindung);
         mapFragment.getMapAsync(this);
+        getSupportActionBar().setTitle(getString(R.string.verbindungenTitel) + ": " + title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

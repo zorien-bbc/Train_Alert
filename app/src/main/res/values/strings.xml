@@ -23,7 +23,7 @@
     <string name="dauerLabel">Dauer (h)</string>
     <string name="gleisLabel">Gleis</string>
     <string name="verkehrsmittelLabel">Verkehrsmittel</string>
-    <string name="title_activity_verbindung_map">VerbindungMap</string>
+    <string name="title_activity_verbindung_map">Verbindung</string>
     <string name="title_activity_alarm_settings">AlarmSettings</string>
     <string name="title_activity_pass_list">PassList</string>
     <string name="einstellungen_title">Train Alert Einstellungen</string>
@@ -37,4 +37,12 @@
     <string name="favoriten">Favoriten</string>
     <string name="route">Route</string>
     <string name="alarme">Alarme</string>
+    <string name="ok_text">OK</string>
+    <string name="fehler_text">Fehler</string>
+    <string name="startzielerror_text">Start- und Zielort angeben!</string>
+    <string name="orterror_text">Orte müssen verschieden sein!</string>
+    <string name="favoriten_tab">Favoriten</string>
+    <string name="route_tab">Route</string>
+    <string name="standort_tab">Standort</string>
+    <string name="nocon_text">Keine Internet Verbindung</string>
 </resources>

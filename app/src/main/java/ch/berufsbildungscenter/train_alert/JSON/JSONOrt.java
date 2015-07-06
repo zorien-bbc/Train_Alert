@@ -24,7 +24,7 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
     private static final String API_URL = "http://transport.opendata.ch/v1/locations?x=";
 
     private StationenLocation activity;
-    // private StandortMap standortMap;
+    private HttpURLConnection connection;
 
     public JSONOrt(StationenLocation activity) {
         this.activity = activity;
@@ -38,11 +38,11 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
         String yCor = params[1];
 
 
-        if (isNetworkConnectionAvailable()) {
+        if (JSONAsyncTask.isNetworkConnectionAvailable(this.activity)) {
             try {
                 URL url = new URL(String.format(API_URL + xCor) + "&y=" + yCor);
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 connection.connect();
@@ -54,48 +54,21 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
                 } else {
                     Log.e(LOG_TAG, String.format("An error occurred while loading the data in the background. HTTP status: %d", responseCode));
                 }
-
-                connection.disconnect();
-
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
+            } finally {
             }
-        } else {
 
         }
-
         return result;
     }
 
-    private boolean isNetworkConnectionAvailable() {
-        ConnectivityManager connectivityService = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityService.getActiveNetworkInfo();
-
-        return null != networkInfo && networkInfo.isConnected();
-    }
-
-
     @Override
     protected void onPostExecute(List<String> result) {
-        if (!isNetworkConnectionAvailable()) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-            alert.setTitle("Keine Internet Verbindung");
-            alert.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-
-                }
-            });
-
-            alert.show();
+        if (null == result) {
+            JSONAsyncTask.noConnectionAlert(this.activity);
         } else {
-            if (null == result) {
-                Log.e("Daten nicht geladen", "EBOLA");
-            } else {
-
-                this.activity.setData(result);
-
-
-            }
+            this.activity.setData(result);
         }
     }
 }

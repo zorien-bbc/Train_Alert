@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ch.berufsbildungscenter.train_alert.JSON.JSONAsyncTask;
 import ch.berufsbildungscenter.train_alert.Listener.EditTextListener;
 import ch.berufsbildungscenter.train_alert.Listener.LocationListener;
 import ch.berufsbildungscenter.train_alert.Listener.SuchListener;
@@ -62,11 +63,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        actionBar.addTab(actionBar.newTab().setText("Favoriten").setTabListener(this), false);
-        actionBar.addTab(actionBar.newTab().setText("Route").setTabListener(this), true);
-        actionBar.addTab(actionBar.newTab().setText("Standort").setTabListener(this), false);
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.favoriten_tab)).setTabListener(this), false);
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.route_tab)).setTabListener(this), true);
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.standort_tab)).setTabListener(this), false);
         actionBar.setHomeButtonEnabled(false);
-
 
         Button button = (Button) findViewById(R
                 .id.button);
@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         textNach = (EditText) findViewById(R.id.editNach);
         textVia = (EditText) findViewById(R.id.editVia);
 
-        if(!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
+        if (!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
             SharedPreferences savedState = getPreferences(MODE_PRIVATE);
             textVon.setText(savedState.getString("textVon", ""));
             textNach.setText(savedState.getString("textNach", ""));
@@ -92,8 +92,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         buttonAb = (RadioButton) findViewById(R.id.toggleButtonAb);
         buttonAn = (RadioButton) findViewById(R.id.toggleButtonAn);
 
-        imageButtonVon.setOnClickListener(new LocationListener(this,imageButtonVon));
-        imageButtonNach.setOnClickListener(new LocationListener(this,imageButtonNach));
+        imageButtonVon.setOnClickListener(new LocationListener(this, imageButtonVon));
+        imageButtonNach.setOnClickListener(new LocationListener(this, imageButtonNach));
         imageButtonVia.setOnClickListener(new LocationListener(this, imageButtonVia));
 
         deleteVon.setOnClickListener(new EditTextListener(textVon));
@@ -104,9 +104,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         textNach.setFocusable(false);
         textVia.setFocusable(false);
 
-        textVon.setOnClickListener(new SuchListener(this, textVon));
-        textNach.setOnClickListener(new SuchListener(this, textNach));
-        textVia.setOnClickListener(new SuchListener(this, textVia));
+        textVon.setOnClickListener(new SuchListener(this, textVon, getString(R.string.hintEditVon)));
+        textNach.setOnClickListener(new SuchListener(this, textNach, getString(R.string.hintEditNach)));
+        textVia.setOnClickListener(new SuchListener(this, textVia, getString(R.string.hintEditVia)));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 String via = textVia.getText().toString();
                 String time = buttonTime.getText().toString();
                 String aban = null;
-                if(buttonAn.isChecked()) {
+                if (buttonAn.isChecked()) {
                     aban = "1";
                 } else {
                     aban = "0";
@@ -125,9 +125,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
 
                 if (von.equals("") || nach.equals("")) {
-                    showErrorDialog("Start- und Zielort angeben!");
+                    showErrorDialog(getString(R.string.startzielerror_text));
                 } else if (von.equals(nach) || von.equals(via) || nach.equals(via)) {
-                    showErrorDialog("Orte m\u00fcssen verschieden sein!");
+                    showErrorDialog(getString(R.string.orterror_text));
                 } else {
                     SimpleDateFormat intentDate = new SimpleDateFormat(c.get(Calendar.YEAR) + "-MM-dd");
                     String startDatum = intentDate.format(startDate);
@@ -155,6 +155,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         buttonDate.setText(dateFormat.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
+
+        if (!JSONAsyncTask.isNetworkConnectionAvailable(this)) {
+            Toast toast = Toast.makeText(this.getApplicationContext(), getString(R.string.fehler_text) + ": " +
+                    getString(R.string.nocon_text), Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences savedState = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = savedState.edit();
+        editor.clear();
+        editor.commit();
     }
 
     @Override
@@ -170,7 +185,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void showErrorDialog(String msg) {
         AlertDialog errorAlertDialog = new AlertDialog.Builder(MainActivity.this)
-                .setPositiveButton("OK",
+                .setPositiveButton(getString(R.string.ok_text),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -179,15 +194,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         }
                 )
                 .create();
-        errorAlertDialog.setTitle("Fehler");
+        errorAlertDialog.setTitle(getString(R.string.fehler_text));
         errorAlertDialog.setMessage(msg);
         errorAlertDialog.show();
     }
-
-    public void displayLoadingDataFailedError() {
-        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-    }
-
 
     public void getDate(int year, int month, int day) {
         date = new Date(year, month, day);
@@ -209,19 +219,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if(id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             Intent intent = new Intent(getApplicationContext(), MainEinstellungen.class);
             startActivity(intent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-
-        if(tab.getPosition()==0) {
+        if (tab.getPosition() == 0) {
             Intent intent = new Intent(getApplicationContext(), FavoritenView.class);
             startActivity(intent);
         } else if (tab.getPosition() == 2) {
@@ -239,6 +246,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
+
     public static EditText getTextVon() {
         return textVon;
     }

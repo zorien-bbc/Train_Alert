@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,9 +69,9 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
 
     public void setAlert() {
         AlarmDatabase alarmDatabase;
-        Alarm alarm=null;
+        Alarm alarm = null;
         int alarmNummer = (int) System.currentTimeMillis();
-        alarm = new Alarm(timestamp.getTime(),buttonVon.getText().toString(),buttonNach.getText().toString(),1,alarmNummer);
+        alarm = new Alarm(timestamp.getTime(), buttonVon.getText().toString(), buttonNach.getText().toString(), 1, alarmNummer);
         alarmDatabase = new AlarmDatabase(getApplicationContext());
         Intent intent = new Intent(this, Notification.class);
 
@@ -84,11 +85,10 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
 
-        Log.v(alarm.getTime()+"", "test");
+        Log.v(alarm.getTime() + "", "test");
         alarmDatabase.close();
 
         Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -112,6 +112,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         } else if (id == R.id.mapIcon) {
             Intent intent = new Intent(getApplicationContext(), VerbindungMap.class);
             intent.putParcelableArrayListExtra("station", stations);
+            intent.putExtra("verbindung", vonOrt.getName() + " - " + nachOrt.getName());
             startActivity(intent);
             this.finish();
         }

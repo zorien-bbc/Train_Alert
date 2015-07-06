@@ -26,7 +26,6 @@ public class FavoritenListener implements View.OnClickListener{
     public FavoritenListener(Activity activity, Ort ort){
         this.activity = activity;
         this.ort = ort;
-
     }
 
     @Override
@@ -51,9 +50,5 @@ public class FavoritenListener implements View.OnClickListener{
             toast.makeText(this.activity.getApplicationContext(), ort.getName() + " wurde zu Favoriten hinzugef\u00fcgt", Toast.LENGTH_SHORT).show();
         }
         favoritenDatabase.close();
-
     }
-
-
-
 }

@@ -34,14 +34,5 @@ public class MainEinstellungen extends PreferenceActivity {
                 addPreferencesFromResource(R.xml.settings);
             }
         }).commit();
-
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        Map<String, ?> item = prefs.getAll();
-        if (item.isEmpty())
-        {
-
-        }
     }
 }
