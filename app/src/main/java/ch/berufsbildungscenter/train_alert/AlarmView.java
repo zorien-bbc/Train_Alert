@@ -12,16 +12,15 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
-import ch.berufsbildungscenter.train_alert.Database.AlarmDatabase;
+import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 
 
 public class AlarmView extends ActionBarActivity implements ActionBar.TabListener {
-    AlarmDatabase alarmDatabase;
+    AlarmDAO alarmDatabase;
 
     Activity activity = this;
     final Calendar cal = Calendar.getInstance();
@@ -46,24 +45,23 @@ public class AlarmView extends ActionBarActivity implements ActionBar.TabListene
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         ListView alrListView = (ListView) findViewById(R.id.listView4);
 
-        alarmDatabase = new AlarmDatabase(getApplicationContext());
-        try {
-            //Try to open the DB connection
-            alarmDatabase.open();
-        } catch (SQLException e) {
-            Log.v("DATABASETEST", e.toString());
-        }
+        alarmDatabase = new AlarmDAO(getApplicationContext());
         final List<Alarm> alarms = alarmDatabase.getAllAlarme();
+        final Calendar calendar = Calendar.getInstance();
+        if(alarms.size() !=0) {
+            AlarmArrayAdapter alarmArrayAdapter = new AlarmArrayAdapter(this.getApplicationContext(), alarms, this.getLayoutInflater(), this);
+            for(int i =0;i<alarms.size();i++){
 
-        if (alarms.size() != 0) {
-            for (int i = 0; i < alarms.size(); i++) {
-                Log.v(alarms.get(i).getTime()+"/"+System.currentTimeMillis(),"test");
+                Log.v(alarms.get(i).getNachOrt(),alarms.get(i).getAktiviert()+"superyolo");
+            }
 
-
-            };
+            alrListView.setAdapter(alarmArrayAdapter);
+        }else {
+            arrayAdapter.add(getString(R.string.keinAlarm));
+            alrListView.setAdapter(arrayAdapter);
         }
-        AlarmArrayAdapter alarmArrayAdapter = new AlarmArrayAdapter(this.getApplicationContext(), alarms, this.getLayoutInflater(), this);
-        alrListView.setAdapter(alarmArrayAdapter);
+
+
 
     }
 

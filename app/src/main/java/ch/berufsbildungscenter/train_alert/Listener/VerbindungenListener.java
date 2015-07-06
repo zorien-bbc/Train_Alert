@@ -10,10 +10,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
-import ch.berufsbildungscenter.train_alert.DatePickerFragment;
+import ch.berufsbildungscenter.train_alert.Fragment.DatePickerFragment;
 import ch.berufsbildungscenter.train_alert.MainActivity;
 import ch.berufsbildungscenter.train_alert.R;
-import ch.berufsbildungscenter.train_alert.TimePickerFragment;
+import ch.berufsbildungscenter.train_alert.Fragment.TimePickerFragment;
 
 /**
  * Created by zorien on 17.06.2015.

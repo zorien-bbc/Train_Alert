@@ -16,16 +16,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Favoriten;
-import ch.berufsbildungscenter.train_alert.Database.FavoritenDatabase;
+import ch.berufsbildungscenter.train_alert.Database.FavoritenDAO;
 
 
 public class FavoritenView extends AppCompatActivity implements ActionBar.TabListener {
 
-    private FavoritenDatabase favoritenDatabase;
+    private FavoritenDAO favoritenDatabase;
     private Activity activity = this;
 
     @Override
@@ -48,13 +47,8 @@ public class FavoritenView extends AppCompatActivity implements ActionBar.TabLis
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         ListView favListView = (ListView) findViewById(R.id.listViewOrte);
-        favoritenDatabase = new FavoritenDatabase(getApplicationContext());
-        try {
-            //Try to open the DB connection
-            favoritenDatabase.open();
-        } catch (SQLException e) {
-            Log.v("DATABASETEST", e.toString());
-        }
+        favoritenDatabase = new FavoritenDAO(getApplicationContext());
+
         final List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
         if (favoritens.size() != 0) {
             for (int i = 0; i < favoritens.size(); i++) {
@@ -94,6 +88,7 @@ public class FavoritenView extends AppCompatActivity implements ActionBar.TabLis
             arrayAdapter.add(getString(R.string.keineFavoriten));
             favListView.setAdapter(arrayAdapter);
         }
+        favoritenDatabase.close();
     }
 
     @Override

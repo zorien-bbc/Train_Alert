@@ -41,14 +41,14 @@ public class VerbindungenActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindungen);
 
-        if (!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
+        if(!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
             SharedPreferences savedState = getPreferences(MODE_PRIVATE);
             von = savedState.getString("von", "");
             nach = savedState.getString("nach", "");
             via = savedState.getString("via", "");
             time = savedState.getString("time", "");
             date = savedState.getString("date", "");
-            aban = savedState.getString("wann", "");
+            aban = savedState.getString("aban", "");
         } else {
             Intent intent = getIntent();
             von = intent.getStringExtra("von");
@@ -60,22 +60,8 @@ public class VerbindungenActivity extends ActionBarActivity {
         }
 
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
-        progressDialog.setCancelable(true);
         JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
         jsonAsyncTask.execute(von, nach, via, time, date, aban);
-    }
-
-    private void destroyPrefs() {
-        SharedPreferences savedState = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = savedState.edit();
-        editor.clear();
-        editor.commit();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        destroyPrefs();
     }
 
     @Override

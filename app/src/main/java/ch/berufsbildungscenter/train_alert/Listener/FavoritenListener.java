@@ -1,24 +1,22 @@
 package ch.berufsbildungscenter.train_alert.Listener;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Favoriten;
-import ch.berufsbildungscenter.train_alert.Database.FavoritenDatabase;
+import ch.berufsbildungscenter.train_alert.Database.FavoritenDAO;
 import ch.berufsbildungscenter.train_alert.JSON.Ort;
 
 /**
  * Created by zorien on 02.07.2015.
  */
 public class FavoritenListener implements View.OnClickListener{
-    FavoritenDatabase favoritenDatabase;
+    FavoritenDAO favoritenDatabase;
     Activity activity;
     Ort ort;
     Toast toast;
@@ -30,13 +28,8 @@ public class FavoritenListener implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        favoritenDatabase = new FavoritenDatabase(this.activity.getApplicationContext());
-        try {
-            //Try to open the DB connection
-            favoritenDatabase.open();
-        } catch (SQLException e) {
-            Log.v("DATABASETEST", e.toString());
-        }
+        favoritenDatabase = new FavoritenDAO(this.activity.getApplicationContext());
+
         LatLng latLng = new LatLng(ort.getX(),ort.getY());
         Favoriten favoriten = new Favoriten(latLng,ort.getName());
         List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();

@@ -8,29 +8,39 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
-import ch.berufsbildungscenter.train_alert.Database.AlarmDatabase;
+import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 
 /**
  * Created by zorien on 19.06.2015.
  */
 public class Notification extends BroadcastReceiver {
-AlarmDatabase alarmDatabase;
-    @Override
-    public void onReceive(Context k1, Intent k2) {
-        // TODO Auto-generated method stub
-        alarmDatabase = new AlarmDatabase(k1);
-        try {
-            alarmDatabase.open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        List<Alarm> alarmList = alarmDatabase.getAllAlarme();
+    AlarmDAO alarmDatabase;
+    int alarmNummer;
+    Context context;
 
-        createNotification(k1, "Alarm alarm alarm!", "Dein Zug f\u00e4hrt in f\u00fcnf minuten", "ALARM");
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        this.context = context;
+        alarmDatabase = new AlarmDAO(context);
+        alarmNummer = intent.getExtras().getInt("id");
+        getAlarme();
+    }
+
+    public void getAlarme() {
+        List<Alarm> alarms = alarmDatabase.getAllAlarme();
+        for (int i = 0; i < alarms.size(); i++) {
+            if (alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 0) {
+                createNotification(this.context, "Alarm alarm alarm!", "Dein Zug f\u00e4hrt in f\u00fcnf minuten", "ALARM");
+                alarmDatabase.deleteAlarm(alarms.get(i));
+            } else if(alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 1) {
+                alarmDatabase.deleteAlarm(alarms.get(i));
+            }
+        }
+
+
     }
 
     public void createNotification(Context context, String msg, String msgtext, String msgalert) {

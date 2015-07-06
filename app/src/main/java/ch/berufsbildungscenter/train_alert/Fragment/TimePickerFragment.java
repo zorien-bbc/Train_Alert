@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.Fragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

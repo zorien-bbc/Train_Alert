@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.berufsbildungscenter.train_alert">
+    package="ch.berufsbildungscenter.train_alert" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,11 +13,11 @@
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,25 +25,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AlarmView"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".VerbindungenActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.berufsbildungscenter.train_alert.MainActivity" />
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".VerbindungDetailsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.berufsbildungscenter.train_alert.VerbindungenActivity" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Location.StationenLocation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.berufsbildungscenter.train_alert.MainActivity" />
@@ -61,27 +59,16 @@
         <activity
             android:name=".SuchHilfe"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.berufsbildungscenter.train_alert.MainActivity" />
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Location.VerbindungMap"
-            android:label="@string/title_activity_verbindung_map">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.berufsbildungscenter.train_alert.VerbindungDetailsActivity" />
+            android:parentActivityName=".VerbindungDetailsActivity"
+            android:label="@string/title_activity_verbindung_map" >
         </activity>
         <activity
             android:name=".FavoritenView"
-            android:label="@string/title_Favorite"></activity>
-        <activity
-            android:name=".MainEinstellungen"
-            android:label="@string/einstellungen_title">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.berufsbildungscenter.train_alert.MainActivity" />
+            android:label="@string/title_Favorite" >
         </activity>
     </application>
 

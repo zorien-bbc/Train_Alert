@@ -1,29 +1,24 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.*;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
-import ch.berufsbildungscenter.train_alert.Database.AlarmDatabase;
+import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
 import ch.berufsbildungscenter.train_alert.JSON.Ort;
 import ch.berufsbildungscenter.train_alert.JSON.Station;
@@ -41,6 +36,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
     Button buttonVon;
     Button buttonNach;
     int zeit;
+    AlarmDAO alarmDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +48,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
         fahrten = intent.getExtras().getParcelableArrayList("fahrten");
         stations = intent.getExtras().getParcelableArrayList("stationen");
-
+        alarmDatabase = new AlarmDAO(this.getApplicationContext());
         buttonVon = (Button) findViewById(R.id.imageButton3);
         buttonNach = (Button) findViewById(R.id.imageButton4);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
@@ -68,27 +64,18 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
     }
 
     public void setAlert() {
-        AlarmDatabase alarmDatabase;
-        Alarm alarm = null;
-        int alarmNummer = (int) System.currentTimeMillis();
-        alarm = new Alarm(timestamp.getTime(), buttonVon.getText().toString(), buttonNach.getText().toString(), 1, alarmNummer);
-        alarmDatabase = new AlarmDatabase(getApplicationContext());
+        int _id=(int)System.currentTimeMillis();
         Intent intent = new Intent(this, Notification.class);
-
+        intent.putExtra("id",_id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), alarmNummer, intent, 0);
-
+                this.getApplicationContext(), _id, intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        zeit = Integer.parseInt(sp.getString("alarmtime", "300000"));
-
         alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
 
-        Log.v(alarm.getTime() + "", "test");
-        alarmDatabase.close();
-
+        Alarm alarm = new Alarm(timestamp.getTime(),buttonVon.getText().toString() ,buttonNach.getText().toString(),0,_id);
+        alarmDatabase.createAlarm(alarm);
         Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -109,10 +96,9 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         if (id == R.id.alarm) {
             setAlert();
             return true;
-        } else if (id == R.id.mapIcon) {
+        } else if (id == R.id.mapAction) {
             Intent intent = new Intent(getApplicationContext(), VerbindungMap.class);
             intent.putParcelableArrayListExtra("station", stations);
-            intent.putExtra("verbindung", vonOrt.getName() + " - " + nachOrt.getName());
             startActivity(intent);
             this.finish();
         }
