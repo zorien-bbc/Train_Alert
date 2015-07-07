@@ -28,7 +28,7 @@ public class AlarmView extends ActionBarActivity implements ActionBar.TabListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm_view);
+        setContentView(R.layout.alarm_fragment);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -49,13 +49,13 @@ public class AlarmView extends ActionBarActivity implements ActionBar.TabListene
         final List<Alarm> alarms = alarmDatabase.getAllAlarme();
         final Calendar calendar = Calendar.getInstance();
         if(alarms.size() !=0) {
-            AlarmArrayAdapter alarmArrayAdapter = new AlarmArrayAdapter(this.getApplicationContext(), alarms, this.getLayoutInflater(), this);
+         //   AlarmArrayAdapter alarmArrayAdapter = new AlarmArrayAdapter(this.getApplicationContext(), alarms, this.getLayoutInflater(), this);
             for(int i =0;i<alarms.size();i++){
 
                 Log.v(alarms.get(i).getNachOrt(),alarms.get(i).getAktiviert()+"superyolo");
             }
 
-            alrListView.setAdapter(alarmArrayAdapter);
+            //alrListView.setAdapter(alarmArrayAdapter);
         }else {
             arrayAdapter.add(getString(R.string.keinAlarm));
             alrListView.setAdapter(arrayAdapter);

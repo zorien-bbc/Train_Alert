@@ -25,7 +25,6 @@ import java.util.Date;
 import ch.berufsbildungscenter.train_alert.Listener.EditTextListener;
 import ch.berufsbildungscenter.train_alert.Listener.LocationListener;
 import ch.berufsbildungscenter.train_alert.Listener.SuchListener;
-import ch.berufsbildungscenter.train_alert.Listener.VerbindungenListener;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     final Calendar c = Calendar.getInstance();
@@ -57,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_fragment);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -152,8 +151,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         buttonTime.setText(time.format(c.getTime()));
         Date datum = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         buttonDate.setText(dateFormat.format(datum));
-        buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
-        buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
+       // buttonTime.setOnClickListener(new VerbindungenListener(this, buttonTime));
+       // buttonDate.setOnClickListener(new VerbindungenListener(this, buttonDate));
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nils on 06.07.2015.
+ * Created by zorien on 06.07.2015.
  */
 public class AlarmDAO extends DatabaseDAO {
     public AlarmDAO(Context context) {

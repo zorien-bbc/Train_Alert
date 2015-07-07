@@ -17,6 +17,7 @@ import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Favoriten;
 import ch.berufsbildungscenter.train_alert.Database.FavoritenDAO;
+import ch.berufsbildungscenter.train_alert.Fragment.HomeFragment;
 import ch.berufsbildungscenter.train_alert.JSON.JSONSuchHilfe;
 
 
@@ -52,11 +53,11 @@ public class SuchHilfe extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (textFeldId == R.id.editVon) {
-                    MainActivity.textVon.setText(favoritens.get(position).getName());
+                    HomeFragment.getTextVon().setText(favoritens.get(position).getName());
                 } else if (textFeldId == R.id.editNach) {
-                    MainActivity.textNach.setText(favoritens.get(position).getName());
+                    HomeFragment.getTextNach().setText(favoritens.get(position).getName());
                 } else if (textFeldId == R.id.editVia) {
-                    MainActivity.textVia.setText(favoritens.get(position).getName());
+                    HomeFragment.getTextVia().setText(favoritens.get(position).getName());
                 }
                 finish();
             }
@@ -100,11 +101,11 @@ public class SuchHilfe extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (textFeldId == R.id.editVon) {
-                    MainActivity.textVon.setText(resultset.get(position).toString());
+                    HomeFragment.getTextVon().setText(resultset.get(position).toString());
                 } else if (textFeldId == R.id.editNach) {
-                    MainActivity.textNach.setText(resultset.get(position).toString());
+                    HomeFragment.getTextNach().setText(resultset.get(position).toString());
                 } else if (textFeldId == R.id.editVia) {
-                    MainActivity.textVia.setText(resultset.get(position).toString());
+                    HomeFragment.getTextVia().setText(resultset.get(position).toString());
                 }
                 finish();
             }

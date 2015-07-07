@@ -1,7 +1,9 @@
 package ch.berufsbildungscenter.train_alert;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
 import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
+import ch.berufsbildungscenter.train_alert.Fragment.AlarmFragment;
 
 /**
  * Created by zorien on 03.07.2015.
@@ -24,15 +27,15 @@ import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 public class AlarmArrayAdapter extends ArrayAdapter<Alarm> {
     LayoutInflater mInflater;
     private List<Alarm> mItems;
-    AlarmView activity;
+    Activity activity;
     AlarmDAO alarmDatabase;
+    AlarmFragment alarmFragment;
 
-
-    public AlarmArrayAdapter(Context context, List<Alarm> items, LayoutInflater inflater, AlarmView activity) {
+    public AlarmArrayAdapter(Context context, List<Alarm> items, LayoutInflater inflater, Activity activity, AlarmFragment alarmFragment) {
         super(context, -1, items);
         this.mItems = items;
         this.mInflater = inflater;
-
+        this.alarmFragment = alarmFragment;
         this.activity = activity;
 
     }
@@ -86,7 +89,7 @@ public class AlarmArrayAdapter extends ArrayAdapter<Alarm> {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 alarmDatabase.updateAlarm(alarm);
-                activity.fillList();
+                refreshFragment();
             }
 
         });
@@ -95,7 +98,7 @@ public class AlarmArrayAdapter extends ArrayAdapter<Alarm> {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 alarmDatabase.deleteAlarm(alarm);
-                activity.fillList();
+                refreshFragment();
 
             }
         });
@@ -103,5 +106,11 @@ public class AlarmArrayAdapter extends ArrayAdapter<Alarm> {
 
         alert.show();
 
+    }
+    public void refreshFragment(){
+        FragmentManager fragmentManager = alarmFragment.getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, alarmFragment)
+                .commit();
     }
 }
