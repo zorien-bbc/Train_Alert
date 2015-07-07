@@ -34,16 +34,15 @@ public class JSONParser {
         JSONObject nachCoordinateJSON = nachJSON.getJSONObject("coordinate");
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
-            Log.v(verbindungenJSON.length()+"","laenge JSON OBJEKT");
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
             JSONObject vonVerbindungJSON = verbindungJSON.getJSONObject("from");
             JSONObject vonStation = vonVerbindungJSON.getJSONObject("station");
             JSONObject vonCoordinatJSON = vonStation.getJSONObject("coordinate");
 
-
             JSONObject nachVerbindungJSON = verbindungJSON.getJSONObject("to");
             JSONObject nachStation = nachVerbindungJSON.getJSONObject("station");
             JSONObject nachCoordinatJSON = nachStation.getJSONObject("coordinate");
+
             JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
 
             Verbindung verbindung = new Verbindung();
@@ -69,10 +68,27 @@ public class JSONParser {
                     JSONObject reiseDeparture = abschnitt.getJSONObject("departure");
                     JSONObject reiseArrival = abschnitt.getJSONObject("arrival");
 
+                    JSONObject prognosisDeparture = reiseDeparture.getJSONObject("prognosis");
+                    JSONObject prognosisArrival = reiseArrival.getJSONObject("prognosis");
+
+                    String platformDeparture;
+                    String platformArrival;
+                    if(!prognosisDeparture.isNull("platform")) {
+                        platformDeparture = prognosisDeparture.getString("platform");
+                    } else {
+                        platformDeparture = reiseDeparture.getString("platform");
+                    }
+
+                    if(!prognosisArrival.isNull("platform")) {
+                        platformArrival = prognosisArrival.getString("platform");
+                    } else {
+                        platformArrival = reiseArrival.getString("platform");
+                    }
+
                     fahrt.setAbfahrt(new java.sql.Timestamp(reiseDeparture.getLong("departureTimestamp") * 1000));
                     fahrt.setAnkunft(new java.sql.Timestamp(reiseArrival.getLong("arrivalTimestamp") * 1000));
-                    fahrt.setVonGleis(reiseDeparture.getString("platform"));
-                    fahrt.setBisGleis(reiseArrival.getString("platform"));
+                    fahrt.setVonGleis(platformDeparture);
+                    fahrt.setBisGleis(platformArrival);
                     fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
                     fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
                     fahrtAbschnitte.add(fahrt);
@@ -80,7 +96,7 @@ public class JSONParser {
             }
             verbindung.setVonOrt(new Ort(vonStation.getString("id"), vonStation.getString("name"), vonCoordinatJSON.getDouble("x"), vonCoordinatJSON.getDouble("y")));
             verbindung.setNachOrt(new Ort(nachJSON.getString("id"), nachJSON.getString("name"), nachCoordinateJSON.getDouble("x"), nachCoordinateJSON.getDouble("y")));
-            verbindung.setGleis(vonVerbindungJSON.getString("platform"));
+            verbindung.setGleis(fahrtAbschnitte.get(0).getVonGleis());
             verbindung.setZeit(new java.sql.Timestamp(vonVerbindungJSON.getLong("departureTimestamp") * 1000));
             verbindung.setZeitAn(new java.sql.Timestamp(nachVerbindungJSON.getLong("arrivalTimestamp") * 1000));
             verbindung.setDauer(verbindungJSON.getString("duration"));
