@@ -115,17 +115,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/verbindungenTitel"
         android:id="@+id/textView16"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
+        android:smoothScrollbar="false"
         android:layout_below="@+id/textView16"
-        android:layout_alignParentStart="true"
-        android:smoothScrollbar="false" />
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

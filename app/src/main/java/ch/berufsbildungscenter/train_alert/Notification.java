@@ -19,6 +19,7 @@ import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 public class Notification extends BroadcastReceiver {
     AlarmDAO alarmDatabase;
     int alarmNummer;
+    String nachOrt;
     Context context;
 
     @Override
@@ -26,6 +27,7 @@ public class Notification extends BroadcastReceiver {
         this.context = context;
         alarmDatabase = new AlarmDAO(context);
         alarmNummer = intent.getExtras().getInt("id");
+        nachOrt = intent.getExtras().getString("nach");
         getAlarme();
     }
 
@@ -33,7 +35,7 @@ public class Notification extends BroadcastReceiver {
         List<Alarm> alarms = alarmDatabase.getAllAlarme();
         for (int i = 0; i < alarms.size(); i++) {
             if (alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 0) {
-                createNotification(this.context, "Alarm alarm alarm!", "Dein Zug f\u00e4hrt in f\u00fcnf minuten", "ALARM");
+                createNotification(this.context, "Errinerung!", "Dein Zug/Tram/Bus nach "+nachOrt+" f\u00e4hrt in f\u00fcnf minuten", "ALARM");
                 alarmDatabase.deleteAlarm(alarms.get(i));
             } else if(alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 1) {
                 alarmDatabase.deleteAlarm(alarms.get(i));
@@ -44,7 +46,7 @@ public class Notification extends BroadcastReceiver {
     }
 
     public void createNotification(Context context, String msg, String msgtext, String msgalert) {
-        PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+        PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, StartScreen.class), 0);
 
         NotificationCompat.Builder mbuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.logo)

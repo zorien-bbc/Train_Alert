@@ -3,7 +3,8 @@ package ch.berufsbildungscenter.train_alert;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,9 +109,12 @@ public class AlarmArrayAdapter extends ArrayAdapter<Alarm> {
 
     }
     public void refreshFragment(){
-        FragmentManager fragmentManager = alarmFragment.getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, alarmFragment)
-                .commit();
+        Fragment frg = null;
+        frg = alarmFragment;
+        final FragmentTransaction ft = alarmFragment.getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+
     }
 }

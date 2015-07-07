@@ -11,19 +11,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ch.berufsbildungscenter.train_alert.MainActivity;
-
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     Button button;
-    MainActivity mainActivity;
+    HomeFragment homeFragment;
     final Calendar c = Calendar.getInstance();
 
     private SimpleDateFormat date = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
 
-    public DatePickerFragment(Button button, MainActivity mainActivity) {
+    public DatePickerFragment(Button button, HomeFragment homeFragment) {
         this.button = button;
-        this.mainActivity = mainActivity;
+        this.homeFragment = homeFragment;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Date datum = new Date(year, month, day);
-        mainActivity.getDate(year,month,day);
+        homeFragment.getDate(year,month,day);
         this.button.setText(date.format(datum));
 
     }

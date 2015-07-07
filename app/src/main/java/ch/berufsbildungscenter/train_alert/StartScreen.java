@@ -14,7 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.berufsbildungscenter.train_alert.Fragment.AlarmFragment;
+import ch.berufsbildungscenter.train_alert.Fragment.FavoritenFragment;
 import ch.berufsbildungscenter.train_alert.Fragment.HomeFragment;
+import ch.berufsbildungscenter.train_alert.Fragment.NavigationDrawerFragment;
+import ch.berufsbildungscenter.train_alert.Fragment.ZugPositionFragment;
 
 
 public class StartScreen extends ActionBarActivity
@@ -29,6 +32,7 @@ public class StartScreen extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,11 @@ public class StartScreen extends ActionBarActivity
             case 1:
                 selectedFragment = new AlarmFragment();
                 break;
+            case 2:
+                selectedFragment = new FavoritenFragment();
+                break;
+            case 3:
+                selectedFragment = new ZugPositionFragment();
 
 
         }
@@ -69,13 +78,16 @@ public class StartScreen extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.app_name);
+                mTitle = getString(R.string.route);
                 break;
             case 2:
-                mTitle = getString(R.string.app_name);
+                mTitle = getString(R.string.alarme);
                 break;
             case 3:
-                mTitle = getString(R.string.app_name);
+                mTitle = getString(R.string.favoriten);
+                break;
+            case 4:
+                mTitle = getString(R.string.verkehr);
                 break;
         }
     }

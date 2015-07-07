@@ -1,11 +1,6 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -36,7 +31,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
         String stationVon = params[0].toString();
 
 
-        if (JSONAsyncTask.isNetworkConnectionAvailable(this.activity)) {
+        if (JSONRoute.isNetworkConnectionAvailable(this.activity)) {
             try {
                 URL url = new URL(API_URL + stationVon.replaceAll("\\s+", "%20"));
 
@@ -64,7 +59,7 @@ public class JSONSuchHilfe extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> result) {
         if (null == result) {
-            JSONAsyncTask.noConnectionAlert(this.activity);
+            JSONRoute.noConnectionAlert(this.activity);
         } else {
             activity.setData(result);
         }

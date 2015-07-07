@@ -1,11 +1,7 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -19,15 +15,17 @@ import ch.berufsbildungscenter.train_alert.Location.StationenLocation;
  */
 public class JSONOrt extends AsyncTask<String, Void, List<String>> {
 
-    private static final String LOG_TAG = JSONAsyncTask.class.getCanonicalName();
+    private static final String LOG_TAG = JSONRoute.class.getCanonicalName();
 
     private static final String API_URL = "http://transport.opendata.ch/v1/locations?x=";
 
     private StationenLocation activity;
     private HttpURLConnection connection;
+    private ProgressDialog progressDialog;
 
-    public JSONOrt(StationenLocation activity) {
+    public JSONOrt(StationenLocation activity, ProgressDialog progressDialog) {
         this.activity = activity;
+        this.progressDialog = progressDialog;
     }
 
 
@@ -38,7 +36,7 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
         String yCor = params[1];
 
 
-        if (JSONAsyncTask.isNetworkConnectionAvailable(this.activity)) {
+        if (JSONRoute.isNetworkConnectionAvailable(this.activity)) {
             try {
                 URL url = new URL(String.format(API_URL + xCor) + "&y=" + yCor);
 
@@ -56,7 +54,6 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
                 }
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
-            } finally {
             }
 
         }
@@ -66,9 +63,10 @@ public class JSONOrt extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> result) {
         if (null == result) {
-            JSONAsyncTask.noConnectionAlert(this.activity);
+            JSONRoute.noConnectionAlert(this.activity);
         } else {
             this.activity.setData(result);
+            progressDialog.dismiss();
         }
     }
 }

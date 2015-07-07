@@ -67,6 +67,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         int _id=(int)System.currentTimeMillis();
         Intent intent = new Intent(this, Notification.class);
         intent.putExtra("id",_id);
+        intent.putExtra("nach",nachOrt.getName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this.getApplicationContext(), _id, intent, 0);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);

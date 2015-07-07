@@ -1,7 +1,5 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +32,6 @@ public class JSONParser {
         JSONObject nachCoordinateJSON = nachJSON.getJSONObject("coordinate");
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
-            Log.v(verbindungenJSON.length()+"","laenge JSON OBJEKT");
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
             JSONObject vonVerbindungJSON = verbindungJSON.getJSONObject("from");
             JSONObject vonStation = vonVerbindungJSON.getJSONObject("station");
@@ -46,6 +43,7 @@ public class JSONParser {
             JSONObject nachCoordinatJSON = nachStation.getJSONObject("coordinate");
             JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
 
+
             Verbindung verbindung = new Verbindung();
             ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
             ArrayList<Station> stationen = new ArrayList<Station>();
@@ -55,7 +53,7 @@ public class JSONParser {
                 if (!abschnitt.isNull("journey")) {
                     JSONObject reise = abschnitt.getJSONObject("journey");
                     JSONArray passList = reise.getJSONArray("passList");
-                    for (int zaehler = 0; zaehler < passList.length();zaehler++) {
+                    for (int zaehler = 0; zaehler < passList.length(); zaehler++) {
 
                         JSONObject stations = passList.getJSONObject(zaehler);
                         JSONObject passStation = stations.getJSONObject("station");
@@ -75,6 +73,8 @@ public class JSONParser {
                     fahrt.setBisGleis(reiseArrival.getString("platform"));
                     fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
                     fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
+
+
                     fahrtAbschnitte.add(fahrt);
                 }
             }
