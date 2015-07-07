@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     Button buttonDate;
     Button buttonTime;
 
-
     static EditText textVon, textNach, textVia;
     Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
@@ -57,7 +56,6 @@ public class HomeFragment extends Fragment {
     boolean isDateChanged = false;
     private String textVonInhalt, textNachInhalt, textViaInhalt;
     private GestureDetectorCompat gDetector;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment,container,false);

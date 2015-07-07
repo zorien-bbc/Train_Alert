@@ -65,5 +65,9 @@
     <string name="title_activity_zug_position_fragment">ZugPositionFragment</string>
     <string name="zugPosition">Zug Position</string>
     <string name="title_activity_info">InfoActivity</string>
+    <string name="style_title">Style</string>
+    <string name="style_bes">Style der App auswählen</string>
+    <string name="alarm_bes">Minuten vor der Abfahrt erinnern</string>
+    <string name="verbindung_bes">Anzahl angezeigte Verbindungen</string>
 
 </resources>

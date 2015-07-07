@@ -2,6 +2,7 @@ package ch.berufsbildungscenter.train_alert;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -123,6 +124,10 @@ public class StartScreen extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, (Fragment) new)
+                    .commit();
             return true;
         }
 

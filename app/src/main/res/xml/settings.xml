@@ -3,23 +3,27 @@
     <PreferenceCategory android:title="@string/einstellungen_title">
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/style_title">
+        <ListPreference
+            android:key="tastyle"
+            android:title="@string/style_bes"
+            android:entries=""
+            android:entryValues="" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/alarm_title">
         <ListPreference
             android:key="alarmtime"
-            android:title="Minuten vor der Abfahrt erinnern"
+            android:title="@string/alarm_bes"
             android:entries="@array/alarmzeiten"
-            android:entryValues="@array/alarmzeiten_values"
-            android:dialogTitle="Bestimmen Sie die Zeit wie lange vor der Abfahrt Sie informiert werden möchten" />
-        <RingtonePreference android:title="Klingelton auswählen"
-            android:key="klingelton" />
+            android:entryValues="@array/alarmzeiten_values" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/verbindung_title">
         <ListPreference
             android:key="anzVerbindungen"
-            android:title="Anzahl angezeigte Verbindungen"
+            android:title="@string/verbindung_bes"
             android:entries="@array/verbindungen"
-            android:entryValues="@array/verbindungen"
-            android:dialogTitle="Bestimmen Sie die Anzahl der Verbindungen, die angezeigt werden" />
+            android:entryValues="@array/verbindungen" />
     </PreferenceCategory>
 </PreferenceScreen>

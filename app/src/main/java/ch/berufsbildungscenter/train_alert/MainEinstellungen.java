@@ -23,16 +23,11 @@ import android.text.TextUtils;
 import java.util.List;
 import java.util.Map;
 
-public class MainEinstellungen extends PreferenceActivity {
-    protected void onCreate(Bundle savedInstanceState) {
+public class MainEinstellungen extends PreferenceFragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment()
-        {
-            public void onCreate(Bundle savedInstanceState)
-            {
-                super.onCreate(savedInstanceState);
-                addPreferencesFromResource(R.xml.settings);
-            }
-        }).commit();
+        addPreferencesFromResource(R.xml.settings);
     }
 }
