@@ -25,7 +25,14 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindung_map);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        actionBar.addTab(actionBar.newTab().setText("Hybrid").setTabListener(this), false);
+        actionBar.addTab(actionBar.newTab().setText("Map").setTabListener(this), true
+        );
+        actionBar.addTab(actionBar.newTab().setText("Terrain").setTabListener(this), false);
+        actionBar.setHomeButtonEnabled(false);
         Intent intent = getIntent();
         mapType = intent.getStringExtra("mapTyp");
         stations = intent.getParcelableArrayListExtra("station");

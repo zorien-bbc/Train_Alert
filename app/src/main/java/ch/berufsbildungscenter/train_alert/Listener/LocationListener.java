@@ -13,7 +13,7 @@ import ch.berufsbildungscenter.train_alert.Location.StationenLocation;
 public class LocationListener implements View.OnClickListener {
     ImageButton imageButton;
     Activity activity;
-    public LocationListener(Activity activity,ImageButton imageButton) {
+    public LocationListener(Activity activity, ImageButton imageButton) {
         this.imageButton = imageButton;
         this.activity = activity;
     }
@@ -21,7 +21,7 @@ public class LocationListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this.activity.getApplicationContext(),StationenLocation.class);
-        intent.putExtra("button",this.imageButton.getId());
+        intent.putExtra("button",imageButton.getId());
         this.activity.startActivity(intent);
     }
 }

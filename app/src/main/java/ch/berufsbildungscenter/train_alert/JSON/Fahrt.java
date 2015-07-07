@@ -76,6 +76,15 @@ public class Fahrt implements Serializable, Parcelable {
     private String transportmittel;
     private String vonGleis;
     private String bisGleis;
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    private String info;
 
     // Parcelling part
     public Fahrt() {

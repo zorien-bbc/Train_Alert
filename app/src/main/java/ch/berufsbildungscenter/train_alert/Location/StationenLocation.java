@@ -1,7 +1,9 @@
 package ch.berufsbildungscenter.train_alert.Location;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,21 +13,24 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.Fragment.HomeFragment;
 import ch.berufsbildungscenter.train_alert.JSON.JSONOrt;
-import ch.berufsbildungscenter.train_alert.MainActivity;
 import ch.berufsbildungscenter.train_alert.R;
 
 
 public class StationenLocation extends ActionBarActivity {
     int imageButtonId;
+    public static ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stationen_location);
         MyLocation myLocation = new MyLocation(this);
-        JSONOrt jsonOrt = new JSONOrt(this);
+        Log.v("derultimativetest",myLocation.getLatitude()+"/"+myLocation.getLongtitude());
+        progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
+        JSONOrt jsonOrt = new JSONOrt(this,progressDialog);
         jsonOrt.execute(myLocation.latitude + "", myLocation.longtitude + "");
-        imageButtonId = getIntent().getIntExtra("button",R.id.imageButtonVon);
+        imageButtonId = getIntent().getExtras().getInt("button");
     }
 
     @Override
@@ -48,11 +53,11 @@ public class StationenLocation extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(imageButtonId == R.id.imageButtonVon) {
-                    MainActivity.getTextVon().setText(resultset.get(position).toString());
+                    HomeFragment.getTextVon().setText(resultset.get(position).toString());
                 } else if(imageButtonId == R.id.imageButtonNach) {
-                    MainActivity.getTextNach().setText(resultset.get(position).toString());
+                    HomeFragment.getTextNach().setText(resultset.get(position).toString());
                 } else if(imageButtonId == R.id.imageButtonVia) {
-                    MainActivity.getTextVia().setText(resultset.get(position).toString());
+                    HomeFragment.getTextVia().setText(resultset.get(position).toString());
                 }
                 finish();
             }

@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import ch.berufsbildungscenter.train_alert.JSON.JSONAsyncTask;
+import ch.berufsbildungscenter.train_alert.JSON.JSONRoute;
 
 
 public class VerbindungenActivity extends ActionBarActivity {
@@ -41,15 +41,6 @@ public class VerbindungenActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindungen);
 
-        if(!getPreferences(MODE_PRIVATE).getAll().isEmpty()) {
-            SharedPreferences savedState = getPreferences(MODE_PRIVATE);
-            von = savedState.getString("von", "");
-            nach = savedState.getString("nach", "");
-            via = savedState.getString("via", "");
-            time = savedState.getString("time", "");
-            date = savedState.getString("date", "");
-            aban = savedState.getString("aban", "");
-        } else {
             Intent intent = getIntent();
             von = intent.getStringExtra("von");
             nach = intent.getStringExtra("nach");
@@ -57,10 +48,10 @@ public class VerbindungenActivity extends ActionBarActivity {
             time = intent.getStringExtra("time");
             date = intent.getStringExtra("date");
             aban = intent.getStringExtra("wann");
-        }
+
 
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
-        JSONAsyncTask jsonAsyncTask = new JSONAsyncTask(this, progressDialog);
+        JSONRoute jsonAsyncTask = new JSONRoute(this, progressDialog);
         jsonAsyncTask.execute(von, nach, via, time, date, aban);
     }
 

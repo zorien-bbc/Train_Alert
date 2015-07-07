@@ -1,7 +1,5 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +43,7 @@ public class JSONParser {
 
             JSONArray reiseAbschnitte = verbindungJSON.getJSONArray("sections");
 
+
             Verbindung verbindung = new Verbindung();
             ArrayList<Fahrt> fahrtAbschnitte = new ArrayList<Fahrt>();
             ArrayList<Station> stationen = new ArrayList<Station>();
@@ -54,7 +53,7 @@ public class JSONParser {
                 if (!abschnitt.isNull("journey")) {
                     JSONObject reise = abschnitt.getJSONObject("journey");
                     JSONArray passList = reise.getJSONArray("passList");
-                    for (int zaehler = 0; zaehler < passList.length();zaehler++) {
+                    for (int zaehler = 0; zaehler < passList.length(); zaehler++) {
 
                         JSONObject stations = passList.getJSONObject(zaehler);
                         JSONObject passStation = stations.getJSONObject("station");
@@ -91,6 +90,8 @@ public class JSONParser {
                     fahrt.setBisGleis(platformArrival);
                     fahrt.setVonHaltestelle(reiseDeparture.getJSONObject("station").getString("name"));
                     fahrt.setBisHaltestelle(reiseArrival.getJSONObject("station").getString("name"));
+
+
                     fahrtAbschnitte.add(fahrt);
                 }
             }

@@ -1,6 +1,5 @@
 package ch.berufsbildungscenter.train_alert.JSON;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,17 +16,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import ch.berufsbildungscenter.train_alert.MainActivity;
 import ch.berufsbildungscenter.train_alert.R;
+import ch.berufsbildungscenter.train_alert.StartScreen;
 import ch.berufsbildungscenter.train_alert.Verbindung;
 import ch.berufsbildungscenter.train_alert.VerbindungenActivity;
 
 /**
  * Created by zorien on 18.06.2015.
  */
-public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
+public class JSONRoute extends AsyncTask<String, Void, List<Verbindung>> {
 
-    private static final String LOG_TAG = JSONAsyncTask.class.getCanonicalName();
+    private static final String LOG_TAG = JSONRoute.class.getCanonicalName();
 
     private static final String API_URL = "http://transport.opendata.ch/v1/connections?from=";
 
@@ -35,7 +34,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
     private ProgressDialog progressDialog;
     private HttpURLConnection connection;
 
-    public JSONAsyncTask(VerbindungenActivity activity, ProgressDialog progressDialog) {
+    public JSONRoute(VerbindungenActivity activity, ProgressDialog progressDialog) {
         this.activity = activity;
         this.progressDialog = progressDialog;
     }
@@ -94,7 +93,7 @@ public class JSONAsyncTask extends AsyncTask<String, Void, List<Verbindung>> {
         alert.setTitle(activity.getString(R.string.nocon_text));
         alert.setNeutralButton(activity.getString(R.string.ok_text), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(activity.getApplicationContext(), StartScreen.class);
                 activity.startActivity(intent);
             }
         });
