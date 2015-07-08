@@ -45,7 +45,6 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
     Button buttonNach;
     ImageButton imageButtonVon;
     ImageButton imageButtonNach;
-    int zeit;
     AlarmDAO alarmDatabase;
     FavoritenDAO favoritenDatabase;
 
@@ -114,6 +113,10 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     this.getApplicationContext(), _id, intent, 0);
             AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+            SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+            String time = sprefs.getString("alarmtime", "60000");
+            Integer zeit = new Integer(time);
             alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
 
             Alarm alarm = new Alarm(timestamp.getTime(), buttonVon.getText().toString(), buttonNach.getText().toString(), 0, _id);

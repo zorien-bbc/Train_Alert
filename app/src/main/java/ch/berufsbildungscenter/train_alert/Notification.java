@@ -5,7 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.List;
@@ -35,7 +37,9 @@ public class Notification extends BroadcastReceiver {
         List<Alarm> alarms = alarmDatabase.getAllAlarme();
         for (int i = 0; i < alarms.size(); i++) {
             if (alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 0) {
-                createNotification(this.context, "Errinerung!", "Dein Zug/Tram/Bus nach "+nachOrt+" f\u00e4hrt in f\u00fcnf minuten", "ALARM");
+                SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.context);
+                String time = sprefs.getString("alarmtime", "60000");
+                createNotification(this.context, "Errinerung!", "Dein Zug/Tram/Bus nach "+nachOrt+" f\u00e4hrt in " + new Integer(time)/1000/60 + " Minuten!", "ALARM");
                 alarmDatabase.deleteAlarm(alarms.get(i));
             } else if(alarms.get(i).getAlarmNummer() == alarmNummer && alarms.get(i).getAktiviert() == 1) {
                 alarmDatabase.deleteAlarm(alarms.get(i));
@@ -49,7 +53,7 @@ public class Notification extends BroadcastReceiver {
         PendingIntent notificIntent = PendingIntent.getActivity(context, 0, new Intent(context, StartScreen.class), 0);
 
         NotificationCompat.Builder mbuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.ic_talogo)
                 .setContentTitle(msg)
                 .setTicker(msgalert)
                 .setContentText(msgtext)
