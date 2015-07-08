@@ -39,7 +39,7 @@ public class FavoritenListener implements View.OnClickListener{
 
                 exist = true;
             }
-        }if(exist==false) {
+        }if(!exist) {
             favoritenDatabase.createFavoriten(favoriten);
             toast.makeText(this.activity.getApplicationContext(), ort.getName() + " wurde zu Favoriten hinzugef\u00fcgt", Toast.LENGTH_SHORT).show();
             this.activity.setFavoritenIcon();
