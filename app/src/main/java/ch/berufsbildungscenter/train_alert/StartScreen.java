@@ -1,12 +1,11 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -15,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import ch.berufsbildungscenter.train_alert.Fragment.AlarmFragment;
 import ch.berufsbildungscenter.train_alert.Fragment.FavoritenFragment;
@@ -53,7 +50,6 @@ public class StartScreen extends ActionBarActivity
         }
 
         setContentView(R.layout.activity_navigation);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -85,9 +81,10 @@ public class StartScreen extends ActionBarActivity
 
         }
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, selectedFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -139,7 +136,7 @@ public class StartScreen extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new MainEinstellungen())
                     .commit();

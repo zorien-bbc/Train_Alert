@@ -23,7 +23,6 @@ import ch.berufsbildungscenter.train_alert.R;
 import ch.berufsbildungscenter.train_alert.StartScreen;
 
 
-
 /**
  * Created by zorien on 02.07.2015.
  */
@@ -53,7 +52,7 @@ public abstract class JSONConnection extends AsyncTask<String, Void, String> {
 
         if (isNetworkConnectionAvailable()) {
             try {
-                if(jsonTyp.equals("verbindung")) {
+                if (jsonTyp.equals("verbindung")) {
                     String stationVon = params[1];
                     String stationNach = params[2];
                     String stationVia = params[3];
@@ -62,10 +61,10 @@ public abstract class JSONConnection extends AsyncTask<String, Void, String> {
                     String aban = params[6];
                     url = new URL((apiUrl + stationVon.replaceAll("\\s+", "%20") + "&to=" + stationNach.replaceAll("\\s+", "%20") + "&via=" +
                             stationVia.replaceAll("\\s+", "%20") + "&time=" + time + "&date=" + date + "&isArrivalTime=" + aban + "&limit=" + limit));
-                }else if(jsonTyp.equals("suche")){
+                } else if (jsonTyp.equals("suche")) {
                     String stationVon = params[1];
                     url = new URL(apiUrl + stationVon.replaceAll("\\s+", "%20"));
-                }else if(jsonTyp.equals("ort")){
+                } else if (jsonTyp.equals("ort")) {
                     String xCor = params[1];
                     String yCor = params[2];
                     url = new URL(String.format(apiUrl + xCor) + "&y=" + yCor);
@@ -87,12 +86,13 @@ public abstract class JSONConnection extends AsyncTask<String, Void, String> {
 
             } catch (Exception e) {
                 Log.e(LOG_TAG, "An error occurred while loading the data in the background", e);
-                return result;            } finally {
+                return result;
+            } finally {
                 connection.disconnect();
             }
         }
 
-        if (result == null){
+        if (result == null) {
             //result can be null
             return null;
         } else {

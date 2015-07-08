@@ -36,10 +36,11 @@ public class VerbindungenListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(this.button.getId() == R.id.buttonTime){
-            DialogFragment newFragment = new TimePickerFragment(this.button);
+            DialogFragment newFragment = new TimePickerFragment();
             newFragment.show(this.activity.getFragmentManager(), "Zeit auswaehlen");
         }else if(this.button.getId() == R.id.buttonDate){
-            DialogFragment newFragment = new DatePickerFragment(this.button,this.homeFragment);
+            //DialogFragment newFragment = new DatePickerFragment(this.button,this.homeFragment);
+            DialogFragment newFragment = new DatePickerFragment();
             newFragment.show(this.activity.getFragmentManager(), "Datum auswaehlen");
         }else if(this.button.getId() == R.id.button){
 

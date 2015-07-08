@@ -2,11 +2,11 @@ package ch.berufsbildungscenter.train_alert.Fragment;
 
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     Button buttonTime;
 
     static EditText textVon, textNach, textVia;
-    Date date;
+    static Date date;
     Date startDate = new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
     ImageButton imageButtonVon;
@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
 
     private SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM." + c.get(Calendar.YEAR));
-    boolean isDateChanged = false;
+    static boolean isDateChanged = false;
     private String textVonInhalt, textNachInhalt, textViaInhalt;
     private GestureDetectorCompat gDetector;
 
@@ -146,6 +146,7 @@ public class HomeFragment extends Fragment {
         buttonDate.setText(dateFormat.format(datum));
         buttonTime.setOnClickListener(new VerbindungenListener(getActivity(),this, buttonTime));
         buttonDate.setOnClickListener(new VerbindungenListener(getActivity(),this, buttonDate));
+
         return view;
     }
     private void showErrorDialog(String msg) {
@@ -169,10 +170,11 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void getDate(int year, int month, int day) {
+    public static void setDate(int year, int month, int day) {
         date = new Date(year, month, day);
         isDateChanged = true;
     }
+
     @Override
     public void onPause() {
         super.onPause();

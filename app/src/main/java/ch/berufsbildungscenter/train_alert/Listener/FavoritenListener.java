@@ -35,8 +35,7 @@ public class FavoritenListener implements View.OnClickListener{
         List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
         for(int i =0;i< favoritens.size() ;i++) {
             if (favoritens.get(i).getName().equals(ort.getName())){
-                toast.makeText(this.activity.getApplicationContext(), ort.getName() + " geh\u00f6rt bereits zu ihren Favoriten", Toast.LENGTH_SHORT).show();
-
+                toast.makeText(this.activity.getApplicationContext(), ort.getName() + "geh\u00f6rt bereits zu ihren Favoriten!", Toast.LENGTH_SHORT).show();
                 exist = true;
             }
         }if(!exist) {

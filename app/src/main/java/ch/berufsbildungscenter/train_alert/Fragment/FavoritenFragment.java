@@ -1,9 +1,9 @@
 package ch.berufsbildungscenter.train_alert.Fragment;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +18,8 @@ import java.util.List;
 import ch.berufsbildungscenter.train_alert.Database.Favoriten;
 import ch.berufsbildungscenter.train_alert.Database.FavoritenDAO;
 import ch.berufsbildungscenter.train_alert.R;
+
+
 
 /**
  * Created by zorien on 07.07.2015.
