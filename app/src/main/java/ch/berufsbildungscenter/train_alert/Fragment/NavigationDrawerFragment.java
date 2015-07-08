@@ -111,7 +111,6 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.zugPosition)
                 }));
         mDrawerListView.setBackgroundColor(Color.BLACK);
-
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
