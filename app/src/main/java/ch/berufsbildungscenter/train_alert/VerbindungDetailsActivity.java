@@ -65,17 +65,20 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_verbindung_details);
 
+
+        SharedPreferences savedState = getPreferences(MODE_PRIVATE);
+
         Intent intent = getIntent();
         vonOrt = (Ort) intent.getSerializableExtra("vonOrt");
         nachOrt = (Ort) intent.getSerializableExtra("nachOrt");
         fahrten = intent.getExtras().getParcelableArrayList("fahrten");
         stations = intent.getExtras().getParcelableArrayList("stationen");
         alarmDatabase = new AlarmDAO(this.getApplicationContext());
+        favoritenDatabase = new FavoritenDAO(getApplicationContext());
         buttonVon = (Button) findViewById(R.id.imageButton3);
         buttonNach = (Button) findViewById(R.id.imageButton4);
         imageButtonVon = (ImageButton) findViewById(R.id.imageButton2);
         imageButtonNach = (ImageButton) findViewById(R.id.imageButton5);
-        favoritenDatabase = new FavoritenDAO(getApplicationContext());
         setFavoritenIcon();
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
         timestamp = fahrten.get(0).getAbfahrt();
@@ -167,4 +170,5 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

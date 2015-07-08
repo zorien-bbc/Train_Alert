@@ -53,7 +53,7 @@ public class VerbindungenActivity extends ActionBarActivity {
         }
 
         setContentView(R.layout.activity_verbindungen);
-
+        String jsonTyp = "verbindung";
             Intent intent = getIntent();
             von = intent.getStringExtra("von");
             nach = intent.getStringExtra("nach");
@@ -65,7 +65,7 @@ public class VerbindungenActivity extends ActionBarActivity {
 
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
         JSONRoute jsonAsyncTask = new JSONRoute(this, progressDialog);
-        jsonAsyncTask.execute(von, nach, via, time, date, aban);
+        jsonAsyncTask.execute(jsonTyp,von, nach, via, time, date, aban);
     }
 
     @Override

@@ -42,8 +42,9 @@ public class StationenLocation extends ActionBarActivity {
         MyLocation myLocation = new MyLocation(this);
         Log.v("derultimativetest",myLocation.getLatitude()+"/"+myLocation.getLongtitude());
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");
+        String jsonTyp = "ort";
         JSONOrt jsonOrt = new JSONOrt(this,progressDialog);
-        jsonOrt.execute(myLocation.latitude + "", myLocation.longtitude + "");
+        jsonOrt.execute(jsonTyp,myLocation.latitude + "", myLocation.longtitude + "");
         imageButtonId = getIntent().getExtras().getInt("button");
     }
 

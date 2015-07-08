@@ -17,12 +17,12 @@ import ch.berufsbildungscenter.train_alert.Verbindung;
  * Created by zorien on 26.06.2015.
  */
 public class JSONParser {
-    public static List<Verbindung> parseConnections(InputStream inputStream) throws IOException, JSONException {
+    public static List<Verbindung> parseConnections(String jsonString) throws IOException, JSONException {
 
         List<Verbindung> result = new ArrayList<Verbindung>();
 
-        String input = readInput(inputStream);
-        JSONObject data = new JSONObject(input);
+
+        JSONObject data = new JSONObject(jsonString);
 
         JSONArray verbindungenJSON = data.getJSONArray("connections");
 
@@ -112,14 +112,14 @@ public class JSONParser {
     }
 
 
-    public static List<String> parseSearch(InputStream inputStream) throws IOException, JSONException {
+    public static List<String> parseSearch(String jsonString) throws IOException, JSONException {
 
         List<String> result = new ArrayList<String>();
 
-        String input = readInput(inputStream);
-        JSONObject data = new JSONObject(input);
+        JSONObject data = new JSONObject(jsonString);
 
         JSONArray verbindungenJSON = data.getJSONArray("stations");
+        Verbindung verbindung = new Verbindung();
 
         for (int i = 0; i < verbindungenJSON.length(); i++) {
             JSONObject verbindungJSON = verbindungenJSON.getJSONObject(i);
@@ -129,12 +129,11 @@ public class JSONParser {
         return result;
     }
 
-    public static List<String> parseOrt(InputStream inputStream) throws IOException, JSONException {
+    public static List<String> parseOrt(String jsonString) throws IOException, JSONException {
 
         List<String> result = new ArrayList<String>();
 
-        String input = readInput(inputStream);
-        JSONObject data = new JSONObject(input);
+        JSONObject data = new JSONObject(jsonString);
 
         JSONArray verbindungenJSON = data.getJSONArray("stations");
 

@@ -1,6 +1,5 @@
 package ch.berufsbildungscenter.train_alert;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,6 +34,7 @@ public class SuchHilfe extends ActionBarActivity {
     public void setVorschlaege(List<String> vorschlaege) {
         this.vorschlaege = vorschlaege;
     }
+    String jsonTyp = "suche";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class SuchHilfe extends ActionBarActivity {
                                       int before, int count) {
 
                 JSONSuchHilfe jsonSuchHilfe = new JSONSuchHilfe(suchHilfe);
-                jsonSuchHilfe.execute(myTextBox.getText().toString());
+                jsonSuchHilfe.execute(jsonTyp, myTextBox.getText().toString());
             }
         });
     }
