@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.ArrayAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import ch.berufsbildungscenter.train_alert.R;
+import ch.berufsbildungscenter.train_alert.Verbindung;
 
 /**
  * Created by zfehrn on 17.06.2015.

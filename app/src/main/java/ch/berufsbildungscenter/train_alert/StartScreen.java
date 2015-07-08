@@ -2,7 +2,6 @@ package ch.berufsbildungscenter.train_alert;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -66,14 +65,16 @@ public class StartScreen extends ActionBarActivity
                 break;
             case 3:
                 selectedFragment = new ZugPositionFragment();
-
+            break;
 
         }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, selectedFragment)
-                .commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, selectedFragment)
+                    .addToBackStack(null)
+                    .commit();
+
     }
 
     public void onSectionAttached(int number) {
@@ -124,10 +125,10 @@ public class StartScreen extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, (Fragment) new)
-                    .commit();
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, (Fragment) new MainEinstellungen())
+//                    .commit();
             return true;
         }
 
@@ -162,8 +163,8 @@ public class StartScreen extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_navigation, container, false);
-            return rootView;
+            View view = inflater.inflate(R.layout.home_fragment, container, false);
+            return view;
         }
 
         @Override

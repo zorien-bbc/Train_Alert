@@ -4,11 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,9 +18,13 @@ import android.widget.Toast;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.ArrayAdapter.VerbindungDetailsArrayAdapter;
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
 import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
+import ch.berufsbildungscenter.train_alert.Database.Favoriten;
+import ch.berufsbildungscenter.train_alert.Database.FavoritenDAO;
 import ch.berufsbildungscenter.train_alert.JSON.Fahrt;
 import ch.berufsbildungscenter.train_alert.JSON.Ort;
 import ch.berufsbildungscenter.train_alert.JSON.Station;
@@ -35,8 +41,11 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
 
     Button buttonVon;
     Button buttonNach;
+    ImageButton imageButtonVon;
+    ImageButton imageButtonNach;
     int zeit;
     AlarmDAO alarmDatabase;
+    FavoritenDAO favoritenDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,34 +60,72 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         alarmDatabase = new AlarmDAO(this.getApplicationContext());
         buttonVon = (Button) findViewById(R.id.imageButton3);
         buttonNach = (Button) findViewById(R.id.imageButton4);
+        imageButtonVon = (ImageButton) findViewById(R.id.imageButton2);
+        imageButtonNach = (ImageButton) findViewById(R.id.imageButton5);
+        favoritenDatabase = new FavoritenDAO(getApplicationContext());
+        setFavoritenIcon();
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm / dd.MM.yyyy");
         timestamp = fahrten.get(0).getAbfahrt();
         ((TextView) findViewById(R.id.textView13)).setText(formatter.format(timestamp));
+        Drawable image = getApplicationContext().getResources().getDrawable( R.mipmap.star_favorite);
+        buttonVon.setCompoundDrawables(image, null, null, null);
         buttonVon.setText(vonOrt.getName());
         buttonNach.setText(nachOrt.getName());
-        buttonVon.setOnClickListener(new FavoritenListener(this, vonOrt));
-        buttonNach.setOnClickListener(new FavoritenListener(this, nachOrt));
+
+        imageButtonVon.setOnClickListener(new FavoritenListener(this, vonOrt));
+        imageButtonNach.setOnClickListener(new FavoritenListener(this, nachOrt));
 
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new VerbindungDetailsArrayAdapter(this.getApplicationContext(), fahrten, this.getLayoutInflater()));
     }
 
     public void setAlert() {
-        int _id=(int)System.currentTimeMillis();
-        Intent intent = new Intent(this, Notification.class);
-        intent.putExtra("id",_id);
-        intent.putExtra("nach",nachOrt.getName());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), _id, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
 
-        Alarm alarm = new Alarm(timestamp.getTime(),buttonVon.getText().toString() ,buttonNach.getText().toString(),0,_id);
-        alarmDatabase.createAlarm(alarm);
-        Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
+        List<Alarm> alarms = alarmDatabase.getAllAlarme();
+        boolean exist = false;
+        for(int i=0; i<alarms.size();i++){
+            Alarm alarm = alarms.get(i);
+            if(alarm.getVonOrt().equals(vonOrt.getName()) && alarm.getNachOrt().equals(nachOrt.getName()) && alarm.getTime() == timestamp.getTime()){
+                Toast.makeText(this.getApplicationContext(), "Alarm ist bereits gesetzt!", Toast.LENGTH_SHORT).show();
+                exist = true;
+
+            }
+        }if(!exist) {
+            int _id = (int) System.currentTimeMillis();
+            Intent intent = new Intent(this, Notification.class);
+            intent.putExtra("id", _id);
+            intent.putExtra("nach", nachOrt.getName());
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    this.getApplicationContext(), _id, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp.getTime() - zeit, pendingIntent);
+
+            Alarm alarm = new Alarm(timestamp.getTime(), buttonVon.getText().toString(), buttonNach.getText().toString(), 0, _id);
+            alarmDatabase.createAlarm(alarm);
+            Toast.makeText(this.getApplicationContext(), "Alarm wurde gesetzt!", Toast.LENGTH_SHORT).show();
+        }
 
     }
+    public void setFavoritenIcon(){
+        if(favoritenDatabase.getAllFavoriten().size()>0) {
+            List<Favoriten> favoritens = favoritenDatabase.getAllFavoriten();
 
+            for(int i = 0;i<favoritens.size(); i++) {
+                if (vonOrt.getName().equals(favoritens.get(i).getName())){
+                    imageButtonVon.setImageResource(R.mipmap.star_favorite);
+                }else if(nachOrt.getName().equals(favoritens.get(i).getName())){
+                    imageButtonNach.setImageResource(R.mipmap.star_favorite);
+                }else if(!vonOrt.getName().equals(favoritens.get(i).getName())){
+                    imageButtonVon.setImageResource(R.mipmap.star_nofavorite);
+                }else if(!nachOrt.getName().equals(favoritens.get(i).getName())){
+                    imageButtonNach.setImageResource(R.mipmap.star_nofavorite);
+                }
+            }
+        }else{
+            imageButtonVon.setImageResource(R.mipmap.star_nofavorite);
+            imageButtonNach.setImageResource(R.mipmap.star_nofavorite);
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,6 +147,7 @@ public class VerbindungDetailsActivity extends ActionBarActivity {
         } else if (id == R.id.mapAction) {
             Intent intent = new Intent(getApplicationContext(), VerbindungMap.class);
             intent.putParcelableArrayListExtra("station", stations);
+            intent.putExtra("verbindung", vonOrt.getName() + " - " + nachOrt.getName());
             startActivity(intent);
             this.finish();
         }

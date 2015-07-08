@@ -2,7 +2,6 @@ package ch.berufsbildungscenter.train_alert;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,26 +15,19 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
-public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallback, android.support.v7.app.ActionBar.TabListener {
+public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallback {
 
     List<Station> stations;
-    String mapType;
+    int laenge;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verbindung_map);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        actionBar.addTab(actionBar.newTab().setText("Hybrid").setTabListener(this), false);
-        actionBar.addTab(actionBar.newTab().setText("Map").setTabListener(this), true
-        );
-        actionBar.addTab(actionBar.newTab().setText("Terrain").setTabListener(this), false);
-        actionBar.setHomeButtonEnabled(false);
         Intent intent = getIntent();
-        mapType = intent.getStringExtra("mapTyp");
         stations = intent.getParcelableArrayListExtra("station");
+        laenge  = this.stations.size() - 1;
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapVerbindung);
         mapFragment.getMapAsync(this);
@@ -43,14 +35,6 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap map) {
-        if (mapType.equals("Map")) {
-            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        } else if (mapType.equals("Hybrid")) {
-            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        } else {
-            map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        }
-
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(this.stations.get(0).getX(), this.stations.get(0).getY()), 13));
         LatLng latLng = new LatLng(this.stations.get(0).getX(), this.stations.get(0).getY());
@@ -59,7 +43,7 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
             polyline.add(new LatLng(this.stations.get(i).getX(), this.stations.get(i).getY()));
 
         }
-        int laenge = this.stations.size() - 1;
+
         map.addMarker(new MarkerOptions()
                 .title(this.stations.get(0).getName())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
@@ -75,28 +59,4 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
     }
 
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-        Intent intent = new Intent(this, VerbindungMap.class);
-        if (tab.getPosition() == 2) {
-            intent.putExtra("mapTyp", "Terrain");
-        } else if (tab.getPosition() == 1) {
-            intent.putExtra("mapTyp", "Hybrid");
-        } else {
-            intent.putExtra("mapTyp", "Map");
-        }
-        startActivity(intent);
-
-
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
-    }
 }

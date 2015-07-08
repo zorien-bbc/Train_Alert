@@ -1,4 +1,4 @@
-package ch.berufsbildungscenter.train_alert;
+package ch.berufsbildungscenter.train_alert.ArrayAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +21,7 @@ import java.util.List;
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
 import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 import ch.berufsbildungscenter.train_alert.Fragment.AlarmFragment;
+import ch.berufsbildungscenter.train_alert.R;
 
 /**
  * Created by zorien on 03.07.2015.

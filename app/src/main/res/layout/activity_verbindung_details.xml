@@ -58,18 +58,18 @@
                 android:gravity="center_vertical" />
 
             <Button
-                android:layout_width="220dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:id="@+id/imageButton3"
                 android:layout_gravity="left"
-                android:drawableLeft="@mipmap/ic_launcher"
                 android:background="@null"
-                android:gravity="center_vertical|right"
+                android:gravity="center_vertical|left"
                 android:paddingRight="20dp" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:src="@mipmap/star_nofavorite"
                 android:id="@+id/imageButton2"
                 android:background="@null" />
 
@@ -91,17 +91,17 @@
                 android:gravity="center_vertical" />
 
             <Button
-                android:layout_width="220dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:id="@+id/imageButton4"
                 android:layout_gravity="left"
-                android:drawableLeft="@mipmap/ic_launcher"
                 android:background="@null"
-                android:gravity="center_vertical|right"
+                android:gravity="center_vertical|left"
                 android:paddingRight="20dp" />
 
             <ImageButton
                 android:layout_width="match_parent"
+                android:src="@mipmap/star_nofavorite"
                 android:layout_height="match_parent"
                 android:id="@+id/imageButton5"
                 android:background="@null" />

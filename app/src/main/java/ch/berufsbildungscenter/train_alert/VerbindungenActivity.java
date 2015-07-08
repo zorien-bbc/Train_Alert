@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import ch.berufsbildungscenter.train_alert.ArrayAdapter.VerbindungenArrayAdapter;
 import ch.berufsbildungscenter.train_alert.JSON.JSONRoute;
 
 

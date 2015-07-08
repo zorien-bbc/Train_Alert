@@ -11,14 +11,13 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
-import ch.berufsbildungscenter.train_alert.R;
 import ch.berufsbildungscenter.train_alert.JSON.Station;
+import ch.berufsbildungscenter.train_alert.R;
 
 public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallback, android.support.v7.app.ActionBar.TabListener {
 
@@ -36,7 +35,7 @@ public class VerbindungMap extends ActionBarActivity implements OnMapReadyCallba
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapVerbindung);
         mapFragment.getMapAsync(this);
-        getSupportActionBar().setTitle(getString(R.string.verbindungenTitel) + ": " + title);
+        getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

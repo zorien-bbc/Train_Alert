@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.Calendar;
 import java.util.List;
 
-import ch.berufsbildungscenter.train_alert.AlarmArrayAdapter;
+import ch.berufsbildungscenter.train_alert.ArrayAdapter.AlarmArrayAdapter;
 import ch.berufsbildungscenter.train_alert.Database.Alarm;
 import ch.berufsbildungscenter.train_alert.Database.AlarmDAO;
 import ch.berufsbildungscenter.train_alert.R;
