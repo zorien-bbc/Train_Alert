@@ -1,7 +1,9 @@
 package ch.berufsbildungscenter.train_alert.Location;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +26,19 @@ public class StationenLocation extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        String style = sprefs.getString("tastyle", "default");
+        if(style.equals("holo")) {
+            setTheme(R.style.holo);
+        } else if(style.equals("iap")) {
+            setTheme(R.style.iap);
+        } else if(style.equals("default")) {
+            setTheme(R.style.AppTheme);
+        }
+
         setContentView(R.layout.activity_stationen_location);
+
         MyLocation myLocation = new MyLocation(this);
         Log.v("derultimativetest",myLocation.getLatitude()+"/"+myLocation.getLongtitude());
         progressDialog = ProgressDialog.show(this, "Lade Verbindung", "Bitte warten...");

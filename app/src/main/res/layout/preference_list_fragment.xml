@@ -32,7 +32,6 @@
         android:scrollbarStyle="@integer/preference_fragment_scrollbarStyle"
         android:clipToPadding="false"
         android:drawSelectorOnTop="false"
-        android:cacheColorHint="@android:color/transparent"
         android:scrollbarAlwaysDrawVerticalTrack="true" />
 
     <TextView android:id="@android:id/empty"

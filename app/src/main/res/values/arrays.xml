@@ -26,10 +26,14 @@
     </string-array>
 
     <string-array name="styles">
-        <item>Grün</item>
+        <item>Standard</item>
+        <item>Holo Light</item>
+        <item>Dark</item>
     </string-array>
 
     <string-array name="styles_values">
-        <item>green</item>
+        <item>default</item>
+        <item>holo</item>
+        <item>iap</item>
     </string-array>
 </resources>

@@ -1,7 +1,10 @@
 package ch.berufsbildungscenter.train_alert;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import ch.berufsbildungscenter.train_alert.Fragment.AlarmFragment;
 import ch.berufsbildungscenter.train_alert.Fragment.FavoritenFragment;
@@ -36,6 +41,17 @@ public class StartScreen extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        String style = sprefs.getString("tastyle", "default");
+        if(style.equals("holo")) {
+            setTheme(R.style.holo);
+        } else if(style.equals("iap")) {
+            setTheme(R.style.iap);
+        } else if(style.equals("default")) {
+            setTheme(R.style.AppTheme);
+        }
+
         setContentView(R.layout.activity_navigation);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)

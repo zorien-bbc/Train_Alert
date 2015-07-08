@@ -117,7 +117,13 @@ public class NavigationDrawerFragment extends Fragment {
                 getActivity(),
                 strings, images
     ));
-        mDrawerListView.setBackgroundColor(Color.BLACK);
+        SharedPreferences sprefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
+        String style = sprefs.getString("tastyle", "default");
+        if(style.equals("iap")) {
+            mDrawerListView.setBackgroundColor(getResources().getColor(R.color.background_material_dark));
+        } else {
+            mDrawerListView.setBackgroundColor(Color.BLACK);
+        }
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
