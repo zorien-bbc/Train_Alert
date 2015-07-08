@@ -70,4 +70,7 @@
     <string name="alarm_bes">Minuten vor der Abfahrt erinnern</string>
     <string name="verbindung_bes">Anzahl angezeigte Verbindungen</string>
 
+    <string name="back_button_label">Back</string>
+    <string name="next_button_label">Next</string>
+    <string name="skip_button_label">Skip</string>
 </resources>

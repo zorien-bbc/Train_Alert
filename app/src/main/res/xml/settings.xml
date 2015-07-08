@@ -6,7 +6,9 @@
     <PreferenceCategory android:title="@string/style_title">
         <ListPreference
             android:key="tastyle"
-            android:title="@string/style_bes"/>
+            android:title="@string/style_bes"
+            android:entries="@array/styles"
+            android:entryValues="@array/styles_values" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/alarm_title">

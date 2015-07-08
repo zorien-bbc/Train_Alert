@@ -65,16 +65,14 @@ public class StartScreen extends ActionBarActivity
                 break;
             case 3:
                 selectedFragment = new ZugPositionFragment();
-            break;
+
 
         }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, selectedFragment)
-                    .addToBackStack(null)
-                    .commit();
-
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, selectedFragment)
+                .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -125,10 +123,10 @@ public class StartScreen extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.container, (Fragment) new MainEinstellungen())
-//                    .commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, new MainEinstellungen())
+                    .commit();
             return true;
         }
 
@@ -163,8 +161,8 @@ public class StartScreen extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.home_fragment, container, false);
-            return view;
+            View rootView = inflater.inflate(R.layout.fragment_navigation, container, false);
+            return rootView;
         }
 
         @Override
